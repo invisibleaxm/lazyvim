@@ -1,22 +1,24 @@
 return {
   {
     "akinsho/toggleterm.nvim",
-    version = "*",
+    config = true,
+    cmd = "ToggleTerm",
     keys = {
       {
-        "<leader>td",
-        "<cmd>ToggleTerm direction=horizontal<cr>",
-        desc = "Open a horizontal terminal",
+        "<C-t>",
+        "<cmd>ToggleTerm<cr>",
+        desc = "Open a floating terminal",
       },
     },
     opts = {
-      terminal = "powershell",
+      open_mapping = [[<C-t>]],
+      direction = "float",
+      shade_filetypes = {},
+      hide_numbers = true,
+      insert_mappings = true,
+      terminal_mappings = true,
+      start_in_insert = true,
+      close_on_exit = true,
     },
   },
-
-  --    keys = {
-  --     { “<leader>td”, “<cmd>ToggleTerm size=40 dir=~/Desktop direction=horizontal<cr>”,
-  --     desc = “Open a horizontal terminal at the Desktop directory” }
-  --    },
-  -- },
 }
