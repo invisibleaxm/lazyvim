@@ -11,9 +11,9 @@ require("lazy").setup({
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import any extras modules here
-    -- { import = "lazyvim.plugins.extras.lang.typescript" },
-    -- { import = "lazyvim.plugins.extras.lang.json" },
-    -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
+    { import = "lazyvim.plugins.extras.lang.typescript" },
+    { import = "lazyvim.plugins.extras.lang.json" },
+    { import = "lazyvim.plugins.extras.ui.mini-animate" },
     -- import/override with your plugins
     { import = "plugins" },
   },
@@ -44,3 +44,17 @@ require("lazy").setup({
     },
   },
 })
+
+--[[
+local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+parser_config.powershell = {
+  install_info = {
+    url = "~/dev/invisibleaxm/tree-sitter-powershell",
+    files = { "src/parser.c" },
+    generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+    requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
+  },
+  filetype = "ps1",
+  used_by = { "psm1", "psd1", "pssc", "psxml", "cdxml" },
+}]]
+--
