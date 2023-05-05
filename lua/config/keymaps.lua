@@ -21,3 +21,6 @@ map("v", "∆", ":m '>+1<cr>gv=gv", { desc = "Move down" })
 map("v", "˚", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 map("i", "∆", "<esc><cmd>m .+1<cr>==gi", { desc = "Move down" })
 map("i", "˚", "<esc><cmd>m .-2<cr>==gi", { desc = "Move up" })
+
+map("n", "<C-p>", "<esc>:MarkdownPreview<cr>", { desc = "Start MarkdownPreview" })
+map("n", "<A-p>", "<esc>:MarkdownPreviewStop<cr>", { desc = "Stop MarkdownPreview" })
