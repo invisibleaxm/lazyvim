@@ -7,9 +7,7 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
   group = augroup("docker"),
   pattern = { "Dockerfile*" },
   command = "set syntax=dockerfile",
-})]]
---
-
+})
 local function augroup(name)
   return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end
@@ -19,3 +17,5 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
   pattern = { "*.bicep" },
   command = "set filetype=bicep",
 })
+]]
+--
