@@ -12,12 +12,24 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 ]]
 --
 
-local function augroup(name)
-  return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
-end
-
+-- Associate .bicep filetype to bicep for language server support
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-  group = augroup("bicep"),
   pattern = { "*.bicep" },
   command = "set filetype=bicep",
 })
+
+-- trim white space
+--vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  pattern = { "*" },
+  command = "%s/\\s\\+$//e",
+})
+
+-- Not sure if I will use this but in case i decide to turn off autocompletion on markdowon
+-- -- disable completion on markdown files by default
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = { "gitcommit", "markdown" },
+--   callback = function()
+--     require("cmp").setup({ enabled = false })
+--   end,
+-- })
