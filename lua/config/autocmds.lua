@@ -11,6 +11,14 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 
 ]]
 --
+-- Fix conceallevel for json & help files
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = { "json", "jsonc" },
+  callback = function()
+    vim.wo.spell = false
+    vim.wo.conceallevel = 0
+  end,
+})
 
 -- Associate .bicep filetype to bicep for language server support
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {

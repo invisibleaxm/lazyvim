@@ -8,6 +8,8 @@ return {
         "cspell",
         "stylua",
         "shfmt",
+        "jsonlint",
+        "black",
         -- "flake8",
       },
     },
