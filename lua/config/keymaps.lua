@@ -26,6 +26,7 @@
 -- map("n", "<A-p>", "<esc>:MarkdownPreviewStop<cr>", { desc = "Stop MarkdownPreview" })
 -- map("n", "π", "<esc>:MarkdownPreviewStop<cr>", { desc = "Stop MarkdownPreview" })
 -- These keymaps help when working on mac as the modifier keys for alt and option key have differnet meaning inside vim
+--
 vim.keymap.set("n", "∆", "<cmd>m .+1<cr>==", { desc = "Move down" })
 vim.keymap.set("n", "˚", "<cmd>m .-2<cr>==", { desc = "Move up" })
 vim.keymap.set("v", "∆", ":m '>+1<cr>gv=gv", { desc = "Move down" })
