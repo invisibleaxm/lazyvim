@@ -4,17 +4,19 @@ return {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
+        -- https://github.com/mason-org/mason-registry/tree/main/packages
         "bicep-lsp",
+        "prettierd",
         "stylua",
         "luacheck",
         "shellcheck",
         "shfmt",
         "black",
-        "isort",
+        "isort", --organize python imports
         "markdownlint",
-        --"clang-format",
-        --"cspell",
-        -- "jsonlint",
+        "clang-format",
+        "cspell",
+        "jsonlint",
       })
     end,
   },
@@ -180,7 +182,7 @@ return {
         }),
         nls.builtins.formatting.isort,
         nls.builtins.formatting.black,
-        --        nls.builtins.diagnostics.flake8,
+        nls.builtins.diagnostics.flake8,
         nls.builtins.diagnostics.luacheck.with({
           condition = function(utils)
             return utils.root_has_file({ ".luacheckrc" })
