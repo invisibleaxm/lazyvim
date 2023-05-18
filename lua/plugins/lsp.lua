@@ -6,7 +6,7 @@ return {
       vim.list_extend(opts.ensure_installed, {
         "bicep-lsp",
         "stylua",
-        "luacheck",
+        -- "luacheck", -- requires luarocks, need to research
         "shellcheck",
         "shfmt",
         "black",
@@ -91,7 +91,7 @@ return {
           },
         },
         html = {},
-        gopls = {},
+        -- gopls = {}, needs go language, enable when ready
         pyright = {},
         rust_analyzer = {
           settings = {
