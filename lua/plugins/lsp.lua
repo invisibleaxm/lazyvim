@@ -8,7 +8,7 @@ return {
         "bicep-lsp",
         "prettierd",
         "stylua",
-        "luacheck",
+        -- "luacheck", -- requires luarocks, need to research
         "shellcheck",
         "shfmt",
         "black",
@@ -43,7 +43,22 @@ return {
             },
           },
         },
-        powershell_es = {},
+        powershell_es = {
+          settings = {
+            powershell = {
+              codeFormatting = {
+                autoCorrectAliases = true,
+                useCorrectCasing = true,
+                preset = "OTBS",
+                trimWhitespaceAroundPipe = true,
+                whitespaceBetweenParameters = true,
+              },
+              scriptAnalysis = {
+                enable = true,
+              },
+            },
+          },
+        },
         ansiblels = {},
         bashls = {},
         clangd = {},
@@ -77,7 +92,7 @@ return {
           },
         },
         html = {},
-        gopls = {},
+        -- gopls = {}, needs go language, enable when ready
         pyright = {},
         rust_analyzer = {
           settings = {
@@ -192,23 +207,24 @@ return {
     end,
   },
 
+  -- I need to research this a bit more
   -- inlay hints
-  {
-    "lvimuser/lsp-inlayhints.nvim",
-    event = "LspAttach",
-    opts = {},
-    config = function(_, opts)
-      require("lsp-inlayhints").setup(opts)
-      vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup("LspAttach_inlayhints", {}),
-        callback = function(args)
-          if not (args.data and args.data.client_id) then
-            return
-          end
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          require("lsp-inlayhints").on_attach(client, args.buf)
-        end,
-      })
-    end,
-  },
+  --   {
+  --     "lvimuser/lsp-inlayhints.nvim",
+  --     event = "LspAttach",
+  --     opts = {},
+  --     config = function(_, opts)
+  --       require("lsp-inlayhints").setup(opts)
+  --       vim.api.nvim_create_autocmd("LspAttach", {
+  --         group = vim.api.nvim_create_augroup("LspAttach_inlayhints", {}),
+  --         callback = function(args)
+  --           if not (args.data and args.data.client_id) then
+  --             return
+  --           end
+  --           local client = vim.lsp.get_client_by_id(args.data.client_id)
+  --           require("lsp-inlayhints").on_attach(client, args.buf)
+  --         end,
+  --       })
+  --     end,
+  --   },
 }

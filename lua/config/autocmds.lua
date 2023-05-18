@@ -11,6 +11,16 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 
 ]]
 --
+--- show cursor line only in active window
+vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
+  callback = function()
+    local ok, cl = pcall(vim.api.nvim_win_get_var, 0, "auto-cursorline")
+    if ok and cl then
+      vim.wo.cursorline = true
+      vim.api.nvim_win_del_var(0, "auto-cursorline")
+    end
+  end,
+})
 -- Fix conceallevel for json & help files
 vim.api.nvim_create_autocmd({ "FileType" }, {
   pattern = { "json", "jsonc" },
@@ -28,10 +38,10 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 
 -- trim white space
 --vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  pattern = { "*" },
-  command = "%s/\\s\\+$//e",
-})
+-- vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+--   pattern = { "*" },
+--   command = "%s/\\s\\+$//e",
+-- })
 
 -- Not sure if I will use this but in case i decide to turn off autocompletion on markdowon
 -- -- disable completion on markdown files by default
