@@ -41,7 +41,17 @@ return {
             },
           },
         },
-        powershell_es = {},
+        powershell_es = {
+          settings = {
+            powershell = {
+              codeFormatting = {
+                autoCorrectAliases = true,
+                useCorrectCasing = true,
+                preset = "OTBS",
+              },
+            },
+          },
+        },
         ansiblels = {},
         bashls = {},
         clangd = {},
