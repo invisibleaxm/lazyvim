@@ -4,18 +4,19 @@ return {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
+        -- https://github.com/mason-org/mason-registry/tree/main/packages
         "bicep-lsp",
+        "prettierd",
         "stylua",
-        "luacheck",
+        -- "luacheck", -- requires luarocks, need to research
         "shellcheck",
         "shfmt",
         "black",
-        "isort",
+        "isort", --organize python imports
         "markdownlint",
         "clang-format",
         "cspell",
         "jsonlint",
-        "flake8",
       })
     end,
   },
@@ -91,7 +92,7 @@ return {
           },
         },
         html = {},
-        gopls = {},
+        -- gopls = {}, needs go language, enable when ready
         pyright = {},
         rust_analyzer = {
           settings = {
