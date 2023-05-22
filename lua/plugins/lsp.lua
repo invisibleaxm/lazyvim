@@ -21,11 +21,18 @@ return {
     end,
   },
 
+  -- detect ansible file type
+  { "pearofducks/ansible-vim" },
   -- lsp servers
+
   {
     "neovim/nvim-lspconfig",
     opts = {
       ---@type lspconfig.options
+      diagnostics = {
+        underline = false,
+        virtual_text = { prefix = "icons" },
+      },
       servers = {
         azure_pipelines_ls = {},
         jsonls = {
@@ -167,14 +174,6 @@ return {
         vimls = {},
         -- tailwindcss = {},
       },
-      setup = {},
-    },
-  },
-
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      diagnostics = { virtual_text = { prefix = "icons" } },
       setup = {
         clangd = function(_, opts)
           opts.capabilities.offsetEncoding = { "utf-16" }

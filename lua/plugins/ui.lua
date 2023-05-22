@@ -1,5 +1,7 @@
 -- Some customizations
 return {
+
+  -- color schemes
   { "ellisonleao/gruvbox.nvim" },
   { "rebelot/kanagawa.nvim" },
 
@@ -11,10 +13,5 @@ return {
     },
   },
 
-  -- change trouble config
-  {
-    "folke/trouble.nvim",
-    -- opts will be merged with the parent spec
-    opts = { use_diagnostic_signs = true },
-  },
+  { "nvim-tree/nvim-web-devicons" },
 }

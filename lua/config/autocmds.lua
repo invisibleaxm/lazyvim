@@ -37,11 +37,11 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 })
 
 -- trim white space
---vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
--- vim.api.nvim_create_autocmd({ "BufWritePre" }, {
---   pattern = { "*" },
---   command = "%s/\\s\\+$//e",
--- })
+vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  pattern = { "*" },
+  command = "%s/\\s\\+$//e",
+})
 
 -- Not sure if I will use this but in case i decide to turn off autocompletion on markdowon
 -- -- disable completion on markdown files by default
