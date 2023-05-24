@@ -1,6 +1,7 @@
 return {
   {
     "akinsho/toggleterm.nvim",
+    version = "*",
     config = true,
     cmd = "ToggleTerm",
     keys = {
@@ -19,6 +20,10 @@ return {
       terminal_mappings = true,
       start_in_insert = true,
       close_on_exit = true,
+      auto_scroll = true,
+      shade_terminals = true,
+      shading_factor = 1,
+      shade_filetypes = { "none", "fzf" },
     },
   },
 }
