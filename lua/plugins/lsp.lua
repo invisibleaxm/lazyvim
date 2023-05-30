@@ -12,6 +12,12 @@ lspCapabilities.textDocument.foldingRange = {
   lineFoldingOnly = true,
 }
 
+local enable_lualsp = true
+
+if vim.loop.os_uname().sysname == "Windows_NT" and vim.loop.os_gethostname() == "acampos0722" then
+  enable_lualsp = false
+end
+
 --------------------------------------------------------------------------------
 
 local function setupAllLsps()
@@ -155,7 +161,7 @@ return {
           },
         },
         lua_ls = {
-          -- enabled = false,
+          enabled = enable_lualsp,
           -- cmd = { "/home/folke/projects/lua-language-server/bin/lua-language-server" },
           single_file_support = true,
           settings = {
