@@ -12,6 +12,9 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      { "windwp/nvim-ts-autotag", opts = {} },
+    },
     opts = {
       ensure_installed = {
         "bash",
@@ -55,12 +58,6 @@ return {
         use_virtual_text = true,
         lint_events = { "BufWrite", "CursorHold" },
       },
-    },
-  },
-  {
-    "nvim-treesitter/nvim-treesitter",
-    dependencies = {
-      { "windwp/nvim-ts-autotag", opts = {} },
     },
   },
 }

@@ -1,6 +1,40 @@
+--------------------------------------------------------------------------------
+-- ENABLE CAPABILITIES FOR PLUGINS
+
+local lspCapabilities = vim.lsp.protocol.make_client_capabilities()
+
+-- Enable snippets-completion (for nvim_cmp)
+lspCapabilities.textDocument.completion.completionItem.snippetSupport = true
+
+-- Enable folding (for nvim-ufo)
+lspCapabilities.textDocument.foldingRange = {
+  dynamicRegistration = false,
+  lineFoldingOnly = true,
+}
+
+--------------------------------------------------------------------------------
+
+local function setupAllLsps()
+  -- INFO must be before the lsp-config setup of lua-ls
+  require("neodev").setup({
+    library = { plugins = false }, -- plugins are helpful e.g. for plenary, but slow down lsp loading
+  })
+
+  for _, lsp in pairs(lsp_servers) do
+    local config = {
+      capabilities = lspCapabilities,
+      settings = lspSettings[lsp], -- if no settings, will assign nil and therefore do nothing
+      on_attach = lspOnAttach[lsp], -- mostly disables some settings
+    }
+
+    require("lspconfig")[lsp].setup(config)
+  end
+end
+--------------------------------------------------------------------------------
+
 return {
   -- tools
-  {
+  { -- package manager
     "williamboman/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
@@ -174,6 +208,7 @@ return {
         vimls = {},
         -- tailwindcss = {},
       },
+      init = setupAllLsps,
       setup = {
         clangd = function(_, opts)
           opts.capabilities.offsetEncoding = { "utf-16" }

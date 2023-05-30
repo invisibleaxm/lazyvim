@@ -43,6 +43,12 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   command = "%s/\\s\\+$//e",
 })
 
+-- Don't auto commenting new lines
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "",
+  command = "set fo-=c fo-=r fo-=o",
+})
+
 -- Not sure if I will use this but in case i decide to turn off autocompletion on markdowon
 -- -- disable completion on markdown files by default
 -- vim.api.nvim_create_autocmd("FileType", {

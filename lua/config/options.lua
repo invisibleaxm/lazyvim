@@ -3,3 +3,9 @@
 -- Add any additional options here
 
 -- vim.opt.conceallevel = 0
+vim.opt.foldcolumn = "1"
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = -1
+vim.opt.foldenable = true
+-- vim.opt.foldmethod = "expr"
+-- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"

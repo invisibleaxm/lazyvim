@@ -38,4 +38,6 @@ vim.keymap.set("n", "<C-p>", "<esc>:MarkdownPreview<cr>", { desc = "Start Markdo
 vim.keymap.set("n", "<A-p>", "<esc>:MarkdownPreviewStop<cr>", { desc = "Stop MarkdownPreview" })
 vim.keymap.set("n", "π", "<esc>:MarkdownPreviewStop<cr>", { desc = "Stop MarkdownPreview" })
 
-vim.keymap.set("n", "<silent> <C-+>", ":silent !tmux neww tmux_sessionizer<CR>", { desc = "tmux sessioniser" })
+-- vim.keymap.set("n", "<silent> <C-+>", ":silent !tmux neww tmux_sessionizer<CR>", { desc = "tmux sessioniser" })
+
+vim.keymap.set("n", "YY", "va{Vy", { desc = "Copy code block inside { and } including brackets" })
