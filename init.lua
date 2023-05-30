@@ -6,6 +6,8 @@ else
   require("config.lazy")
   -- require("kanagawa").load("wave")
   -- Looks like tree sitter project was abandoned but i will try to get this to work for fun
+  require("kanagawa").load("wave")
+  -- Looks like the pwsh tree sitter project was abandoned but i will try to get this to work for fun
   -- if needed, this may be a location where to install custom parser for powrshell.
   -- local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
   -- parser_config.powershell = {
