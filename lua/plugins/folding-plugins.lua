@@ -38,11 +38,15 @@ return {
   },
   {
     "kevinhwang91/nvim-ufo",
-    dependencies = "kevinhwang91/promise-async",
+    dependencies = {
+      "kevinhwang91/promise-async",
+      "neovim/nvim-lspconfig",
+    },
     event = "BufReadPost",
     opts = {
       provider_selector = function(_, ft, _)
-        local lspWithOutFolding = { "yaml", "markdown", "bash", "sh", "bash", "zsh", "css" }
+        local lspWithOutFolding =
+          { "yaml", "yaml.ansible", "yaml.azdevops", "markdown", "bash", "sh", "bash", "zsh", "css" }
         if vim.tbl_contains(lspWithOutFolding, ft) then
           return { "treesitter", "indent" }
         else

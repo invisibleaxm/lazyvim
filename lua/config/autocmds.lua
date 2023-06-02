@@ -36,6 +36,11 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
   command = "set filetype=bicep",
 })
 
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  pattern = { "*/azure-pipeline*.y*l", "*/pipeline*/*.y*l" },
+  command = "set filetype=yaml.azdevops",
+})
+
 -- trim white space
 vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {

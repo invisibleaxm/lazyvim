@@ -51,6 +51,8 @@ return {
         -- "luacheck", -- requires luarocks, need to research
         "shellcheck",
         "shfmt",
+        "debugpy",
+        "ruff",
         "black",
         "isort", --organize python imports
         "markdownlint",
@@ -74,7 +76,19 @@ return {
         virtual_text = { prefix = "icons" },
       },
       servers = {
-        azure_pipelines_ls = {},
+        azure_pipelines_ls = {
+          filetypes = { "yaml.azdevops" },
+          settings = {
+            yaml = {
+              schemas = {
+                ["https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json"] = {
+                  "/azure-pipeline*.y*l",
+                  "Pipelines/*.y*l",
+                },
+              },
+            },
+          },
+        },
         jsonls = {
           -- lazy-load schemastore when needed
           on_new_config = function(new_config)
@@ -110,7 +124,6 @@ return {
         bashls = {},
         clangd = {},
         dockerls = {},
-        ruff_lsp = {},
         tsserver = {
           single_file_support = false,
           settings = {
@@ -140,7 +153,26 @@ return {
         },
         html = {},
         -- gopls = {}, needs go language, enable when ready
-        pyright = {},
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                autoImportCompletions = true,
+                typeCheckingMode = "off",
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = true,
+                diagnosticMode = "workspace", -- "openFilesOnly",
+              },
+            },
+          },
+        },
+        ruff_lsp = {
+          init_options = {
+            settings = {
+              args = { "--max-line-length=180" },
+            },
+          },
+        },
         rust_analyzer = {
           settings = {
             ["rust-analyzer"] = {
@@ -245,6 +277,15 @@ return {
         }),
       })
     end,
+  },
+  {
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      "mfussenegger/nvim-dap-python",
+      config = function()
+        require("dap-python").setup() -- Use default python
+      end,
+    },
   },
 
   -- I need to research this a bit more
