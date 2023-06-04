@@ -41,3 +41,7 @@ vim.keymap.set("i", "˚", "<esc><cmd>m .-2<cr>==gi", { desc = "Move up" })
 -- vim.keymap.set("n", "<silent> <C-+>", ":silent !tmux neww tmux_sessionizer<CR>", { desc = "tmux sessioniser" })
 
 vim.keymap.set("n", "YY", "va{Vy", { desc = "Copy code block inside { and } including brackets" })
+vim.keymap.set("n", "<CR>", "ciw", { desc = "Map enter to ciw in normal mode" })
+
+vim.keymap.set("n", "<leader>W", ":wa<CR>", { desc = "Write all buffers" })
+vim.keymap.set("n", "<leader>Q", ":qa<CR>", { desc = "Quit all buffers" })
