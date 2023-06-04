@@ -36,7 +36,7 @@ return {
         "markdown",
         "markdown_inline",
         "nix",
-        "php",
+        -- "php",
         "python",
         "query",
         "regex",

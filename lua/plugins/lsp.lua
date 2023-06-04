@@ -42,8 +42,8 @@ return {
   -- tools
   { -- package manager
     "williamboman/mason.nvim",
-    opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, {
+    opts = {
+      ensure_installed = {
         -- https://github.com/mason-org/mason-registry/tree/main/packages
         "bicep-lsp",
         "prettierd",
@@ -59,8 +59,8 @@ return {
         "clang-format",
         "cspell",
         "jsonlint",
-      })
-    end,
+      },
+    },
   },
 
   -- detect ansible file type
@@ -89,6 +89,7 @@ return {
             },
           },
         },
+        marksman = {},
         jsonls = {
           -- lazy-load schemastore when needed
           on_new_config = function(new_config)
@@ -256,28 +257,57 @@ return {
   },
 
   -- null-ls
+  -- {
+  --   "jose-elias-alvarez/null-ls.nvim",
+  --   opts = function(_, opts)
+  --     local nls = require("null-ls")
+  --     vim.list_extend(opts.sources, {
+  --       nls.builtins.diagnostics.markdownlint,
+  --       nls.builtins.diagnostics.selene.with({
+  --         condition = function(utils)
+  --           return utils.root_has_file({ "selene.toml" })
+  --         end,
+  --       }),
+  --       nls.builtins.formatting.isort,
+  --       nls.builtins.formatting.black,
+  --       nls.builtins.diagnostics.flake8,
+  --       nls.builtins.diagnostics.luacheck.with({
+  --         condition = function(utils)
+  --           return utils.root_has_file({ ".luacheckrc" })
+  --         end,
+  --       }),
+  --     })
+  --   end,
+  -- },
+
   {
     "jose-elias-alvarez/null-ls.nvim",
-    opts = function(_, opts)
+    opts = function()
       local nls = require("null-ls")
-      vim.list_extend(opts.sources, {
-        nls.builtins.diagnostics.markdownlint,
-        nls.builtins.diagnostics.selene.with({
-          condition = function(utils)
-            return utils.root_has_file({ "selene.toml" })
-          end,
-        }),
-        nls.builtins.formatting.isort,
-        nls.builtins.formatting.black,
-        nls.builtins.diagnostics.flake8,
-        nls.builtins.diagnostics.luacheck.with({
-          condition = function(utils)
-            return utils.root_has_file({ ".luacheckrc" })
-          end,
-        }),
-      })
+      return {
+        root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
+        sources = {
+          nls.builtins.diagnostics.markdownlint,
+          nls.builtins.formatting.stylua,
+          nls.builtins.diagnostics.selene.with({
+            condition = function(utils)
+              return utils.root_has_file({ "selene.toml" })
+            end,
+          }),
+          nls.builtins.formatting.isort,
+          nls.builtins.formatting.shfmt,
+          nls.builtins.formatting.black,
+          nls.builtins.diagnostics.flake8,
+          nls.builtins.diagnostics.luacheck.with({
+            condition = function(utils)
+              return utils.root_has_file({ ".luacheckrc" })
+            end,
+          }),
+        },
+      }
     end,
   },
+
   {
     "mfussenegger/nvim-dap",
     dependencies = {

@@ -21,5 +21,9 @@ if vim.loop.os_uname().sysname == "Windows_NT" then
     vim.opt[option] = value
   end
 end
+
+if vim.loop.os_uname().sysname == "Darwin" then
+  vim.g.python3_host_prog = "/Users/alex/.pyenv/shims/python"
+end
 -- vim.opt.foldmethod = "expr"
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
