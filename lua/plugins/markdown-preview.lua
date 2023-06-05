@@ -2,9 +2,10 @@ return {
   {
     {
       "iamcco/markdown-preview.nvim",
+      lazy = true,
       ft = "markdown",
       -- depends on having node and yarn installed
-      build = "cd app && yarn install",
+      -- build = "cd app && yarn install",
       -- build = ":call mkdp#util#install()",
       config = function()
         -- vim.g.mkdp_filetypes = { "markdown" },
