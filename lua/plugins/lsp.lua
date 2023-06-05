@@ -13,9 +13,13 @@ lspCapabilities.textDocument.foldingRange = {
 }
 
 local enable_lualsp = true
+enable_ansiblelint = true
 
-if vim.loop.os_uname().sysname == "Windows_NT" and vim.loop.os_gethostname() == "acampos0722" then
-  enable_lualsp = false
+if vim.loop.os_uname().sysname == "Windows_NT" then
+  enable_ansiblelint = false
+  if vim.loop.os_gethostname() == "acampos0722" then
+    enable_lualsp = false
+  end
 end
 
 --------------------------------------------------------------------------------
@@ -64,7 +68,7 @@ return {
   },
 
   -- detect ansible file type
-  { "pearofducks/ansible-vim" },
+  { "pearofducks/ansible-vim", enabled = enable_ansiblelint },
   -- lsp servers
 
   {
@@ -121,9 +125,15 @@ return {
             },
           },
         },
-        ansiblels = {},
+        ansiblels = {
+          -- settings = {
+          --   validation = {
+          --     enabled = enable_ansiblelint,
+          --   },
+          -- },
+        },
         bashls = {},
-        clangd = {},
+        -- clangd = {},
         dockerls = {},
         tsserver = {
           single_file_support = false,
@@ -152,7 +162,7 @@ return {
             },
           },
         },
-        html = {},
+        -- html = {},
         -- gopls = {}, needs go language, enable when ready
         pyright = {
           settings = {
@@ -244,7 +254,7 @@ return {
             },
           },
         },
-        vimls = {},
+        -- vimls = {},
         -- tailwindcss = {},
       },
       init = setupAllLsps,
