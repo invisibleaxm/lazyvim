@@ -11,14 +11,14 @@ return {
           cterm_color = "68",
           name = "PsScriptfile",
         },
-        [".psm1"] = {
+        ["psm1"] = {
           -- icon = "",
           icon = "",
           color = "#4273ca",
           cterm_color = "68",
           name = "PsScriptfile",
         },
-        [".psd1"] = {
+        ["psd1"] = {
           -- icon = "",
           icon = "",
           color = "#4273ca",
