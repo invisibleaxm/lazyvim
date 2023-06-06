@@ -44,11 +44,10 @@ end
 
 return {
   -- tools
-  { -- package manager
+  { -- package manager see https://github.com/mason-org/mason-registry/tree/main/packages
     "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
-        -- https://github.com/mason-org/mason-registry/tree/main/packages
         "bicep-lsp",
         "prettierd",
         "stylua",
@@ -94,21 +93,6 @@ return {
           },
         },
         marksman = {},
-        jsonls = {
-          -- lazy-load schemastore when needed
-          on_new_config = function(new_config)
-            new_config.settings.json.schemas = new_config.settings.json.schemas or {}
-            vim.list_extend(new_config.settings.json.schemas, require("schemastore").json.schemas())
-          end,
-          settings = {
-            json = {
-              format = {
-                enable = true,
-              },
-              validate = { enable = true },
-            },
-          },
-        },
         powershell_es = {
           settings = {
             powershell = {

@@ -12,52 +12,10 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    dependencies = {
-      { "windwp/nvim-ts-autotag", opts = {} },
-    },
-    opts = {
-      ensure_installed = {
-        "bash",
-        "c",
-        "cmake",
-        -- "comment", -- comments are slowing down TS bigtime, so disable for now
-        "cpp",
-        "css",
-        "diff",
-        "gitignore",
-        "go",
-        "graphql",
-        "html",
-        "http",
-        "javascript",
-        "jsdoc",
-        "jsonc",
-        "lua",
-        "markdown",
-        "markdown_inline",
-        "nix",
-        -- "php",
-        "python",
-        "query",
-        "regex",
-        "rust",
-        "sql",
-        "toml",
-        "tsx",
-        "typescript",
-        "vim",
-        "yaml",
-        "json",
-      },
-      matchup = {
-        enable = true,
-      },
-      highlight = { enable = true },
-      query_linter = {
-        enable = true,
-        use_virtual_text = true,
-        lint_events = { "BufWrite", "CursorHold" },
-      },
-    },
+    opts = function(_, opts)
+      if type(opts.ensure_installed) == "table" then
+        vim.list_extend(opts.ensure_installed, { "rust", "toml" })
+      end
+    end,
   },
 }
