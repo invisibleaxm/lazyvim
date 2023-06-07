@@ -8,6 +8,11 @@ vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = -1
 vim.opt.foldenable = true
 
+-- highlight options for search
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
+vim.opt.scrolloff = 8
+
 if vim.loop.os_uname().sysname == "Windows_NT" then
   local powershell_options = {
     shell = vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell",
