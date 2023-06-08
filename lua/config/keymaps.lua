@@ -28,7 +28,7 @@
 -- These keymaps help when working on mac as the modifier keys for alt and option key have differnet meaning inside vim
 
 -- move lines/highlights by pressing alt and movement up/down keys like jk
-vim.keymap.set("n", "<C-f>", "<cmd>!tmux neww tmux-sessionizer<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<C-f>", "<cmd>!tmux neww tmux_sessionizer<CR>", { noremap = true, silent = true })
 
 vim.keymap.set("n", "∆", "<cmd>m .+1<cr>==", { desc = "Move down" })
 vim.keymap.set("n", "˚", "<cmd>m .-2<cr>==", { desc = "Move up" })
