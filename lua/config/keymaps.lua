@@ -31,7 +31,7 @@
 -- vim.keymap.set(
 --   "n",
 --   "<C-f>",
---   '<cmd>!tmux neww "~/.zsh_autoload_functions/tmux_sessionizer"<CR>',
+--   ':!tmux neww "~/.zsh_autoload_functions/tmux_sessionizer"<CR>',
 --   { noremap = true, silent = true }
 -- )
 --
