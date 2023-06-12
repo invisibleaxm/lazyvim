@@ -3,7 +3,7 @@
 -- Add any additional options here
 
 -- vim.opt.conceallevel = 0
-vim.opt.foldcolumn = "1"
+vim.opt.foldcolumn = "0"
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = -1
 vim.opt.foldenable = true
@@ -12,6 +12,8 @@ vim.opt.foldenable = true
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 vim.opt.scrolloff = 8
+
+vim.opt.statuscolumn = "%l %r"
 
 if vim.loop.os_uname().sysname == "Windows_NT" then
   local powershell_options = {

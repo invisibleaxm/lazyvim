@@ -35,6 +35,10 @@
 --   { noremap = true, silent = true }
 -- )
 --
+
+-- map("n", "<c-/>", lazyterm, { desc = "Terminal (root dir)" })
+-- map("n", "<c-_>", lazyterm, { desc = "which_key_ignore" })
+
 vim.keymap.set("n", "∆", "<cmd>m .+1<cr>==", { desc = "Move down" })
 vim.keymap.set("n", "˚", "<cmd>m .-2<cr>==", { desc = "Move up" })
 vim.keymap.set("v", "∆", ":m '>+1<cr>gv=gv", { desc = "Move down" })
