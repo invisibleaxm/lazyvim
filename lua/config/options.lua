@@ -27,6 +27,7 @@ if vim.loop.os_uname().sysname == "Windows_NT" then
   for option, value in pairs(powershell_options) do
     vim.opt[option] = value
   end
+  vim.g.python3_host_prog = "C:\\Users\\alexc\\.pyenv\\pyenv-win\\shims\\python.bat"
 end
 
 if vim.loop.os_uname().sysname == "Darwin" then
