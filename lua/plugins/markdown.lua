@@ -16,4 +16,29 @@ return {
       end,
     },
   },
+
+  --pastify
+  {
+    "TobinPalmer/pastify.nvim",
+    cmd = "Pastify",
+    lazy = true,
+    config = function()
+      require("pastify").setup({
+        opts = {
+          local_path = "/docs/img/", -- The path to put local files in, ex ~/Projects/<name>/assets/images/<imgname>.png
+        },
+      })
+    end,
+  },
+
+  {
+    "krivahtoo/silicon.nvim",
+    build = "./install.sh build",
+    lazy = false,
+    config = function()
+      require("silicon").setup({
+        theme = "Monokai Extended",
+      })
+    end,
+  },
 }
