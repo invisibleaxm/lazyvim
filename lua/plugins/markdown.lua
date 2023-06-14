@@ -40,7 +40,11 @@ return {
         -- Configuration here, or leave empty to use defaults
         font = "FiraCode Nerd Font=34;Symbols Nerd Font Mono=34",
         output = function()
-          return "~/dev/img/" .. os.date("!%Y-%m-%dT%H-%M-%S") .. "_code.png"
+          if vim.loop.os_uname().sysname == "Windows_NT" then
+            return os.getenv("USERPROFILE") .. "\\dev\\tools\\snaps\\" .. os.date("!%Y-%m-%dT%H-%M-%S") .. "_code.png"
+          else
+            return "~/dev/tools/snaps/" .. os.date("!%Y-%m-%dT%H-%M-%S") .. "_code.png"
+          end
         end,
       })
     end,
