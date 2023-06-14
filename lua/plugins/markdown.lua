@@ -40,7 +40,7 @@ return {
         -- Configuration here, or leave empty to use defaults
         font = "FiraCode Nerd Font=34;Symbols Nerd Font Mono=34",
         output = function()
-          return "./docs/img/" .. os.date("!%Y-%m-%dT%H-%M-%S") .. "_code.png"
+          return "~/dev/img/" .. os.date("!%Y-%m-%dT%H-%M-%S") .. "_code.png"
         end,
       })
     end,
