@@ -62,6 +62,7 @@ return {
         "clang-format",
         "cspell",
         "jsonlint",
+        "flake8",
       },
     },
   },
