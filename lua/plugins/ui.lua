@@ -20,7 +20,7 @@ return {
     "aserowy/tmux.nvim",
     opts = {
       resize = {
-        enable_default_keybindings = true,
+        enable_default_keybindings = false,
       },
     },
   },
