@@ -51,6 +51,7 @@ return {
         "bicep-lsp",
         "prettierd",
         "stylua",
+        "delve",
         -- "luacheck", -- requires luarocks, need to research
         "shellcheck",
         "shfmt",
@@ -120,33 +121,6 @@ return {
         bashls = {},
         -- clangd = {},
         dockerls = {},
-        tsserver = {
-          single_file_support = false,
-          settings = {
-            typescript = {
-              inlayHints = {
-                includeInlayParameterNameHints = "literal",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = false,
-                includeInlayVariableTypeHints = false,
-                includeInlayPropertyDeclarationTypeHints = false,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-            },
-            javascript = {
-              inlayHints = {
-                includeInlayParameterNameHints = "all",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-            },
-          },
-        },
         -- html = {},
         -- gopls = {}, needs go language, enable when ready
         pyright = {
@@ -303,16 +277,16 @@ return {
     end,
   },
 
-  {
-    "mfussenegger/nvim-dap",
-    dependencies = {
-      "mfussenegger/nvim-dap-python",
-      config = function()
-        require("dap-python").setup() -- Use default python
-      end,
-    },
-  },
-
+  -- {
+  --   "mfussenegger/nvim-dap",
+  --   dependencies = {
+  --     "mfussenegger/nvim-dap-python",
+  --     config = function()
+  --       require("dap-python").setup() -- Use default python
+  --     end,
+  --   },
+  -- },
+  --
   -- I need to research this a bit more
   -- inlay hints
   --   {
