@@ -15,7 +15,7 @@ return {
     },
   },
 
-  --tmux navigation, requires config on tmux to make it smooth
+  --integrated tmux navigation, requires config on tmux to make it smooth
   {
     "aserowy/tmux.nvim",
     opts = {

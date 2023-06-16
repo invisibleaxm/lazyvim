@@ -17,7 +17,7 @@ return {
     },
   },
 
-  --pastify
+  --pastify, does not work on wsl
   {
     "TobinPalmer/pastify.nvim",
     cmd = "Pastify",
@@ -30,7 +30,7 @@ return {
       })
     end,
   },
-
+  -- requires manually installing silicon via brew or windows installer
   {
     "michaelrommel/nvim-silicon",
     lazy = true,

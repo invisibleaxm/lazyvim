@@ -10,6 +10,7 @@ return {
     end,
   },
 
+  --extends tree sitter default list/options available at: https://www.lazyvim.org/plugins/treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)

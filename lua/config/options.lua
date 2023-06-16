@@ -13,7 +13,9 @@ vim.opt.hlsearch = false
 vim.opt.incsearch = true
 vim.opt.scrolloff = 8
 
-vim.opt.statuscolumn = "%l %r"
+vim.opt.numberwidth = 3
+-- vim.opt.statuscolumn = "%=%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . '  ' : v:lnum) : ''}%=%s"
+-- vim.opt.statuscolumn = "%l %r"
 
 if vim.loop.os_uname().sysname == "Windows_NT" then
   local powershell_options = {

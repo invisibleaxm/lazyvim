@@ -44,27 +44,25 @@ end
 
 return {
   -- tools
-  { -- package manager see https://github.com/mason-org/mason-registry/tree/main/packages
+  {
     "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "bicep-lsp",
-        "prettierd",
-        "stylua",
-        -- "luacheck", -- requires luarocks, need to research
-        "shellcheck",
-        "shfmt",
-        "debugpy",
-        "ruff",
-        "black",
-        "isort", --organize python imports
-        "markdownlint",
-        "clang-format",
-        "cspell",
-        "jsonlint",
-        "flake8",
-      },
-    },
+    opts = function(_, opts)
+      if type(opts.ensure_installed) == "table" then
+        vim.list_extend(opts.ensure_installed, {
+          "bicep-lsp",
+          "shellcheck",
+          "flake8", --  python code linter
+          "debugpy", --python debugger
+          "ruff", -- fast python linter, written in Rust.
+          "black", -- python code formatter
+          "isort", --organize python imports
+          "markdownlint",
+          "clang-format",
+          "cspell",
+          "jsonlint",
+        })
+      end
+    end,
   },
 
   -- detect ansible file type
@@ -120,33 +118,6 @@ return {
         bashls = {},
         -- clangd = {},
         dockerls = {},
-        tsserver = {
-          single_file_support = false,
-          settings = {
-            typescript = {
-              inlayHints = {
-                includeInlayParameterNameHints = "literal",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = false,
-                includeInlayVariableTypeHints = false,
-                includeInlayPropertyDeclarationTypeHints = false,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-            },
-            javascript = {
-              inlayHints = {
-                includeInlayParameterNameHints = "all",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-            },
-          },
-        },
         -- html = {},
         -- gopls = {}, needs go language, enable when ready
         pyright = {
@@ -303,16 +274,16 @@ return {
     end,
   },
 
-  {
-    "mfussenegger/nvim-dap",
-    dependencies = {
-      "mfussenegger/nvim-dap-python",
-      config = function()
-        require("dap-python").setup() -- Use default python
-      end,
-    },
-  },
-
+  -- {
+  --   "mfussenegger/nvim-dap",
+  --   dependencies = {
+  --     "mfussenegger/nvim-dap-python",
+  --     config = function()
+  --       require("dap-python").setup() -- Use default python
+  --     end,
+  --   },
+  -- },
+  --
   -- I need to research this a bit more
   -- inlay hints
   --   {
