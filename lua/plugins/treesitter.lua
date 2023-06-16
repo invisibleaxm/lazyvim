@@ -10,11 +10,12 @@ return {
     end,
   },
 
+  --extends tree sitter default list/options available at: https://www.lazyvim.org/plugins/treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
-        vim.list_extend(opts.ensure_installed, { "toml", "rust", "go", "gomod", "gowork", "gosum" })
+        vim.list_extend(opts.ensure_installed, { "toml", "rust" })
       end
     end,
   },

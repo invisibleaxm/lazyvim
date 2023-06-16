@@ -1,4 +1,5 @@
 return {
+  -- used to override problematic icons on noetree
   {
     "nvim-tree/nvim-web-devicons",
     lazy = true,

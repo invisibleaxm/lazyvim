@@ -44,28 +44,25 @@ end
 
 return {
   -- tools
-  { -- package manager see https://github.com/mason-org/mason-registry/tree/main/packages
+  {
     "williamboman/mason.nvim",
-    opts = {
-      ensure_installed = {
-        "bicep-lsp",
-        "prettierd",
-        "stylua",
-        "delve",
-        -- "luacheck", -- requires luarocks, need to research
-        "shellcheck",
-        "shfmt",
-        "debugpy",
-        "ruff",
-        "black",
-        "isort", --organize python imports
-        "markdownlint",
-        "clang-format",
-        "cspell",
-        "jsonlint",
-        "flake8",
-      },
-    },
+    opts = function(_, opts)
+      if type(opts.ensure_installed) == "table" then
+        vim.list_extend(opts.ensure_installed, {
+          "bicep-lsp",
+          "shellcheck",
+          "flake8", --  python code linter
+          "debugpy", --python debugger
+          "ruff", -- fast python linter, written in Rust.
+          "black", -- python code formatter
+          "isort", --organize python imports
+          "markdownlint",
+          "clang-format",
+          "cspell",
+          "jsonlint",
+        })
+      end
+    end,
   },
 
   -- detect ansible file type
