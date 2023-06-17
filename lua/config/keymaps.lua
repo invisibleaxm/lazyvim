@@ -110,3 +110,7 @@ vim.keymap.set("x", "<leader>p", '"_dP', { desc = "Paste over selection preservi
 vim.keymap.set("n", "<A-F>", function()
   vim.lsp.buf.format()
 end)
+
+-- toggle term
+vim.keymap.set("v", "<F9>", ":ToggleTermSendVisualLines<CR><CR>", { desc = "send visual lines to term" })
+vim.keymap.set("n", "<F9>", ":ToggleTermSendCurrentLine<CR><CR>", { desc = "send current line to terminal" })
