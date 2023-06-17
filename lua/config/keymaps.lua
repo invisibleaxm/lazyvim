@@ -27,7 +27,6 @@
 -- map("n", "π", "<esc>:MarkdownPreviewStop<cr>", { desc = "Stop MarkdownPreview" })
 -- These keymaps help when working on mac as the modifier keys for alt and option key have differnet meaning inside vim
 
--- -- move lines/highlights by pressing alt and movement up/down keys like jk
 -- vim.keymap.set(
 --   "n",
 --   "<C-f>",
@@ -38,7 +37,47 @@
 
 -- map("n", "<c-/>", lazyterm, { desc = "Terminal (root dir)" })
 -- map("n", "<c-_>", lazyterm, { desc = "which_key_ignore" })
+-- debugger keymaps
+vim.keymap.set("n", "<F5>", function()
+  require("dap").continue()
+end, { desc = "continue" })
 
+vim.keymap.set("n", "<S-F5>", function()
+  require("dap").disconnect()
+  require("dap").repl.close()
+end, { desc = "continue" })
+vim.keymap.set("n", "<F8>", function()
+  require("dap").toggle_breakpoint()
+end, { desc = "toggle breakpoint" })
+vim.keymap.set("n", "<F10>", function()
+  require("dap").step_over()
+end, { desc = "step over" })
+vim.keymap.set("n", "<F11>", function()
+  require("dap").step_into()
+end, { desc = "step into" })
+vim.keymap.set("n", "<F12>", function()
+  require("dap").step_out()
+end, { desc = "step out" })
+vim.keymap.set({ "n", "v" }, "<Leader>dh", function()
+  require("dap.ui.widgets").hover()
+end, { desc = "hover" })
+
+vim.keymap.set({ "n", "v" }, "<Leader>dP", function()
+  require("dap.ui.widgets").preview()
+end, { desc = "Preview" })
+-- vim.keymap.set("n", "<Leader>df", function()
+--   local widgets = require("dap.ui.widgets")
+--   widgets.centered_float(widgets.frames)
+-- end)
+-- vim.keymap.set("n", "<Leader>ds", function()
+--   local widgets = require("dap.ui.widgets")
+--   widgets.centered_float(widgets.scopes)
+-- end)
+
+-- vim.keymap.set(n, '<leader>dk', function() require('dap').continue() end)
+-- vim.keymap.set(n, '<leader>dl', function() require('dap').run_last() end)
+
+-- -- move lines/highlights by pressing alt and movement up/down keys like jk
 vim.keymap.set("n", "∆", "<cmd>m .+1<cr>==", { desc = "Move down" })
 vim.keymap.set("n", "˚", "<cmd>m .-2<cr>==", { desc = "Move up" })
 vim.keymap.set("v", "∆", ":m '>+1<cr>gv=gv", { desc = "Move down" })
