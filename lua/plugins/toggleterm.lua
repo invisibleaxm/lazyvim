@@ -63,7 +63,7 @@ return {
   --
   -- vim-slime {{{
   {
-    "jpalardy/vim-slime",
+    "invisibleaxm/vim-slime",
     lazy = true,
     event = "VeryLazy",
     cmd = {
@@ -83,27 +83,28 @@ return {
           target_pane = "{right-of}",
         }
       else
-        --         vim.g.slime_target = "neovim"
-        --         vim.g.slime_python_ipython = 1
-        --         vim.api.nvim_set_keymap("n", "<c-c><c-u>", [[<cmd>SlimeSend0 "\x15"<CR>]], { noremap = true })
-        --         vim.api.nvim_set_keymap("n", "<c-c><c-i>", [[<cmd>SlimeSend0 "\x03"<CR>]], { noremap = true })
-        --         vim.api.nvim_set_keymap("n", "<c-c><c-d>", [[<cmd>SlimeSend0 "\x04"<CR>]], { noremap = true })
-        --         vim.api.nvim_set_keymap("n", "<c-c><c-p>", [[<cmd>SlimeSend0 "\x1bk\x0d"<CR>]], { noremap = true })
-        --         vim.api.nvim_set_keymap("n", "<c-c><cr>", [[<cmd>SlimeSend0 "\x0d"<CR>]], { noremap = true })
-        --         vim.api.nvim_exec(
-        --           [[
-        -- augroup auto_slime_channel
-        --   autocmd!
-        --   autocmd BufEnter,WinEnter,TermOpen  * lua reset_slime()
-        -- augroup END]],
-        --           false
-        --         )
         vim.g.slime_bracketed_paste = true
         vim.g.slime_target = "wezterm"
         vim.g.slime_default_config = {
           pane_id = "1",
         }
       end
+      -- I have not tried this, but its supposed to work for neovim terminal/toggleterm buffers.
+      --         vim.g.slime_target = "neovim"
+      --         vim.g.slime_python_ipython = 1
+      --         vim.api.nvim_set_keymap("n", "<c-c><c-u>", [[<cmd>SlimeSend0 "\x15"<CR>]], { noremap = true })
+      --         vim.api.nvim_set_keymap("n", "<c-c><c-i>", [[<cmd>SlimeSend0 "\x03"<CR>]], { noremap = true })
+      --         vim.api.nvim_set_keymap("n", "<c-c><c-d>", [[<cmd>SlimeSend0 "\x04"<CR>]], { noremap = true })
+      --         vim.api.nvim_set_keymap("n", "<c-c><c-p>", [[<cmd>SlimeSend0 "\x1bk\x0d"<CR>]], { noremap = true })
+      --         vim.api.nvim_set_keymap("n", "<c-c><cr>", [[<cmd>SlimeSend0 "\x0d"<CR>]], { noremap = true })
+      --         vim.api.nvim_exec(
+      --           [[
+      -- augroup auto_slime_channel
+      --   autocmd!
+      --   autocmd BufEnter,WinEnter,TermOpen  * lua reset_slime()
+      -- augroup END]],
+      --           false
+      --         )
     end,
   }, -- }}}
 }
