@@ -1,9 +1,11 @@
-enable_tmux_slime = true
+--------------------------------------------------------------------------------
+local enable_tmux_slime = true
 if vim.loop.os_uname().sysname == "Windows_NT" then
+  --- tmux does not work on windows so we use wezterm
   enable_tmux_slime = false
 end
 
--- i borrowed this from https://github.com/you-n-g/deploy/blob/623a56064926fb551cff7e4afb0984d2233bf788/configs/lazynvim/lua/plugins/slime.lua#L18
+-- I borrowed this from https://github.com/you-n-g/deploy/blob/623a56064926fb551cff7e4afb0984d2233bf788/configs/lazynvim/lua/plugins/slime.lua#L18
 function reset_slime()
   -- this part is designed coupled with toggleterm
   if vim.api.nvim_get_var("slime_target") == "neovim" then
@@ -18,6 +20,7 @@ function reset_slime()
   end
 end
 
+--------------------------------------------------------------------------------
 return {
 
   {
