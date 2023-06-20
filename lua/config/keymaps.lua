@@ -27,13 +27,12 @@
 -- map("n", "π", "<esc>:MarkdownPreviewStop<cr>", { desc = "Stop MarkdownPreview" })
 -- These keymaps help when working on mac as the modifier keys for alt and option key have differnet meaning inside vim
 
--- vim.keymap.set(
---   "n",
---   "<C-f>",
---   ':!tmux neww "~/.zsh_autoload_functions/tmux_sessionizer"<CR>',
---   { noremap = true, silent = true }
--- )
---
+vim.keymap.set(
+  "n",
+  "<leader>fs",
+  ':!tmux neww "~/.zsh_autoload_functions/tmux_sessionizer"<CR>',
+  { desc = "Fuzzy find session", noremap = true, silent = true }
+)
 
 -- map("n", "<c-/>", lazyterm, { desc = "Terminal (root dir)" })
 -- map("n", "<c-_>", lazyterm, { desc = "which_key_ignore" })
