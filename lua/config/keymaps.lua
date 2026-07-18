@@ -1,82 +1,57 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
---
--- local Util = require("lazyvim.util")
---
--- local function map(mode, lhs, rhs, opts)
---   local keys = require("lazy.core.handler").handlers.keys
---   ---@cast keys LazyKeysHandler
---   -- do not create the keymap if a lazy keys handler exists
---   if not keys.active[keys.parse({ lhs, mode = mode }).id] then
---     opts = opts or {}
---     opts.silent = opts.silent ~= false
---     vim.keymap.set(mode, lhs, rhs, opts)
---   end
--- end
---
--- map("n", "∆", "<cmd>m .+1<cr>==", { desc = "Move down" })
--- map("n", "˚", "<cmd>m .-2<cr>==", { desc = "Move up" })
--- map("v", "∆", ":m '>+1<cr>gv=gv", { desc = "Move down" })
--- map("v", "˚", ":m '<-2<cr>gv=gv", { desc = "Move up" })
--- map("i", "∆", "<esc><cmd>m .+1<cr>==gi", { desc = "Move down" })
--- map("i", "˚", "<esc><cmd>m .-2<cr>==gi", { desc = "Move up" })
---
--- map("n", "<C-p>", "<esc>:MarkdownPreview<cr>", { desc = "Start MarkdownPreview" })
--- map("n", "<A-p>", "<esc>:MarkdownPreviewStop<cr>", { desc = "Stop MarkdownPreview" })
--- map("n", "π", "<esc>:MarkdownPreviewStop<cr>", { desc = "Stop MarkdownPreview" })
--- These keymaps help when working on mac as the modifier keys for alt and option key have differnet meaning inside vim
 
-vim.keymap.set(
-  "n",
-  "<leader>fs",
-  ':!tmux neww "~/.zsh_autoload_functions/tmux_sessionizer"<CR>',
-  { desc = "Fuzzy find session", noremap = true, silent = true }
-)
+-- Skip VSCode-specific keymaps if running in VSCode (handled in plugins/vscode.lua)
+if vim.g.vscode then
+  return
+end
 
--- map("n", "<c-/>", lazyterm, { desc = "Terminal (root dir)" })
--- map("n", "<c-_>", lazyterm, { desc = "which_key_ignore" })
--- debugger keymaps
+-- Tmux sessionizer (Unix-like systems only)
+if vim.fn.has("unix") == 1 then
+  vim.keymap.set(
+    "n",
+    "<leader>fs",
+    ':!tmux neww "~/.zsh_autoload_functions/tmux_sessionizer"<CR>',
+    { desc = "Fuzzy find session", noremap = true, silent = true }
+  )
+end
+
+-- Debugger keymaps (DAP)
 vim.keymap.set("n", "<F5>", function()
   require("dap").continue()
-end, { desc = "continue" })
+end, { desc = "DAP: Continue" })
 
 vim.keymap.set("n", "<S-F5>", function()
   require("dap").disconnect()
   require("dap").repl.close()
-end, { desc = "continue" })
+end, { desc = "DAP: Stop" })
+
 vim.keymap.set("n", "<F8>", function()
   require("dap").toggle_breakpoint()
-end, { desc = "toggle breakpoint" })
+end, { desc = "DAP: Toggle breakpoint" })
+
 vim.keymap.set("n", "<F10>", function()
   require("dap").step_over()
-end, { desc = "step over" })
+end, { desc = "DAP: Step over" })
+
 vim.keymap.set("n", "<F11>", function()
   require("dap").step_into()
-end, { desc = "step into" })
+end, { desc = "DAP: Step into" })
+
 vim.keymap.set("n", "<F12>", function()
   require("dap").step_out()
-end, { desc = "step out" })
+end, { desc = "DAP: Step out" })
+
 vim.keymap.set({ "n", "v" }, "<Leader>dh", function()
   require("dap.ui.widgets").hover()
-end, { desc = "hover" })
+end, { desc = "DAP: Hover" })
 
 vim.keymap.set({ "n", "v" }, "<Leader>dP", function()
   require("dap.ui.widgets").preview()
-end, { desc = "Preview" })
--- vim.keymap.set("n", "<Leader>df", function()
---   local widgets = require("dap.ui.widgets")
---   widgets.centered_float(widgets.frames)
--- end)
--- vim.keymap.set("n", "<Leader>ds", function()
---   local widgets = require("dap.ui.widgets")
---   widgets.centered_float(widgets.scopes)
--- end)
+end, { desc = "DAP: Preview" })
 
--- vim.keymap.set(n, '<leader>dk', function() require('dap').continue() end)
--- vim.keymap.set(n, '<leader>dl', function() require('dap').run_last() end)
-
--- -- move lines/highlights by pressing alt and movement up/down keys like jk
+-- Mac-specific Alt+J/K for moving lines (∆ = Alt+j, ˚ = Alt+k on Mac)
 vim.keymap.set("n", "∆", "<cmd>m .+1<cr>==", { desc = "Move down" })
 vim.keymap.set("n", "˚", "<cmd>m .-2<cr>==", { desc = "Move up" })
 vim.keymap.set("v", "∆", ":m '>+1<cr>gv=gv", { desc = "Move down" })
@@ -84,20 +59,24 @@ vim.keymap.set("v", "˚", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 vim.keymap.set("i", "∆", "<esc><cmd>m .+1<cr>==gi", { desc = "Move down" })
 vim.keymap.set("i", "˚", "<esc><cmd>m .-2<cr>==gi", { desc = "Move up" })
 
--- J appends line below to end of line, this remap keeps the cursor in current position
-vim.keymap.set("n", "J", "mzJ`z")
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
+-- Better line manipulation
+vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines without moving cursor" })
 
--- vim.keymap.set("n", "<C-p>", "<esc>:MarkdownPreview<cr>", { desc = "Start MarkdownPreview" })
--- vim.keymap.set("n", "<A-p>", "<esc>:MarkdownPreviewStop<cr>", { desc = "Stop MarkdownPreview" })
--- vim.keymap.set("n", "π", "<esc>:MarkdownPreviewStop<cr>", { desc = "Stop MarkdownPreview" })
+-- Better scrolling (center cursor)
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
+vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
+vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
 
--- vim.keymap.set("n", "<silent> <C-+>", ":silent !tmux neww tmux_sessionizer<CR>", { desc = "tmux sessioniser" })
+-- Better paste (don't replace register)
+vim.keymap.set("x", "<leader>p", '"_dP', { desc = "Paste without yanking" })
 
-vim.keymap.set("n", "YY", "va{Vy", { desc = "Copy code block inside { and } including brackets" })
+-- System clipboard operations
+vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank to system clipboard" })
+vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line to system clipboard" })
+
+-- Quick copy code block
+vim.keymap.set("n", "YY", "va{Vy", { desc = "Copy code block inside {}" })
 vim.keymap.set("n", "<CR>", "ciw", { desc = "Map enter to ciw in normal mode" })
 
 vim.keymap.set("n", "<leader>W", ":wa<CR>", { desc = "Write all buffers" })

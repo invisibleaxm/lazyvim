@@ -1,6 +1,6 @@
 return {
-  -- { "ggandor/flit.nvim", enabled = false }, -- this plugin takes over the find and . , which i was not too keen
+  -- Disable plugins you don't want
+  -- { "ggandor/flit.nvim", enabled = false },
   -- { "rcarriga/nvim-notify", enabled = false },
-  --  { "echasnovski/mini.pairs", enabled = false },
-  test,
+  -- { "echasnovski/mini.pairs", enabled = false },
 }

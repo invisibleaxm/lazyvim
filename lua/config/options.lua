@@ -18,6 +18,22 @@ vim.opt.numberwidth = 3
 -- vim.opt.statuscolumn = "%l %r"
 
 if vim.loop.os_uname().sysname == "Windows_NT" then
+  -- Ensure MSYS2 MinGW64 tools are in PATH for building plugins
+  -- Note: Setup-MSYS2.ps1 should add this to your system PATH permanently
+  -- This is a fallback that adds them if not already present
+  local mingw_bin = "C:\\msys64\\mingw64\\bin"
+  if vim.fn.isdirectory(mingw_bin) == 1 and not string.find(vim.env.PATH, "msys64", 1, true) then
+    vim.env.PATH = mingw_bin .. ";" .. vim.env.PATH
+  end
+
+  -- Set C compiler for Treesitter
+  -- Prefer gcc (from MinGW-w64/MSYS2) over clang on Windows
+  if vim.fn.executable("gcc") == 1 then
+    vim.env.CC = "gcc"
+  elseif vim.fn.executable("clang") == 1 then
+    vim.env.CC = "clang"
+  end
+
   local powershell_options = {
     shell = vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell",
     shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
@@ -35,6 +51,35 @@ end
 if vim.loop.os_uname().sysname == "Darwin" then
   vim.g.python3_host_prog = "/Users/alex/.pyenv/shims/python"
 end
+
+
+local M = {}
+
+local function paste()
+  return {
+    vim.split(vim.fn.getreg(''), '\n'),
+    vim.fn.getregtype(''),
+  }
+end
+
+function M.init()
+  if vim.env.SSH_TTY then
+    vim.g.clipboard = {
+      name = 'OSC 52',
+      copy = {
+        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+      },
+      paste = {
+        ['+'] = paste,
+        ['*'] = paste,
+      },
+    }
+  end
+end
+
+return M
+
 
 -- vim.opt.foldmethod = "expr"
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"

@@ -45,7 +45,7 @@ end
 return {
   -- tools
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
         vim.list_extend(opts.ensure_installed, {
@@ -222,57 +222,43 @@ return {
     },
   },
 
-  -- null-ls
+  -- NOTE: null-ls.nvim is deprecated and has been replaced by none-ls.nvim
+  -- However, LazyVim now uses conform.nvim for formatting and nvim-lint for linting by default
+  -- which are more modern and better maintained. The configuration below has been disabled.
+  --
+  -- If you want to use none-ls.nvim instead, enable this extra in lazy.lua:
+  -- { import = "lazyvim.plugins.extras.lsp.none-ls" }
+  --
+  -- Then you can configure it here. For now, we're using LazyVim's defaults.
+  --
+  -- Old null-ls configuration (for reference):
   -- {
   --   "jose-elias-alvarez/null-ls.nvim",
-  --   opts = function(_, opts)
+  --   opts = function()
   --     local nls = require("null-ls")
-  --     vim.list_extend(opts.sources, {
-  --       nls.builtins.diagnostics.markdownlint,
-  --       nls.builtins.diagnostics.selene.with({
-  --         condition = function(utils)
-  --           return utils.root_has_file({ "selene.toml" })
-  --         end,
-  --       }),
-  --       nls.builtins.formatting.isort,
-  --       nls.builtins.formatting.black,
-  --       nls.builtins.diagnostics.flake8,
-  --       nls.builtins.diagnostics.luacheck.with({
-  --         condition = function(utils)
-  --           return utils.root_has_file({ ".luacheckrc" })
-  --         end,
-  --       }),
-  --     })
+  --     return {
+  --       root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
+  --       sources = {
+  --         nls.builtins.diagnostics.markdownlint,
+  --         nls.builtins.formatting.stylua,
+  --         nls.builtins.diagnostics.selene.with({
+  --           condition = function(utils)
+  --             return utils.root_has_file({ "selene.toml" })
+  --           end,
+  --         }),
+  --         nls.builtins.formatting.isort,
+  --         nls.builtins.formatting.shfmt,
+  --         nls.builtins.formatting.black,
+  --         nls.builtins.diagnostics.flake8,
+  --         nls.builtins.diagnostics.luacheck.with({
+  --           condition = function(utils)
+  --             return utils.root_has_file({ ".luacheckrc" })
+  --           end,
+  --         }),
+  --       },
+  --     }
   --   end,
   -- },
-
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    opts = function()
-      local nls = require("null-ls")
-      return {
-        root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
-        sources = {
-          nls.builtins.diagnostics.markdownlint,
-          nls.builtins.formatting.stylua,
-          nls.builtins.diagnostics.selene.with({
-            condition = function(utils)
-              return utils.root_has_file({ "selene.toml" })
-            end,
-          }),
-          nls.builtins.formatting.isort,
-          nls.builtins.formatting.shfmt,
-          nls.builtins.formatting.black,
-          nls.builtins.diagnostics.flake8,
-          nls.builtins.diagnostics.luacheck.with({
-            condition = function(utils)
-              return utils.root_has_file({ ".luacheckrc" })
-            end,
-          }),
-        },
-      }
-    end,
-  },
 
   -- {
   --   "mfussenegger/nvim-dap",
