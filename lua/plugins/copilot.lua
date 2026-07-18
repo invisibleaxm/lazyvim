@@ -1,6 +1,9 @@
 -- GitHub Copilot Configuration
--- Customizations for LazyVim's built-in Copilot
--- (LazyVim loads this via: { import = "lazyvim.plugins.extras.ai.copilot" })
+-- VSCODE HYBRID MODE: Disable Neovim Copilot in VSCode
+-- Use VSCode's native Copilot extension instead
+if vim.g.vscode then
+  return {}
+end
 
 return {
   -- Customize copilot.lua (inline ghost text suggestions)

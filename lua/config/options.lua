@@ -3,6 +3,18 @@
 -- Add any additional options here
 
 -- ============================================================================
+-- VSCODE DETECTION
+-- ============================================================================
+
+-- Detect if running in VSCode and print startup message
+if vim.g.vscode then
+  -- Defer notification to avoid startup conflicts
+  vim.defer_fn(function()
+    print("🚀 Neovim Hybrid Mode Active in VSCode")
+  end, 100)
+end
+
+-- ============================================================================
 -- CROSS-PLATFORM CLIPBOARD & MOUSE
 -- ============================================================================
 

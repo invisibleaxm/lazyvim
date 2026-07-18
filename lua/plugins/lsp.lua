@@ -1,5 +1,11 @@
 --------------------------------------------------------------------------------
 -- ENABLE CAPABILITIES FOR PLUGINS
+-- VSCODE HYBRID MODE: Disable LSP servers in VSCode
+-- Use VSCode's language servers instead
+
+if vim.g.vscode then
+  return {}
+end
 
 local lspCapabilities = vim.lsp.protocol.make_client_capabilities()
 

@@ -1,5 +1,11 @@
 -- PowerShell Development Configuration
--- Optimized for PowerShell scripting with PowerShell Editor Services LSP
+-- VSCODE HYBRID MODE: Disable PowerShell LSP in VSCode
+-- Use VSCode's PowerShell extension instead
+-- Keep keymaps for consistency
+
+if vim.g.vscode then
+  return {}
+end
 
 return {
   -- PowerShell LSP Configuration

@@ -1,3 +1,9 @@
+-- VSCODE HYBRID MODE: Disable Neovim completion in VSCode
+-- Use VSCode IntelliSense instead of nvim-cmp
+if vim.g.vscode then
+  return {}
+end
+
 return {
   -- Use <tab> for completion and snippets (supertab)
   -- first: disable default <tab> and <s-tab> behavior in LuaSnip

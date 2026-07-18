@@ -1,3 +1,9 @@
+-- VSCODE HYBRID MODE: Disable Telescope in VSCode
+-- Use VSCode's Ctrl+P and search features instead
+if vim.g.vscode then
+  return {}
+end
+
 return {
   {
     "nvim-telescope/telescope.nvim",

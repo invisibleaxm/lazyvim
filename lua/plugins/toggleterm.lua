@@ -1,4 +1,10 @@
 --------------------------------------------------------------------------------
+-- VSCODE HYBRID MODE: Disable ToggleTerm in VSCode
+-- Use VSCode's integrated terminal instead
+if vim.g.vscode then
+  return {}
+end
+
 local enable_tmux_slime = true
 if vim.loop.os_uname().sysname == "Windows_NT" then
   --- tmux does not work on windows so we use wezterm

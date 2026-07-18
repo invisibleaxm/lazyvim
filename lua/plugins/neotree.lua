@@ -1,3 +1,9 @@
+-- VSCODE HYBRID MODE: Disable Neo-tree in VSCode
+-- Use VSCode's Explorer sidebar instead
+if vim.g.vscode then
+  return {}
+end
+
 return {
   {
     "nvim-neo-tree/neo-tree.nvim",

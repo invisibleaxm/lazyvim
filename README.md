@@ -59,6 +59,7 @@ This runs cleanup + bootstrap to ensure a smooth installation.
 **Start here:** **[📖 Complete User Guide](docs/NEOVIM_USER_GUIDE.md)** - All keybindings, plugins, and workflows
 
 **Specialized guides:**
+- **[🎯 VSCode Integration](docs/VSCODE_INTEGRATION.md)** - Hybrid Mode: Use Neovim in VSCode
 - **[🤖 Copilot Quick Reference](docs/COPILOT_QUICKREF.md)** - Accept suggestions, navigate alternatives, troubleshooting
 - **[💻 PowerShell Development](docs/POWERSHELL_DEVELOPMENT.md)** - PowerShell IDE features and keybindings
 - **[📋 Clipboard & Mouse Guide](docs/CLIPBOARD_MOUSE_GUIDE.md)** - Clipboard & mouse integration

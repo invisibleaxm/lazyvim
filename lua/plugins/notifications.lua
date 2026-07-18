@@ -1,5 +1,10 @@
 -- Notification Configuration
 -- Makes notifications stay visible longer
+-- VSCODE HYBRID MODE: Disable custom notifications in VSCode
+-- Use VSCode's notification system instead
+if vim.g.vscode then
+  return {}
+end
 
 return {
   -- Configure noice.nvim (LazyVim's notification system)
