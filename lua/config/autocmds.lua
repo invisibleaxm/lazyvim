@@ -1,17 +1,11 @@
 -- Autocmds are automatically loaded on the VeryLazy event
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
---
---[[
-vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-  group = augroup("docker"),
-  pattern = { "Dockerfile*" },
-  command = "set syntax=dockerfile",
-})
 
-]]
---
---- show cursor line only in active window
+-- ============================================================================
+-- CURSOR LINE (only in active window)
+-- ============================================================================
+
 vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
   callback = function()
     local ok, cl = pcall(vim.api.nvim_win_get_var, 0, "auto-cursorline")
@@ -21,8 +15,13 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
     end
   end,
 })
--- Fix conceallevel for json & help files
-vim.api.nvim_create_autocmd({ "FileType" }, {
+
+-- ============================================================================
+-- FILETYPE-SPECIFIC SETTINGS
+-- ============================================================================
+
+-- JSON files: disable concealing and spell check
+vim.api.nvim_create_autocmd("FileType", {
   pattern = { "json", "jsonc" },
   callback = function()
     vim.wo.spell = false
@@ -30,35 +29,30 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   end,
 })
 
--- Associate .bicep filetype to bicep for language server support
+-- Bicep files: set filetype for LSP support
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-  pattern = { "*.bicep" },
+  pattern = "*.bicep",
   command = "set filetype=bicep",
 })
 
+-- Azure DevOps pipeline files: special YAML filetype
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
   pattern = { "*/azure-pipeline*.y*l", "*/pipeline*/*.y*l" },
   command = "set filetype=yaml.azdevops",
 })
 
--- trim white space
-vim.api.nvim_create_autocmd("BufWritePre", { command = "%s/\\s\\+$//e" })
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  pattern = { "*" },
-  command = "%s/\\s\\+$//e",
+-- ============================================================================
+-- FORMATTING
+-- ============================================================================
+
+-- Trim trailing whitespace on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  command = [[%s/\s\+$//e]],
 })
 
--- Don't auto commenting new lines
+-- Disable auto-commenting on new lines
 vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = "",
+  pattern = "*",
   command = "set fo-=c fo-=r fo-=o",
 })
-
--- Not sure if I will use this but in case i decide to turn off autocompletion on markdowon
--- -- disable completion on markdown files by default
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = { "gitcommit", "markdown" },
---   callback = function()
---     require("cmp").setup({ enabled = false })
---   end,
--- })

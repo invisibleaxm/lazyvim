@@ -92,22 +92,7 @@ return {
           },
         },
         marksman = {},
-        powershell_es = {
-          settings = {
-            powershell = {
-              codeFormatting = {
-                autoCorrectAliases = true,
-                useCorrectCasing = true,
-                preset = "OTBS",
-                trimWhitespaceAroundPipe = true,
-                whitespaceBetweenParameters = true,
-              },
-              scriptAnalysis = {
-                enable = true,
-              },
-            },
-          },
-        },
+        -- powershell_es configuration moved to lua/plugins/powershell.lua for better organization
         ansiblels = {
           -- settings = {
           --   validation = {

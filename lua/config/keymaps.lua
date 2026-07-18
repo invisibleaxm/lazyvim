@@ -7,17 +7,62 @@ if vim.g.vscode then
   return
 end
 
--- Tmux sessionizer (Unix-like systems only)
-if vim.fn.has("unix") == 1 then
-  vim.keymap.set(
-    "n",
-    "<leader>fs",
-    ':!tmux neww "~/.zsh_autoload_functions/tmux_sessionizer"<CR>',
-    { desc = "Fuzzy find session", noremap = true, silent = true }
-  )
-end
+-- ============================================================================
+-- CLIPBOARD OPERATIONS (System clipboard integration)
+-- ============================================================================
 
--- Debugger keymaps (DAP)
+-- Yank to system clipboard (works with mouse selection too)
+vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank to system clipboard" })
+vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line to system clipboard" })
+
+-- Paste from system clipboard without overwriting register
+vim.keymap.set("x", "<leader>p", '"_dP', { desc = "Paste without yanking" })
+
+-- Delete without yanking (use black hole register)
+vim.keymap.set({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without yanking" })
+
+-- ============================================================================
+-- EDITING SHORTCUTS
+-- ============================================================================
+
+-- Join lines without moving cursor
+vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines (keep cursor)" })
+
+-- Change word under cursor
+vim.keymap.set("n", "<CR>", "ciw", { desc = "Change word under cursor" })
+
+-- Copy code block (visual select inside {})
+vim.keymap.set("n", "YY", "va{Vy", { desc = "Copy code block" })
+
+-- ============================================================================
+-- NAVIGATION & SCROLLING (Center cursor after movement)
+-- ============================================================================
+
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll down (centered)" })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up (centered)" })
+vim.keymap.set("n", "n", "nzzzv", { desc = "Next search (centered)" })
+vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search (centered)" })
+
+-- ============================================================================
+-- BUFFER & FILE OPERATIONS
+-- ============================================================================
+
+vim.keymap.set("n", "<leader>W", ":wa<CR>", { desc = "Write all buffers" })
+vim.keymap.set("n", "<leader>Q", ":qa<CR>", { desc = "Quit all" })
+
+-- ============================================================================
+-- FORMATTING
+-- ============================================================================
+
+-- Format file with LSP (Alt+Shift+F like VSCode)
+vim.keymap.set("n", "<A-F>", function()
+  vim.lsp.buf.format()
+end, { desc = "Format file (LSP)" })
+
+-- ============================================================================
+-- DEBUGGER (DAP)
+-- ============================================================================
+
 vim.keymap.set("n", "<F5>", function()
   require("dap").continue()
 end, { desc = "DAP: Continue" })
@@ -51,44 +96,33 @@ vim.keymap.set({ "n", "v" }, "<Leader>dP", function()
   require("dap.ui.widgets").preview()
 end, { desc = "DAP: Preview" })
 
--- Mac-specific Alt+J/K for moving lines (∆ = Alt+j, ˚ = Alt+k on Mac)
-vim.keymap.set("n", "∆", "<cmd>m .+1<cr>==", { desc = "Move down" })
-vim.keymap.set("n", "˚", "<cmd>m .-2<cr>==", { desc = "Move up" })
-vim.keymap.set("v", "∆", ":m '>+1<cr>gv=gv", { desc = "Move down" })
-vim.keymap.set("v", "˚", ":m '<-2<cr>gv=gv", { desc = "Move up" })
-vim.keymap.set("i", "∆", "<esc><cmd>m .+1<cr>==gi", { desc = "Move down" })
-vim.keymap.set("i", "˚", "<esc><cmd>m .-2<cr>==gi", { desc = "Move up" })
+-- ============================================================================
+-- TOGGLETERM (Send code to terminal)
+-- ============================================================================
 
--- Better line manipulation
-vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines without moving cursor" })
+vim.keymap.set("v", "<F9>", ":ToggleTermSendVisualLines<CR><CR>", { desc = "Send visual lines to term" })
+vim.keymap.set("n", "<F9>", ":ToggleTermSendCurrentLine<CR><CR>", { desc = "Send current line to term" })
 
--- Better scrolling (center cursor)
-vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll down and center" })
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll up and center" })
-vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
-vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
+-- ============================================================================
+-- PLATFORM-SPECIFIC KEYMAPS
+-- ============================================================================
 
--- Better paste (don't replace register)
-vim.keymap.set("x", "<leader>p", '"_dP', { desc = "Paste without yanking" })
+-- Mac: Alt+J/K for moving lines (∆ = Alt+j, ˚ = Alt+k on macOS)
+if vim.loop.os_uname().sysname == "Darwin" then
+  vim.keymap.set("n", "∆", "<cmd>m .+1<cr>==", { desc = "Move line down" })
+  vim.keymap.set("n", "˚", "<cmd>m .-2<cr>==", { desc = "Move line up" })
+  vim.keymap.set("v", "∆", ":m '>+1<cr>gv=gv", { desc = "Move selection down" })
+  vim.keymap.set("v", "˚", ":m '<-2<cr>gv=gv", { desc = "Move selection up" })
+  vim.keymap.set("i", "∆", "<esc><cmd>m .+1<cr>==gi", { desc = "Move line down" })
+  vim.keymap.set("i", "˚", "<esc><cmd>m .-2<cr>==gi", { desc = "Move line up" })
+end
 
--- System clipboard operations
-vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank to system clipboard" })
-vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line to system clipboard" })
-
--- Quick copy code block
-vim.keymap.set("n", "YY", "va{Vy", { desc = "Copy code block inside {}" })
-vim.keymap.set("n", "<CR>", "ciw", { desc = "Map enter to ciw in normal mode" })
-
-vim.keymap.set("n", "<leader>W", ":wa<CR>", { desc = "Write all buffers" })
-vim.keymap.set("n", "<leader>Q", ":qa<CR>", { desc = "Quit all buffers" })
-
---- paste over highlight and not loose register contents
-vim.keymap.set("x", "<leader>p", '"_dP', { desc = "Paste over selection preserving buffer" })
---- format file from lsp with similar to vscode shortcut alt shift f
-vim.keymap.set("n", "<A-F>", function()
-  vim.lsp.buf.format()
-end)
-
--- toggle term
-vim.keymap.set("v", "<F9>", ":ToggleTermSendVisualLines<CR><CR>", { desc = "send visual lines to term" })
-vim.keymap.set("n", "<F9>", ":ToggleTermSendCurrentLine<CR><CR>", { desc = "send current line to terminal" })
+-- Unix/Linux: Tmux sessionizer
+if vim.fn.has("unix") == 1 then
+  vim.keymap.set(
+    "n",
+    "<leader>fs",
+    ':!tmux neww "~/.zsh_autoload_functions/tmux_sessionizer"<CR>',
+    { desc = "Fuzzy find session (tmux)", noremap = true, silent = true }
+  )
+end

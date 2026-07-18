@@ -2,23 +2,69 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
--- vim.opt.conceallevel = 0
-vim.opt.foldcolumn = "0"
-vim.opt.foldlevel = 99
-vim.opt.foldlevelstart = -1
+-- ============================================================================
+-- CROSS-PLATFORM CLIPBOARD & MOUSE
+-- ============================================================================
+
+-- Enable mouse support in all modes (works in terminal and SSH)
+vim.opt.mouse = "a"
+
+-- Enable system clipboard integration (works locally)
+-- For SSH, OSC 52 is configured below
+vim.opt.clipboard = "unnamedplus"
+
+-- OSC 52 clipboard for SSH sessions
+-- This allows clipboard to work even when SSH'd into a remote server
+if vim.env.SSH_TTY or vim.env.SSH_CONNECTION then
+  local function paste()
+    return {
+      vim.fn.split(vim.fn.getreg(""), "\n"),
+      vim.fn.getregtype(""),
+    }
+  end
+
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+      ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+    },
+    paste = {
+      ["+"] = paste,
+      ["*"] = paste,
+    },
+  }
+end
+
+-- ============================================================================
+-- FOLDING (UFO plugin provides better defaults, these are minimal overrides)
+-- ============================================================================
+
+vim.opt.foldcolumn = "0" -- Hide fold column for cleaner look
+vim.opt.foldlevel = 99 -- Open all folds by default
+vim.opt.foldlevelstart = 99 -- Start with all folds open
 vim.opt.foldenable = true
 
--- highlight options for search
-vim.opt.hlsearch = false
-vim.opt.incsearch = true
-vim.opt.scrolloff = 8
+-- ============================================================================
+-- SEARCH & SCROLL
+-- ============================================================================
 
-vim.opt.numberwidth = 3
--- vim.opt.statuscolumn = "%=%{v:virtnum < 1 ? (v:relnum ? v:relnum : v:lnum < 10 ? v:lnum . '  ' : v:lnum) : ''}%=%s"
--- vim.opt.statuscolumn = "%l %r"
+vim.opt.hlsearch = false -- Don't highlight all search matches
+vim.opt.incsearch = true -- Show search matches as you type
+vim.opt.scrolloff = 8 -- Keep 8 lines visible above/below cursor
+
+-- ============================================================================
+-- UI
+-- ============================================================================
+
+vim.opt.numberwidth = 3 -- Narrower number column
+
+-- ============================================================================
+-- PLATFORM-SPECIFIC CONFIGURATION
+-- ============================================================================
 
 if vim.loop.os_uname().sysname == "Windows_NT" then
-  -- Ensure MSYS2 MinGW64 tools are in PATH for building plugins
+  -- Windows: Ensure MSYS2 MinGW64 tools are in PATH for building plugins
   -- Note: Setup-MSYS2.ps1 should add this to your system PATH permanently
   -- This is a fallback that adds them if not already present
   local mingw_bin = "C:\\msys64\\mingw64\\bin"
@@ -34,6 +80,7 @@ if vim.loop.os_uname().sysname == "Windows_NT" then
     vim.env.CC = "clang"
   end
 
+  -- PowerShell configuration
   local powershell_options = {
     shell = vim.fn.executable("pwsh") == 1 and "pwsh" or "powershell",
     shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
@@ -45,41 +92,22 @@ if vim.loop.os_uname().sysname == "Windows_NT" then
   for option, value in pairs(powershell_options) do
     vim.opt[option] = value
   end
-  vim.g.python3_host_prog = os.getenv("USERPROFILE") .. "\\.pyenv\\pyenv-win\\shims\\python.bat"
-end
 
-if vim.loop.os_uname().sysname == "Darwin" then
-  vim.g.python3_host_prog = "/Users/alex/.pyenv/shims/python"
-end
-
-
-local M = {}
-
-local function paste()
-  return {
-    vim.split(vim.fn.getreg(''), '\n'),
-    vim.fn.getregtype(''),
-  }
-end
-
-function M.init()
-  if vim.env.SSH_TTY then
-    vim.g.clipboard = {
-      name = 'OSC 52',
-      copy = {
-        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-      },
-      paste = {
-        ['+'] = paste,
-        ['*'] = paste,
-      },
-    }
+  -- Python provider (auto-detect pyenv if available)
+  local pyenv_path = os.getenv("USERPROFILE") .. "\\.pyenv\\pyenv-win\\shims\\python.bat"
+  if vim.fn.executable(pyenv_path) == 1 then
+    vim.g.python3_host_prog = pyenv_path
+  end
+elseif vim.loop.os_uname().sysname == "Darwin" then
+  -- macOS: Python provider (auto-detect pyenv if available)
+  local pyenv_path = os.getenv("HOME") .. "/.pyenv/shims/python"
+  if vim.fn.executable(pyenv_path) == 1 then
+    vim.g.python3_host_prog = pyenv_path
+  end
+else
+  -- Linux: Python provider (auto-detect pyenv if available)
+  local pyenv_path = os.getenv("HOME") .. "/.pyenv/shims/python"
+  if vim.fn.executable(pyenv_path) == 1 then
+    vim.g.python3_host_prog = pyenv_path
   end
 end
-
-return M
-
-
--- vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"

@@ -54,6 +54,18 @@ This runs cleanup + bootstrap to ensure a smooth installation.
 4. Run `:TSUpdate` to compile parsers
 5. Optional: Install formatters via `:Mason`
 
+## 📚 Documentation
+
+**Start here:** **[📖 Complete User Guide](docs/NEOVIM_USER_GUIDE.md)** - All keybindings, plugins, and workflows
+
+**Specialized guides:**
+- **[🤖 Copilot Quick Reference](docs/COPILOT_QUICKREF.md)** - Accept suggestions, navigate alternatives, troubleshooting
+- **[💻 PowerShell Development](docs/POWERSHELL_DEVELOPMENT.md)** - PowerShell IDE features and keybindings
+- **[📋 Clipboard & Mouse Guide](docs/CLIPBOARD_MOUSE_GUIDE.md)** - Clipboard & mouse integration
+- **[🔧 Configuration Review](docs/CONFIGURATION_REVIEW.md)** - Recent optimizations summary
+- **[🧹 Maintenance Scripts](scripts/README.md)** - Bootstrap, cleanup, and setup scripts
+- **[🌐 LazyVim Documentation](https://lazyvim.github.io/)** - Official LazyVim docs
+
 ## 🧹 Maintenance
 
 Having plugin issues? Use the cleanup script:
@@ -70,7 +82,13 @@ Having plugin issues? Use the cleanup script:
 
 See [scripts/README.md](scripts/README.md) for details.
 
-For detailed documentation, refer to:
-- [LazyVim Documentation](https://lazyvim.github.io/installation)
-- [This config's guide](CONFIGURATION_GUIDE.md)
+---
+
+## 🎓 Learning Resources
+
+- **[Complete User Guide](docs/NEOVIM_USER_GUIDE.md)** - Your main reference for all features
+- **[LazyVim Keymaps](https://www.lazyvim.org/keymaps)** - Default LazyVim keybindings
+- **[Neovim Documentation](https://neovim.io/doc/)** - Official Neovim docs
+- Type `:help` in Neovim for built-in documentation
+
 

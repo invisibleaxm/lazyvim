@@ -45,8 +45,17 @@ return {
     event = "BufReadPost",
     opts = {
       provider_selector = function(_, ft, _)
-        local lspWithOutFolding =
-          { "yaml", "yaml.ansible", "yaml.azdevops", "markdown", "bash", "sh", "bash", "zsh", "css" }
+        local lspWithOutFolding = {
+          "yaml",
+          "yaml.ansible",
+          "yaml.azdevops",
+          "markdown",
+          "bash",
+          "sh",
+          "bash",
+          "zsh",
+          "css",
+        }
         if vim.tbl_contains(lspWithOutFolding, ft) then
           return { "treesitter", "indent" }
         else
