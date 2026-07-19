@@ -10,24 +10,107 @@ require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    -- import any extras modules here
-    -- NOTE: Some extras have been reorganized in newer LazyVim versions
-    { import = "lazyvim.plugins.extras.editor.mini-files" },
-    { import = "lazyvim.plugins.extras.formatting.prettier" },
-    { import = "lazyvim.plugins.extras.dap.core" },
-    { import = "lazyvim.plugins.extras.lang.json" },
-    { import = "lazyvim.plugins.extras.lang.go" },
-    { import = "lazyvim.plugins.extras.vscode" },
+
+    -- ═══════════════════════════════════════════════════════════════════════
+    -- ENABLED EXTRAS
+    -- ═══════════════════════════════════════════════════════════════════════
+
+    -- AI
     { import = "lazyvim.plugins.extras.ai.copilot" },
-    -- Additional useful extras for modern setup
+    -- { import = "lazyvim.plugins.extras.ai.copilot-chat" },
+    -- { import = "lazyvim.plugins.extras.ai.codeium" },
+    -- { import = "lazyvim.plugins.extras.ai.tabnine" },
+
+    -- Coding
     { import = "lazyvim.plugins.extras.coding.luasnip" },
-    { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
-    -- Uncomment these as needed:
-    -- { import = "lazyvim.plugins.extras.linting.eslint" },
-    -- { import = "lazyvim.plugins.extras.lang.typescript" },
+    -- { import = "lazyvim.plugins.extras.coding.mini-comment" },
+    -- { import = "lazyvim.plugins.extras.coding.mini-surround" },
+    -- { import = "lazyvim.plugins.extras.coding.neogen" },
+    -- { import = "lazyvim.plugins.extras.coding.nvim-cmp" },
+    -- { import = "lazyvim.plugins.extras.coding.yanky" },
+
+    -- DAP (Debugging)
+    { import = "lazyvim.plugins.extras.dap.core" },
+    -- { import = "lazyvim.plugins.extras.dap.nlua" },
+
+    -- Editor
+    { import = "lazyvim.plugins.extras.editor.mini-files" },
+    -- { import = "lazyvim.plugins.extras.editor.aerial" },
+    -- { import = "lazyvim.plugins.extras.editor.dial" },
+    -- { import = "lazyvim.plugins.extras.editor.harpoon2" },
+    -- { import = "lazyvim.plugins.extras.editor.illuminate" },
+    -- { import = "lazyvim.plugins.extras.editor.leap" },
+    -- { import = "lazyvim.plugins.extras.editor.mini-diff" },
+    -- { import = "lazyvim.plugins.extras.editor.mini-move" },
+    -- { import = "lazyvim.plugins.extras.editor.navic" },
+    -- { import = "lazyvim.plugins.extras.editor.outline" },
+    -- { import = "lazyvim.plugins.extras.editor.overseer" },
+    -- { import = "lazyvim.plugins.extras.editor.refactoring" },
+    -- { import = "lazyvim.plugins.extras.editor.telescope" },
+
+    -- Formatting
+    { import = "lazyvim.plugins.extras.formatting.prettier" },
+    -- { import = "lazyvim.plugins.extras.formatting.black" },
+
+    -- Languages
+    { import = "lazyvim.plugins.extras.lang.json" },
+    -- { import = "lazyvim.plugins.extras.lang.go" }, -- Disabled: Go not available on Linux
+    -- { import = "lazyvim.plugins.extras.lang.ansible" },
+    -- { import = "lazyvim.plugins.extras.lang.clangd" },
+    -- { import = "lazyvim.plugins.extras.lang.cmake" },
+    -- { import = "lazyvim.plugins.extras.lang.docker" },
+    -- { import = "lazyvim.plugins.extras.lang.elixir" },
+    -- { import = "lazyvim.plugins.extras.lang.git" },
+    -- { import = "lazyvim.plugins.extras.lang.helm" },
+    -- { import = "lazyvim.plugins.extras.lang.java" },
+    -- { import = "lazyvim.plugins.extras.lang.markdown" },
+    -- { import = "lazyvim.plugins.extras.lang.omnisharp" },
+    -- { import = "lazyvim.plugins.extras.lang.php" },
+    -- { import = "lazyvim.plugins.extras.lang.prisma" },
     -- { import = "lazyvim.plugins.extras.lang.python" },
+    -- { import = "lazyvim.plugins.extras.lang.ruby" },
+    -- { import = "lazyvim.plugins.extras.lang.rust" },
+    -- { import = "lazyvim.plugins.extras.lang.scala" },
+    -- { import = "lazyvim.plugins.extras.lang.sql" },
+    -- { import = "lazyvim.plugins.extras.lang.svelte" },
+    -- { import = "lazyvim.plugins.extras.lang.tailwind" },
+    -- { import = "lazyvim.plugins.extras.lang.terraform" },
+    -- { import = "lazyvim.plugins.extras.lang.toml" },
+    -- { import = "lazyvim.plugins.extras.lang.typescript" },
+    -- { import = "lazyvim.plugins.extras.lang.vue" },
+    -- { import = "lazyvim.plugins.extras.lang.yaml" },
+
+    -- Linting
+    -- { import = "lazyvim.plugins.extras.linting.eslint" },
+
+    -- LSP
+    -- { import = "lazyvim.plugins.extras.lsp.none-ls" },
+
+    -- Test
+    -- { import = "lazyvim.plugins.extras.test.core" },
+
+    -- UI
+    -- { import = "lazyvim.plugins.extras.ui.alpha" },
+    -- { import = "lazyvim.plugins.extras.ui.edgy" },
+    -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
+    -- { import = "lazyvim.plugins.extras.ui.mini-indentscope" },
+    -- { import = "lazyvim.plugins.extras.ui.mini-starter" },
+
+    -- Util
+    { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
+    -- { import = "lazyvim.plugins.extras.util.dot" },
+    -- { import = "lazyvim.plugins.extras.util.gitui" },
+    -- { import = "lazyvim.plugins.extras.util.octo" },
     -- { import = "lazyvim.plugins.extras.util.project" },
-    -- import/override with your plugins
+    -- { import = "lazyvim.plugins.extras.util.rest" },
+
+    -- VSCode Integration
+    { import = "lazyvim.plugins.extras.vscode" },
+
+    -- ═══════════════════════════════════════════════════════════════════════
+    -- CUSTOM PLUGINS
+    -- ═══════════════════════════════════════════════════════════════════════
+    -- import/override with your plugins from lua/plugins/*.lua
     { import = "plugins" },
   },
   ui = {
