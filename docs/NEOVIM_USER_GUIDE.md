@@ -466,6 +466,47 @@ See full guide: [POWERSHELL_DEVELOPMENT.md](POWERSHELL_DEVELOPMENT.md)
 - `<C-\><C-n>` - Exit terminal mode (back to Normal mode)
 - `i` or `a` - Enter terminal mode
 
+### REPL Integration (vim-slime)
+
+**Send code directly to terminal panes** for interactive development:
+
+| Keymap | Mode | Action |
+|--------|------|--------|
+| `<F9>` | Normal | Send current line to terminal |
+| `<F9>` | Visual | Send selection to terminal |
+
+**How it works:**
+- **Linux/macOS:** Uses tmux to send code to panes (default target: `{right-of}`)
+- **Windows:** Uses WezTerm to send code to panes (default pane_id: `1`)
+
+**First time setup:**
+```vim
+:SlimeConfig
+```
+
+You'll be prompted for target configuration:
+- **tmux:** Enter socket name and target pane (e.g., `{right-of}` or `{bottom}`)
+- **WezTerm:** Enter pane ID (find with `wezterm cli list`)
+
+**Example workflow (Python REPL):**
+1. Open terminal: `<C-\>`
+2. Start Python REPL: `python`
+3. Switch back to your code buffer
+4. Select code (visual mode), press `<F9>`
+5. Code executes in REPL immediately!
+
+**Example workflow (PowerShell):**
+1. Open PowerShell terminal: `<leader>pp`
+2. Select code to test
+3. Press `<F9>` - runs in terminal
+4. Iterate quickly without saving file
+
+**Tips:**
+- Works with any REPL: Python, PowerShell, Node.js, R, Julia
+- Selection is automatically bracketed (prevents paste issues)
+- Send entire functions or single lines
+- Much faster than copy-paste for interactive development
+
 ### Maximizing Productivity
 
 **Learn these first:**

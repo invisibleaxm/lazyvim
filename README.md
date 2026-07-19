@@ -65,6 +65,7 @@ This runs cleanup + bootstrap to ensure a smooth installation.
 - **[📋 Clipboard & Mouse Guide](docs/CLIPBOARD_MOUSE_GUIDE.md)** - Clipboard & mouse integration
 - **[🔧 Configuration Review](docs/CONFIGURATION_REVIEW.md)** - Recent optimizations summary
 - **[🧹 Maintenance Scripts](scripts/README.md)** - Bootstrap, cleanup, and setup scripts
+- **[📝 Changelog](CHANGELOG.md)** - Recent changes and improvements
 - **[🌐 LazyVim Documentation](https://lazyvim.github.io/)** - Official LazyVim docs
 
 ## 🧹 Maintenance
