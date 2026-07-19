@@ -73,7 +73,7 @@ echo -e "\n${CYAN}📋 Step 1: Checking prerequisites...${NC}"
 # Check Neovim
 echo -n "  Checking Neovim..."
 if command -v nvim &> /dev/null; then
-    NVIM_VERSION=$(nvim --version | head -n1 | grep -oP 'v\K[0-9.]+')
+    NVIM_VERSION=$(nvim --version | head -n1 | sed -E 's/.*v([0-9.]+).*/\1/')
     echo -e " ${GREEN}✓ $NVIM_VERSION${NC}"
 else
     echo -e " ${RED}✗ Not found${NC}"
