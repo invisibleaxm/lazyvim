@@ -34,11 +34,52 @@ keymap("n", "<C-u>", "<C-u>zz")
 keymap("n", "n", "nzzzv")
 keymap("n", "N", "Nzzzv")
 
--- Better paste
+-- Change entire word under cursor (regardless of cursor position within word)
+-- Note: native `cw` only changes cursor→end-of-word; `ciw` changes the whole word
+keymap("n", "<CR>", "ciw")
+
+-- ============================================================================
+-- EDITING (pure Vim — no VSCode conflicts)
+-- ============================================================================
+
+-- Join lines without moving cursor
+keymap("n", "J", "mzJ`z")
+
+-- Delete without clobbering the yank register
+keymap({ "n", "v" }, "<leader>d", '"_d')
+
+-- Copy code block (yank inside nearest {})
+keymap("n", "YY", "va{Vy")
+
+-- ============================================================================
+-- CLIPBOARD
+-- ============================================================================
+
+-- Better paste (visual: replace selection without overwriting register)
 keymap("x", "<leader>p", '"_dP')
 
--- Copy to system clipboard
+-- Yank to system clipboard
 keymap({ "n", "v" }, "<leader>y", '"+y')
 keymap("n", "<leader>Y", '"+Y')
+
+-- ============================================================================
+-- VS CODE ACTIONS (via VSCodeNotify)
+-- ============================================================================
+
+-- Move lines up/down (works in normal + visual, cross-platform)
+keymap("n", "<A-j>", ":call VSCodeNotify('editor.action.moveLinesDownAction')<CR>")
+keymap("n", "<A-k>", ":call VSCodeNotify('editor.action.moveLinesUpAction')<CR>")
+keymap("x", "<A-j>", ":call VSCodeNotify('editor.action.moveLinesDownAction')<CR>")
+keymap("x", "<A-k>", ":call VSCodeNotify('editor.action.moveLinesUpAction')<CR>")
+
+-- Format document
+keymap("n", "<A-F>", ":call VSCodeNotify('editor.action.formatDocument')<CR>")
+
+-- Rename symbol
+keymap("n", "<leader>rn", ":call VSCodeNotify('editor.action.rename')<CR>")
+
+-- Navigate diagnostics (errors/warnings)
+keymap("n", "]d", ":call VSCodeNotify('editor.action.marker.next')<CR>")
+keymap("n", "[d", ":call VSCodeNotify('editor.action.marker.prev')<CR>")
 
 return {}
