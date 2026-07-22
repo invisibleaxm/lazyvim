@@ -78,10 +78,13 @@ vim.opt.numberwidth = 3 -- Narrower number column
 if vim.loop.os_uname().sysname == "Windows_NT" then
   -- Windows: Ensure MSYS2 MinGW64 tools are in PATH for building plugins
   -- Note: Setup-MSYS2.ps1 should add this to your system PATH permanently
-  -- This is a fallback that adds them if not already present
+  -- This is a fallback that adds them if the exact MinGW64 path is missing
   local mingw_bin = "C:\\msys64\\mingw64\\bin"
-  if vim.fn.isdirectory(mingw_bin) == 1 and not string.find(vim.env.PATH, "msys64", 1, true) then
-    vim.env.PATH = mingw_bin .. ";" .. vim.env.PATH
+  local current_path = vim.env.PATH or ""
+  local normalized_path = string.lower(current_path)
+  local normalized_mingw = string.lower(mingw_bin)
+  if vim.fn.isdirectory(mingw_bin) == 1 and not string.find(normalized_path, normalized_mingw, 1, true) then
+    vim.env.PATH = mingw_bin .. ";" .. current_path
   end
 
   -- Set C compiler for Treesitter

@@ -17,6 +17,9 @@ return {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     opts = function(_, opts)
+      -- Prefer GCC first for parser builds, fallback to clang.
+      opts.compilers = { "gcc", "clang" }
+
       if type(opts.ensure_installed) == "table" then
         vim.list_extend(opts.ensure_installed, { "toml", "rust" })
       end
