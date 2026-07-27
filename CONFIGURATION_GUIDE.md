@@ -1,286 +1,294 @@
-# Neovim Configuration - Modernized Setup
+# Plugin Guide — Getting to Know Your Setup
 
-## Overview
-This Neovim configuration has been modernized from a 3-year-old setup to work seamlessly with the latest LazyVim distribution. It's cross-platform (Windows, macOS, Linux) and includes excellent VSCode integration.
+This is a tour of the plugins actually selected/customized in this config, organized by what they're for. Each entry covers **what it does**, a **quick cheat sheet**, and a **link to the official project** for the full docs.
 
-## What Was Fixed
+> This config is built on [LazyVim](https://www.lazyvim.org/) — a curated Neovim "distro". LazyVim itself already brings in a large default plugin set (Telescope, Neo-tree, which-key, gitsigns, lualine, bufferline, flash.nvim, mini.nvim, noice.nvim, Trouble, and more). See the [LazyVim plugin list](https://www.lazyvim.org/plugins) for everything included out of the box. Below is what's specifically configured or added on top of that foundation, in [lua/plugins/](lua/plugins).
 
-### 1. **Syntax Error** ✅
-- Fixed invalid `test,` entry in `lua/plugins/disabled.lua` that was causing startup failures
+---
 
-### 2. **Updated LazyVim Extras** ✅
-The following extras were updated to current paths:
-- `lazyvim.plugins.extras.ui.mini-animate` → `lazyvim.plugins.extras.editor.mini-files`
-- `lazyvim.plugins.extras.coding.copilot` → `lazyvim.plugins.extras.ai.copilot`
-- Added modern extras: `coding.luasnip`, `util.mini-hipatterns`
+## LSP & Language Servers
 
-### 3. **Enhanced VSCode Integration** ✅
-- Created dedicated `lua/plugins/vscode.lua` for VSCode-specific keybindings
-- Keymaps now automatically adapt when running inside VSCode
-- Seamless navigation, file management, and LSP features in VSCode
+**[lua/plugins/lsp.lua](lua/plugins/lsp.lua)** · powered by [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) + [mason.nvim](https://github.com/mason-org/mason.nvim)
 
-### 4. **Cross-Platform Keymaps** ✅
-- Keymaps now detect OS and only load platform-specific features
-- Tmux integration only loads on Unix-like systems
-- Better descriptions for all keybindings
+Provides IDE features (go-to-definition, hover docs, diagnostics, rename, etc.) via language servers, auto-installed through Mason. Configured servers: `pyright` & `ruff` (Python), `rust_analyzer` (Rust), `lua_ls` (Lua), `yamlls`, `bashls`, `dockerls`, `marksman` (Markdown), `ansiblels`, `azure_pipelines_ls`, plus `powershell_es` (see PowerShell section below).
 
-### 5. **Migrated to Modern Formatting/Linting** ✅
-- Removed deprecated `null-ls.nvim` configuration (was causing errors)
-- Now using `conform.nvim` for formatting (LazyVim's default)
-- Now using `nvim-lint` for linting (LazyVim's default)
-- All your previous formatters (stylua, black, isort, shfmt) and linters (flake8, markdownlint, luacheck) are configured
+**Cheat sheet** (standard LazyVim LSP keymaps):
+| Key | Action |
+|---|---|
+| `gd` | Go to definition |
+| `gr` | Go to references |
+| `gi` | Go to implementation |
+| `K` | Hover documentation |
+| `<leader>ca` | Code actions |
+| `<leader>rn` | Rename symbol |
+| `]d` / `[d` | Next/previous diagnostic |
+| `:Mason` | Install/manage LSP servers, formatters, linters |
+| `:LspInfo` | Check which server is attached to the current buffer |
+| `:checkhealth` | Diagnose LSP/plugin setup issues |
 
-## Key Features
+🔗 [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) · [mason.nvim](https://github.com/mason-org/mason.nvim) · [LazyVim LSP docs](https://www.lazyvim.org/plugins/lsp)
 
-### ✨ Included Plugins & Features
-- **Language Support**: Go, JSON, Rust, PowerShell, Python, Lua, and more
-- **LSP Servers**: Pre-configured for 15+ languages
-- **Debugger (DAP)**: Full debugging support with F5-F12 keybindings
-- **AI Tools**: GitHub Copilot integration
-- **Formatting**: Prettier, Black, Stylua, and more
-- **Telescope**: Enhanced fuzzy finding with FZF native
-- **Treesitter**: Syntax highlighting and code understanding
-- **Folding**: Smart code folding support
+---
 
-### 🎯 Cross-Platform Support
-- **Windows**: PowerShell configuration, Python path detection
-- **macOS**: Python path detection, Mac-specific Alt key mappings
-- **Linux**: Full Unix tool support, tmux integration
+## Completion
 
-### 🎨 VSCode Integration
-When running in VSCode, the config automatically:
-- Loads VSCode-specific keybindings
-- Disables UI plugins that conflict with VSCode
-- Maintains all editing features (motions, text objects, etc.)
+**[lua/plugins/completion.lua](lua/plugins/completion.lua)** · [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) + [LuaSnip](https://github.com/L3MON4D3/LuaSnip)
 
-## Quick Start
+The autocompletion popup while typing. Sources are prioritized: LSP first, then Copilot, then snippets, then buffer words, then file paths.
 
-### Prerequisites - C Compiler (Cross-Platform)
-Neovim Treesitter requires a C compiler to build syntax parsers.
+**Cheat sheet:**
+| Key | Action |
+|---|---|
+| `<Tab>` / `<S-Tab>` | Next/previous item (or accept Copilot / expand snippet if menu closed) |
+| `<CR>` | Confirm the selected item |
+| `<C-Space>` | Manually trigger completion |
+| `<C-e>` | Abort/close the completion menu |
 
-**Windows**:
-```powershell
-# Install LLVM/Clang (recommended)
-winget install LLVM.LLVM
-# Or: scoop install llvm
-```
+🔗 [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) · [LuaSnip](https://github.com/L3MON4D3/LuaSnip)
 
-**macOS**:
-```bash
-# Install Xcode Command Line Tools (includes clang)
-xcode-select --install
-```
+---
 
-**Linux**:
-```bash
-# Debian/Ubuntu - gcc usually pre-installed, but to be sure:
-sudo apt install build-essential
+## GitHub Copilot
 
-# Or install clang:
-sudo apt install clang
+**[lua/plugins/copilot.lua](lua/plugins/copilot.lua)** · [copilot.lua](https://github.com/zbirenbaum/copilot.lua) + [copilot-cmp](https://github.com/zbirenbaum/copilot-cmp)
 
-# Fedora/RHEL:
-sudo dnf install gcc-c++
-# Or: sudo dnf install clang
-```
+Inline AI code suggestions (ghost text) as you type, plus a suggestion source inside the completion menu.
 
-After installing, restart your terminal. Windows users see [WINDOWS_COMPILER_SETUP.md](WINDOWS_COMPILER_SETUP.md) for detailed instructions.
+**Cheat sheet:**
+| Key | Action |
+|---|---|
+| `<C-j>` | Accept full suggestion |
+| `<C-Right>` | Accept next word only |
+| `<C-l>` | Accept current line only |
+| `<M-]>` / `<M-[>` | Next/previous suggestion |
+| `<C-]>` | Dismiss suggestion |
+| `<M-CR>` | Open the Copilot panel (multiple suggestions) |
 
-### First Time Setup
-1. Backup your old config (if not already done):
-   ```powershell
-   # Windows
-   Rename-Item $env:LOCALAPPDATA\nvim $env:LOCALAPPDATA\nvim.backup
+🔗 [copilot.lua](https://github.com/zbirenbaum/copilot.lua) · [GitHub Copilot](https://github.com/features/copilot)
 
-   # macOS/Linux
-   mv ~/.config/nvim ~/.config/nvim.backup
-   ```
+---
 
-2. Launch Neovim:
-   ```bash
-   nvim
-   ```
+## Syntax & Structural Editing
 
-3. LazyVim will automatically:
-   - Clone the lazy.nvim plugin manager
-   - Install all plugins
-   - Set up LSP servers via Mason
+**[lua/plugins/treesitter.lua](lua/plugins/treesitter.lua)** · [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) + [nvim-treehopper](https://github.com/mfussenegger/nvim-treehopper)
 
-### Using with VSCode
-1. Install the [VSCode Neovim extension](https://marketplace.visualstudio.com/items?itemName=asvetliakov.vscode-neovim)
-2. In VSCode settings, point to your init.lua:
-   ```json
-   {
-     "vscode-neovim.neovimInitVimPaths.windows": "C:\\Users\\alexc\\AppData\\Local\\nvim\\init.lua",
-     "vscode-neovim.neovimExecutablePaths.windows": "nvim"
-   }
-   ```
+Treesitter parses your code into a real syntax tree for accurate highlighting, indentation, and folding. Treehopper lets you target syntax nodes directly for edits.
 
-## Key Bindings
+**Cheat sheet:**
+| Key | Action |
+|---|---|
+| _(automatic)_ | Highlighting/indentation just works once a parser is installed |
+| `m` (in operator-pending or visual mode, e.g. `dm`, `vm`) | Select the nearest syntax node (function call, block, etc.) |
+| `:TSUpdate` | Update/compile parsers |
 
-### Leader Key
-The leader key is `<Space>` (default LazyVim setting)
+🔗 [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) · [nvim-treehopper](https://github.com/mfussenegger/nvim-treehopper)
 
-### Essential Keybindings
+---
 
-#### File Navigation
-- `<leader>ff` - Find files
-- `<leader>fg` - Live grep (search in files)
-- `<leader>fb` - Browse buffers
-- `<leader>fp` - Find plugin files
+## Code Folding
 
-#### LSP & Code
-- `gd` - Go to definition
-- `gr` - Go to references
-- `gi` - Go to implementation
-- `K` - Show hover documentation
-- `<leader>ca` - Code actions
-- `<leader>rn` - Rename symbol
+**[lua/plugins/folding-plugins.lua](lua/plugins/folding-plugins.lua)** · [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo) + [fold-cycle.nvim](https://github.com/jghauser/fold-cycle.nvim)
 
-#### Debugging (DAP)
-- `<F5>` - Continue/Start debugging
-- `<Shift-F5>` - Stop debugging
-- `<F8>` - Toggle breakpoint
-- `<F10>` - Step over
-- `<F11>` - Step into
-- `<F12>` - Step out
-- `<leader>dh` - DAP hover
-- `<leader>dP` - DAP preview
+Smarter code folding than vanilla Neovim — picks the best available fold source per filetype (LSP `foldingRange` when the server supports it, otherwise Treesitter, otherwise indentation).
 
-#### Editor Enhancements
-- `<C-d>` - Scroll down (centered)
-- `<C-u>` - Scroll up (centered)
-- `J` - Join lines (cursor stays in place)
-- `n`/`N` - Next/Previous search (centered)
-- `<leader>y` - Yank to system clipboard
-- `YY` - Copy code block inside `{}`
+**Cheat sheet** (standard Vim fold commands, enhanced by nvim-ufo):
+| Key | Action |
+|---|---|
+| `zo` / `zc` | Open/close fold under cursor |
+| `za` | Toggle fold under cursor |
+| `zR` | Open all folds |
+| `zM` | Close all folds |
 
-#### Mac-Specific (Alt+j/k for moving lines)
-- `∆` (Alt+j) - Move line/selection down
-- `˚` (Alt+k) - Move line/selection up
+🔗 [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo) · [fold-cycle.nvim](https://github.com/jghauser/fold-cycle.nvim)
 
-## Customization
+---
 
-### Adding Language Servers
-Edit `lua/plugins/lsp.lua` and add to the `servers` table:
-```lua
-servers = {
-  your_lsp = {
-    settings = {
-      -- LSP-specific settings
-    }
-  }
-}
-```
+## Formatting & Linting
 
-### Adding Plugins
-Create a new file in `lua/plugins/` or add to existing files:
-```lua
-return {
-  {
-    "author/plugin-name",
-    config = function()
-      -- plugin configuration
-    end
-  }
-}
-```
+**[lua/plugins/formatting.lua](lua/plugins/formatting.lua)** · [conform.nvim](https://github.com/stevearc/conform.nvim) (linting via [nvim-lint](https://github.com/mfussenegger/nvim-lint) is present but disabled by default)
 
-### Disabling Plugins
-Edit `lua/plugins/disabled.lua`:
+Runs formatters per filetype: `stylua` (Lua), `black`/`isort` (Python), `shfmt` (Shell). Install the actual formatter binaries via `:Mason`.
+
+**Cheat sheet:**
+| Key | Action |
+|---|---|
+| `<leader>cf` | Format the current buffer |
+| `:ConformInfo` | See which formatter is configured/active for this buffer |
+
+🔗 [conform.nvim](https://github.com/stevearc/conform.nvim) · [nvim-lint](https://github.com/mfussenegger/nvim-lint)
+
+---
+
+## File Explorer & Fuzzy Finding
+
+**[lua/plugins/neotree.lua](lua/plugins/neotree.lua)** · [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim)
+**[lua/plugins/telescope.lua](lua/plugins/telescope.lua)** · [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) + [telescope-fzf-native](https://github.com/nvim-telescope/telescope-fzf-native.nvim)
+
+Neo-tree is the sidebar file browser (dotfiles hidden by default here). Telescope is the fuzzy finder for files, text search, buffers, and more, accelerated by the native `fzf` sorter.
+
+**Cheat sheet:**
+| Key | Action |
+|---|---|
+| `<leader>e` | Toggle file explorer (Neo-tree) |
+| `<leader>ff` | Find files |
+| `<leader>fg` | Live grep (search text across files) |
+| `<leader>fb` | Browse open buffers |
+| `<leader>fp` | Find a file inside your Neovim plugin config |
+| `<leader>sn` | Search notification history |
+
+🔗 [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim) · [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
+
+---
+
+## Notifications & Messages UI
+
+**[lua/plugins/notifications.lua](lua/plugins/notifications.lua)** · [noice.nvim](https://github.com/folke/noice.nvim) + [nvim-notify](https://github.com/rcarriga/nvim-notify)
+
+Replaces the plain command line and message area with a nicer UI, and shows `vim.notify()` calls as pop-up toasts (5s timeout here) instead of only `:messages`.
+
+**Cheat sheet:**
+| Key / Command | Action |
+|---|---|
+| `:Noice` or `:Noice history` | Reopen the full message/notification history (use this since popups disappear!) |
+| `:Noice last` | Redisplay the most recent notification |
+| `<leader>un` | Dismiss all visible notifications |
+| `<leader>nh` | Notification history (via Telescope) |
+
+🔗 [noice.nvim](https://github.com/folke/noice.nvim) · [nvim-notify](https://github.com/rcarriga/nvim-notify)
+
+---
+
+## PowerShell Development
+
+**[lua/plugins/powershell.lua](lua/plugins/powershell.lua)** · [PowerShellEditorServices](https://github.com/PowerShell/PowerShellEditorServices) (via `powershell_es` in nvim-lspconfig) + custom snippets
+
+Full PowerShell IDE support: LSP diagnostics/formatting via PSScriptAnalyzer, plus a few custom snippets and script-runner keymaps.
+
+**Cheat sheet:**
+| Key | Action |
+|---|---|
+| `<leader>pr` | Run the current script |
+| `<leader>pt` | Run Pester tests |
+| `<leader>pa` | Run PSScriptAnalyzer on the current file |
+| `<leader>ph` | `Get-Help` lookup |
+| `<leader>pf` | Format the current file |
+| `func`, `param`, `try`, `foreach` + `<Tab>` | Expand custom snippets in `.ps1` files |
+
+🔗 [PowerShellEditorServices](https://github.com/PowerShell/PowerShellEditorServices)
+
+---
+
+## Terminal & REPL Integration
+
+**[lua/plugins/toggleterm.lua](lua/plugins/toggleterm.lua)** · [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim) + [vim-slime](https://github.com/jpalardy/vim-slime) (using an [invisibleaxm fork](https://github.com/invisibleaxm/vim-slime))
+
+Toggleterm gives you a quick floating/split terminal. `vim-slime` sends lines/blocks of code to an external terminal pane — tmux on Linux/macOS, or WezTerm on Windows (since tmux isn't available there).
+
+**Cheat sheet:**
+| Key | Action |
+|---|---|
+| `<C-\>` | Open/close a floating terminal |
+| `:SlimeConfig` | Configure the target tmux/WezTerm pane |
+| `:SlimeSend` / `:SlimeSendCurrentLine` | Send a selection/line to the target pane |
+
+🔗 [toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim) · [vim-slime](https://github.com/jpalardy/vim-slime)
+
+---
+
+## Diagnostics List
+
+**[lua/plugins/trouble.lua](lua/plugins/trouble.lua)** · [trouble.nvim](https://github.com/folke/trouble.nvim)
+
+A pretty, navigable list for diagnostics, references, quickfix, and LSP results (auto-open/auto-preview turned off here to stay unobtrusive).
+
+**Cheat sheet:**
+| Key | Action |
+|---|---|
+| `<leader>xx` | Toggle diagnostics list (workspace) |
+| `<leader>xX` | Toggle diagnostics list (current buffer) |
+| `<leader>cs` | Symbols list |
+
+🔗 [trouble.nvim](https://github.com/folke/trouble.nvim)
+
+---
+
+## Markdown & Sharing Tools
+
+**[lua/plugins/markdown.lua](lua/plugins/markdown.lua)** · [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) · [pastify.nvim](https://github.com/TobinPalmer/pastify.nvim) · [nvim-silicon](https://github.com/michaelrommel/nvim-silicon)
+
+Live browser preview for Markdown files, pasting clipboard images directly into a note, and rendering code snippets as shareable images.
+
+**Cheat sheet:**
+| Key / Command | Action |
+|---|---|
+| `<C-p>` | Start Markdown preview |
+| `<A-p>` | Stop Markdown preview |
+| `:Pastify` | Paste an image from the clipboard into the current file |
+| `:Silicon` | Render current selection/buffer as a code screenshot |
+
+Note: `nvim-silicon` requires the external `silicon` binary installed separately (via Homebrew or the Windows installer).
+
+🔗 [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim) · [pastify.nvim](https://github.com/TobinPalmer/pastify.nvim) · [nvim-silicon](https://github.com/michaelrommel/nvim-silicon)
+
+---
+
+## Tmux / Pane Navigation
+
+**[lua/plugins/ui.lua](lua/plugins/ui.lua)** · [tmux.nvim](https://github.com/aserowy/tmux.nvim)
+
+Lets `<C-h/j/k/l>` seamlessly move between Neovim splits _and_ tmux panes as if they were the same grid (Unix/macOS only — needs a small tmux-side config to feel smooth).
+
+🔗 [tmux.nvim](https://github.com/aserowy/tmux.nvim)
+
+---
+
+## Icons
+
+**[lua/plugins/web-devicons.lua](lua/plugins/web-devicons.lua)** · [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons)
+
+Custom file-type icons used by Neo-tree/Telescope/bufferline — notably distinct icons for `.ps1`/`.psm1`/`.psd1` and Dockerfiles.
+
+🔗 [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons)
+
+---
+
+## VSCode Hybrid Mode
+
+**[lua/plugins/vscode.lua](lua/plugins/vscode.lua)** · [vscode-neovim](https://marketplace.visualstudio.com/items?itemName=asvetliakov.vscode-neovim) extension compatibility layer
+
+Not a plugin itself — this file only activates when Neovim is running _inside_ VSCode via the vscode-neovim extension. It remaps a handful of keys to call native VSCode commands (quick open, find in files, go to definition, rename, etc.) instead of Neovim's own UI plugins, and disables the Neovim-only UI plugins above (Telescope, Neo-tree, Trouble, noice, etc. all short-circuit with `if vim.g.vscode then return {} end`) so there's no conflict.
+
+🔗 [vscode-neovim extension](https://marketplace.visualstudio.com/items?itemName=asvetliakov.vscode-neovim)
+
+---
+
+## Disabling Plugins
+
+**[lua/plugins/disabled.lua](lua/plugins/disabled.lua)**
+
+Currently empty — this is the file to use whenever you want to turn a plugin off, e.g.:
+
 ```lua
 return {
   { "plugin-name", enabled = false },
 }
 ```
 
-## Installed Language Servers (via Mason)
-- bicep-lsp
-- pyright (Python)
-- ruff-lsp (Python linter)
-- gopls (Go)
-- lua-ls (Lua)
-- rust-analyzer (Rust)
-- powershell-es (PowerShell)
-- bashls (Bash)
-- ansiblels (Ansible)
-- yamlls (YAML)
-- jsonls (JSON)
-- marksman (Markdown)
-- dockerls (Docker)
-
-## Troubleshooting
-
-### Plugins Not Loading
-```vim
-:Lazy sync
-```
-
-### LSP Not Working
-```vim
-:Mason
-" Install missing servers from the UI
-```
-
-### Check Health
-```vim
-:checkhealth
-```
-
-### Update Everything
-```vim
-:Lazy sync
-:Mason update
-:TSUpdate
-```
-
-## File Structure
-```
-nvim/
-├── init.lua                    # Entry point
-├── lazy-lock.json              # Plugin versions lockfile
-├── lazyvim.json                # LazyVim config
-├── lua/
-│   ├── config/
-│   │   ├── autocmds.lua        # Auto commands
-│   │   ├── keymaps.lua         # Key mappings
-│   │   ├── lazy.lua            # Lazy.nvim setup
-│   │   └── options.lua         # Vim options
-│   └── plugins/
-│       ├── completion.lua      # Completion config
-│       ├── disabled.lua        # Disabled plugins
-│       ├── folding-plugins.lua # Code folding
-│       ├── formatting.lua      # Formatting & linting (NEW)
-│       ├── lsp.lua             # LSP configuration
-│       ├── markdown.lua        # Markdown support
-│       ├── neotree.lua         # File tree
-│       ├── telescope.lua       # Fuzzy finder
-│       ├── toggleterm.lua      # Terminal
-│       ├── treesitter.lua      # Syntax highlighting
-│       ├── trouble.lua         # Diagnostics
-│       ├── ui.lua              # UI enhancements
-│       ├── vscode.lua          # VSCode integration (NEW)
-│       └── web-devicons.lua    # Icons
-└── spell/                      # Spell check dictionaries
-```
-
-## Tips & Tricks
-
-1. **Which-key**: Press `<leader>` and wait to see available keybindings
-2. **Command Palette**: Use `<leader><leader>` for command fuzzy finding
-3. **File Explorer**: `<leader>e` toggles the file explorer (Neo-tree)
-4. **Terminal**: `<leader>ft` opens a floating terminal
-5. **Lazy UI**: `:Lazy` opens the plugin manager interface
-6. **Mason UI**: `:Mason` opens the LSP/DAP/linter installer
-
-## Resources
-- [LazyVim Documentation](https://www.lazyvim.org/)
-- [Neovim Documentation](https://neovim.io/doc/)
-- [Lazy.nvim](https://github.com/folke/lazy.nvim)
-- [Mason.nvim](https://github.com/mason-org/mason.nvim)
-
 ---
 
-**Last Updated**: July 2026
-**LazyVim Version**: Latest (auto-updated)
-**Neovim Version**: 0.9+ required
+## Adding Something New
+
+- **New LSP server:** add an entry to `servers = {}` in [lua/plugins/lsp.lua](lua/plugins/lsp.lua).
+- **New plugin:** create a file in [lua/plugins/](lua/plugins) or add a spec to an existing one — see the [LazyVim plugin authoring docs](https://www.lazyvim.org/configuration/plugins) for the spec format.
+- **Browse everything currently installed:** `:Lazy`
+- **Browse/install LSP servers, formatters, linters, DAP adapters:** `:Mason`
+
+## Handy Commands Reference
+
+| Command        | Purpose                                  |
+| -------------- | ---------------------------------------- |
+| `:Lazy`        | Plugin manager UI (install/update/clean) |
+| `:Mason`       | LSP/formatter/linter installer UI        |
+| `:checkhealth` | Diagnose configuration/plugin issues     |
+| `:LspInfo`     | See active LSP clients for the buffer    |
+| `:TSUpdate`    | Rebuild Treesitter parsers               |

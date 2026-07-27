@@ -1,104 +1,37 @@
-# Quick Start Guide - Fixing Remaining Issues
+# Quick Start
 
-## Current Status
+## First Launch
 
-✅ **Fixed**: Deprecated null-ls.nvim removed
-✅ **Fixed**: Cross-platform compiler configuration
-✅ **Fixed**: Linting errors (commented out until tools installed)
-⚠️ **Remaining**: C compiler needed for Treesitter
+1. Make sure a C compiler is on your `PATH` (`gcc` preferred, `clang` as fallback — this is auto-detected, see [lua/config/options.lua](lua/config/options.lua)).
+2. Start Neovim:
+   ```bash
+   nvim
+   ```
+3. LazyVim installs all plugins automatically on first run.
+4. Once it's done, run `:TSUpdate` to compile Treesitter parsers.
+5. Optional: open `:Mason` to install any formatters/linters you want (e.g. `stylua`, `black`, `isort`, `shfmt`, `markdownlint`).
 
-## Immediate Next Steps
+## Your First 5 Minutes
 
-### 1. Install C Compiler (Required for Treesitter)
+| Key                           | What it does                                         |
+| ----------------------------- | ---------------------------------------------------- |
+| `<Space>` (leader), then wait | which-key pops up showing every available keybinding |
+| `<leader>e`                   | Toggle the file explorer (Neo-tree)                  |
+| `<leader>ff`                  | Find files                                           |
+| `<leader>fg`                  | Search text across the project                       |
+| `<leader><leader>`            | Command palette / fuzzy command finder               |
+| `gd`                          | Go to definition (once an LSP server is attached)    |
+| `K`                           | Hover documentation                                  |
+| `<C-j>`                       | Accept a Copilot suggestion                          |
+| `<C-\>`                       | Open a floating terminal                             |
 
-On **Windows**, run:
-```powershell
-# Easiest method - via Winget
-winget install LLVM.LLVM
+For the full breakdown of every plugin — what it does, its cheat sheet, and a link to its docs — see the **[Plugin Guide](CONFIGURATION_GUIDE.md)**.
 
-# Then RESTART your terminal/PowerShell
-```
+## Maintenance
 
-Alternative methods: See [WINDOWS_COMPILER_SETUP.md](WINDOWS_COMPILER_SETUP.md)
-
-### 2. Restart Neovim
-
-After installing the compiler and restarting your terminal:
-```bash
-nvim
-```
-
-### 3. Let Plugins Install
-
-LazyVim will automatically:
-- Install all plugins
-- Update Treesitter parsers (now that you have a compiler)
-- Set up LSP servers
-
-### 4. Optional - Install Formatters/Linters via Mason
-
-Once Neovim is running without errors:
 ```vim
-:Mason
+:Lazy sync      " update/sync plugins
+:Mason update   " update installed LSP servers/formatters/linters
+:TSUpdate       " rebuild Treesitter parsers
+:checkhealth    " diagnose issues
 ```
-
-Then install any of these tools you want:
-- **stylua** (Lua formatter)
-- **black** (Python formatter)
-- **isort** (Python import sorter)
-- **shfmt** (Shell script formatter)
-- **flake8** (Python linter)
-- **markdownlint** (Markdown linter)
-- **luacheck** (Lua linter)
-
-After installing these tools, you can uncomment the linting section in [lua/plugins/formatting.lua](lua/plugins/formatting.lua)
-
-## Why the Errors Happened
-
-1. **null-ls.nvim** was deprecated and trying to load
-2. **Linters** (flake8, luacheck) were configured but not installed
-3. **C compiler** missing for Treesitter to build parsers
-
-## Current Configuration State
-
-### What's Active Now:
-- ✅ Core LazyVim with all default plugins
-- ✅ LSP servers (via Mason)
-- ✅ Treesitter (will work once compiler installed)
-- ✅ Copilot
-- ✅ DAP debugger support
-- ✅ VSCode integration
-- ✅ Cross-platform compatible
-
-### What's Optional/Commented Out:
-- ⏸️ Auto-format on save (enable in formatting.lua after installing formatters)
-- ⏸️ Linting (enable in formatting.lua after installing linters via Mason)
-
-## Troubleshooting
-
-### If you still see errors after installing clang:
-```vim
-:Lazy sync
-:TSUpdate
-:checkhealth
-```
-
-### To check if clang is installed:
-```powershell
-clang --version
-```
-
-### To see what's wrong with Treesitter:
-```vim
-:checkhealth nvim-treesitter
-```
-
-## Philosophy of This Config
-
-This config is designed to:
-1. **Start clean** - minimal errors on first launch
-2. **Add tools gradually** - install formatters/linters as you need them
-3. **Cross-platform** - same config works on Windows, macOS, Linux
-4. **VSCode compatible** - seamlessly integrates with VSCode Neovim extension
-
-You can enable more features by installing tools via Mason and uncommenting sections in the plugin files.

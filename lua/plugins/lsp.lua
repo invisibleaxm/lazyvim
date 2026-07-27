@@ -7,17 +7,6 @@ if vim.g.vscode then
   return {}
 end
 
-local lspCapabilities = vim.lsp.protocol.make_client_capabilities()
-
--- Enable snippets-completion (for nvim_cmp)
-lspCapabilities.textDocument.completion.completionItem.snippetSupport = true
-
--- Enable folding (for nvim-ufo)
-lspCapabilities.textDocument.foldingRange = {
-  dynamicRegistration = false,
-  lineFoldingOnly = true,
-}
-
 local enable_lualsp = true
 enable_ansiblelint = true
 
@@ -28,24 +17,6 @@ if vim.loop.os_uname().sysname == "Windows_NT" then
   end
 end
 
---------------------------------------------------------------------------------
-
-local function setupAllLsps()
-  -- INFO must be before the lsp-config setup of lua-ls
-  require("neodev").setup({
-    library = { plugins = false }, -- plugins are helpful e.g. for plenary, but slow down lsp loading
-  })
-
-  for _, lsp in pairs(lsp_servers) do
-    local config = {
-      capabilities = lspCapabilities,
-      settings = lspSettings[lsp], -- if no settings, will assign nil and therefore do nothing
-      on_attach = lspOnAttach[lsp], -- mostly disables some settings
-    }
-
-    require("lspconfig")[lsp].setup(config)
-  end
-end
 --------------------------------------------------------------------------------
 
 return {
@@ -84,6 +55,20 @@ return {
         virtual_text = { prefix = "icons" },
       },
       servers = {
+        ["*"] = {
+          capabilities = {
+            textDocument = {
+              completion = {
+                completionItem = { snippetSupport = true },
+              },
+              -- Enable folding (for nvim-ufo's "lsp" fold provider)
+              foldingRange = {
+                dynamicRegistration = false,
+                lineFoldingOnly = true,
+              },
+            },
+          },
+        },
         azure_pipelines_ls = {
           filetypes = { "yaml.azdevops" },
           settings = {
@@ -124,7 +109,7 @@ return {
             },
           },
         },
-        ruff_lsp = {
+        ruff = {
           init_options = {
             settings = {
               args = { "--max-line-length=180" },
@@ -204,7 +189,6 @@ return {
         -- vimls = {},
         -- tailwindcss = {},
       },
-      init = setupAllLsps,
       setup = {
         clangd = function(_, opts)
           opts.capabilities.offsetEncoding = { "utf-16" }

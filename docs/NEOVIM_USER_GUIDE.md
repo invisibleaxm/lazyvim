@@ -466,27 +466,16 @@ See full guide: [POWERSHELL_DEVELOPMENT.md](POWERSHELL_DEVELOPMENT.md)
 - `<C-\><C-n>` - Exit terminal mode (back to Normal mode)
 - `i` or `a` - Enter terminal mode
 
-### REPL Integration (vim-slime)
+### REPL Integration
 
-**Send code directly to terminal panes** for interactive development:
+**Send code directly to a terminal** for interactive development:
 
 | Keymap | Mode | Action |
 |--------|------|--------|
-| `<F9>` | Normal | Send current line to terminal |
-| `<F9>` | Visual | Send selection to terminal |
+| `<F9>` | Normal | Send current line to the toggleterm floating terminal |
+| `<F9>` | Visual | Send selection to the toggleterm floating terminal |
 
-**How it works:**
-- **Linux/macOS:** Uses tmux to send code to panes (default target: `{right-of}`)
-- **Windows:** Uses WezTerm to send code to panes (default pane_id: `1`)
-
-**First time setup:**
-```vim
-:SlimeConfig
-```
-
-You'll be prompted for target configuration:
-- **tmux:** Enter socket name and target pane (e.g., `{right-of}` or `{bottom}`)
-- **WezTerm:** Enter pane ID (find with `wezterm cli list`)
+`<F9>` uses toggleterm.nvim's own built-in send commands (`ToggleTermSendCurrentLine`/`ToggleTermSendVisualLines`) — it works the same on every OS and doesn't depend on tmux or WezTerm at all.
 
 **Example workflow (Python REPL):**
 1. Open terminal: `<C-\>`
@@ -503,9 +492,22 @@ You'll be prompted for target configuration:
 
 **Tips:**
 - Works with any REPL: Python, PowerShell, Node.js, R, Julia
-- Selection is automatically bracketed (prevents paste issues)
 - Send entire functions or single lines
 - Much faster than copy-paste for interactive development
+
+#### Optional: vim-slime (send to an external pane)
+
+If you'd rather send code to a pane *outside* Neovim (e.g. a real tmux/WezTerm pane instead of the in-editor toggleterm terminal), `vim-slime` is also configured, via its own commands (`:SlimeSend`, `:SlimeSendCurrentLine`, etc. — not bound to `<F9>`):
+
+- **Linux/macOS:** targets tmux panes (default target: `{right-of}`)
+- **Windows:** defaults to targeting the toggleterm floating terminal directly (no external terminal app needed). If you prefer sending to real WezTerm panes instead, see the alternate config commented in [lua/plugins/toggleterm.lua](../lua/plugins/toggleterm.lua).
+
+**First time setup:**
+```vim
+:SlimeConfig
+```
+You'll be prompted for target-specific configuration (e.g. socket name/target pane for tmux, or pane ID for WezTerm — find WezTerm pane IDs with `wezterm cli list`).
+
 
 ### Maximizing Productivity
 

@@ -59,20 +59,9 @@ return {
     },
   },
 
-  -- {
-  --   "jpalardy/vim-slime",
-  --   lazy = false,
-  --   config = function()
-  --     vim.g.slime_target = "wezterm"
-  --     -- vim.g.slime_default_config = { socket_name = "default", target_pane = "{left-of}" }
-  --     vim.g.slime_default_config = { pane_id = "1" }
-  --   end,
-  --   enabled = true,
-  -- },
-  --
   -- vim-slime {{{
   {
-    "invisibleaxm/vim-slime",
+    "jpalardy/vim-slime",
     lazy = true,
     event = "VeryLazy",
     cmd = {
@@ -92,11 +81,22 @@ return {
           target_pane = "{right-of}",
         }
       else
-        vim.g.slime_bracketed_paste = true
-        vim.g.slime_target = "wezterm"
-        vim.g.slime_default_config = {
-          pane_id = "1",
-        }
+        -- Windows: default to sending into the toggleterm floating terminal
+        -- (via its job channel) so SlimeSend works regardless of which
+        -- terminal app you're running Neovim in (Windows Terminal, WezTerm, etc.)
+        -- No external terminal multiplexer required.
+        --
+        -- If you prefer sending to WezTerm panes instead (e.g. you're always
+        -- running Neovim inside WezTerm), swap this block for:
+        --   vim.g.slime_bracketed_paste = true
+        --   vim.g.slime_target = "wezterm"
+        --   vim.g.slime_default_config = { pane_id = "1" }
+        vim.g.slime_target = "neovim"
+
+        vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter", "TermOpen" }, {
+          group = vim.api.nvim_create_augroup("auto_slime_channel", { clear = true }),
+          callback = reset_slime,
+        })
       end
       -- I have not tried this, but its supposed to work for neovim terminal/toggleterm buffers.
       --         vim.g.slime_target = "neovim"
