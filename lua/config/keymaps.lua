@@ -103,6 +103,16 @@ end, { desc = "DAP: Preview" })
 vim.keymap.set("v", "<F9>", ":ToggleTermSendVisualLines<CR><CR>", { desc = "Send visual lines to term" })
 vim.keymap.set("n", "<F9>", ":ToggleTermSendCurrentLine<CR><CR>", { desc = "Send current line to term" })
 
+vim.keymap.set("n", "<A-`>", "<cmd>ToggleTerm<cr>", { desc = "Toggle terminal" })
+-- terminal mode needs manual escape before the command
+vim.keymap.set("t", "<A-`>", [[<C-\><C-n><cmd>ToggleTerm<cr>]], { desc = "Toggle terminal" })
+
+-- Navigate to adjacent split from terminal buffer (mirrors Ctrl+H/J/K/L in normal mode)
+vim.keymap.set("t", "<A-h>", [[<C-\><C-n><C-w>h]], { desc = "Go to left split" })
+vim.keymap.set("t", "<A-j>", [[<C-\><C-n><C-w>j]], { desc = "Go to lower split" })
+vim.keymap.set("t", "<A-k>", [[<C-\><C-n><C-w>k]], { desc = "Go to upper split" })
+vim.keymap.set("t", "<A-l>", [[<C-\><C-n><C-w>l]], { desc = "Go to right split" })
+
 -- ============================================================================
 -- PLATFORM-SPECIFIC KEYMAPS
 -- ============================================================================
