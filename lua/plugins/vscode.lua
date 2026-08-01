@@ -4,6 +4,17 @@ if not vim.g.vscode then
 end
 
 -- Suppress vscode-neovim noise from webview focus (Copilot chat, output panels, etc.)
+-- vim.notify only catches Lua-level messages; the real error is an RPC response
+-- from nvim_set_current_win being called with a stale window id (e.g. after
+-- Copilot Chat / any webview steals focus). Patching the API avoids the error
+-- being generated at all, which prevents the VS Code notification.
+local _orig_set_current_win = vim.api.nvim_set_current_win
+vim.api.nvim_set_current_win = function(win)
+  if vim.api.nvim_win_is_valid(win) then
+    _orig_set_current_win(win)
+  end
+end
+
 local _orig_notify = vim.notify
 vim.notify = function(msg, level, opts)
   if type(msg) == "string" and msg:match("Invalid window id") then
@@ -90,5 +101,11 @@ keymap("n", "<leader>rn", ":call VSCodeNotify('editor.action.rename')<CR>")
 -- Navigate diagnostics (errors/warnings)
 keymap("n", "]d", ":call VSCodeNotify('editor.action.marker.next')<CR>")
 keymap("n", "[d", ":call VSCodeNotify('editor.action.marker.prev')<CR>")
+
+-- Mac: VS Code receives ∆/˚ from Option+j/k regardless of WezTerm settings
+if vim.loop.os_uname().sysname == "Darwin" then
+  keymap({ "n", "x" }, "∆", ":call VSCodeNotify('editor.action.moveLinesDownAction')<CR>")
+  keymap({ "n", "x" }, "˚", ":call VSCodeNotify('editor.action.moveLinesUpAction')<CR>")
+end
 
 return {}
