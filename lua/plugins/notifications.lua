@@ -3,7 +3,10 @@
 -- VSCODE HYBRID MODE: Disable custom notifications in VSCode
 -- Use VSCode's notification system instead
 if vim.g.vscode then
-  return {}
+  return {
+    { "folke/noice.nvim", enabled = false },
+    { "rcarriga/nvim-notify", enabled = false },
+  }
 end
 
 return {
