@@ -3,6 +3,15 @@ if not vim.g.vscode then
   return {}
 end
 
+-- Suppress vscode-neovim noise from webview focus (Copilot chat, output panels, etc.)
+local _orig_notify = vim.notify
+vim.notify = function(msg, level, opts)
+  if type(msg) == "string" and msg:match("Invalid window id") then
+    return
+  end
+  _orig_notify(msg, level, opts)
+end
+
 -- Keymaps that work well in VSCode
 local keymap = vim.keymap.set
 
