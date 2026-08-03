@@ -103,15 +103,32 @@ end, { desc = "DAP: Preview" })
 vim.keymap.set("v", "<F9>", ":ToggleTermSendVisualLines<CR><CR>", { desc = "Send visual lines to term" })
 vim.keymap.set("n", "<F9>", ":ToggleTermSendCurrentLine<CR><CR>", { desc = "Send current line to term" })
 
+local term_program = vim.env.TERM_PROGRAM or ""
+local is_wezterm = term_program:lower():find("wezterm") ~= nil
+
 vim.keymap.set("n", "<A-`>", "<cmd>ToggleTerm<cr>", { desc = "Toggle terminal" })
 -- terminal mode needs manual escape before the command
 vim.keymap.set("t", "<A-`>", [[<C-\><C-n><cmd>ToggleTerm<cr>]], { desc = "Toggle terminal" })
+
+-- SSH terminals (e.g., Terminus) often do not forward Option key combos reliably.
+vim.keymap.set("n", "<leader>`", "<cmd>ToggleTerm<cr>", { desc = "Toggle terminal (SSH-safe)" })
+vim.keymap.set("t", "<leader>`", [[<C-\><C-n><cmd>ToggleTerm<cr>]], { desc = "Toggle terminal (SSH-safe)" })
+vim.keymap.set("n", "<leader>tt", "<cmd>ToggleTerm<cr>", { desc = "Toggle terminal (SSH-safe)" })
+vim.keymap.set("t", "<leader>tt", [[<C-\><C-n><cmd>ToggleTerm<cr>]], { desc = "Toggle terminal (SSH-safe)" })
 
 -- Navigate to adjacent split from terminal buffer (mirrors Ctrl+H/J/K/L in normal mode)
 vim.keymap.set("t", "<A-h>", [[<C-\><C-n><C-w>h]], { desc = "Go to left split" })
 vim.keymap.set("t", "<A-j>", [[<C-\><C-n><C-w>j]], { desc = "Go to lower split" })
 vim.keymap.set("t", "<A-k>", [[<C-\><C-n><C-w>k]], { desc = "Go to upper split" })
 vim.keymap.set("t", "<A-l>", [[<C-\><C-n><C-w>l]], { desc = "Go to right split" })
+
+-- Mac terminals that compose Option keys can emit symbols instead of <A-*>.
+if vim.loop.os_uname().sysname == "Darwin" and not is_wezterm then
+  vim.keymap.set("t", "˙", [[<C-\><C-n><C-w>h]], { desc = "Go to left split" })
+  vim.keymap.set("t", "∆", [[<C-\><C-n><C-w>j]], { desc = "Go to lower split" })
+  vim.keymap.set("t", "˚", [[<C-\><C-n><C-w>k]], { desc = "Go to upper split" })
+  vim.keymap.set("t", "¬", [[<C-\><C-n><C-w>l]], { desc = "Go to right split" })
+end
 
 -- ============================================================================
 -- PLATFORM-SPECIFIC KEYMAPS
@@ -127,8 +144,6 @@ vim.keymap.set("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move line down
 vim.keymap.set("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move line up" })
 
 -- Mac: ∆/˚ fallback for terminals that compose Option keys (skip WezTerm—it sends ESC sequences)
-local term_program = vim.env.TERM_PROGRAM or ""
-local is_wezterm = term_program:lower():find("wezterm") ~= nil
 if vim.loop.os_uname().sysname == "Darwin" and not is_wezterm then
   vim.keymap.set("n", "∆", "<cmd>m .+1<cr>==", { desc = "Move line down" })
   vim.keymap.set("n", "˚", "<cmd>m .-2<cr>==", { desc = "Move line up" })
