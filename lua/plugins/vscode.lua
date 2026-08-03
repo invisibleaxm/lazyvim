@@ -86,26 +86,45 @@ keymap("n", "<leader>Y", '"+Y')
 -- VS CODE ACTIONS (via VSCodeNotify)
 -- ============================================================================
 
--- Move lines up/down (works in normal + visual, cross-platform)
-keymap("n", "<A-j>", ":call VSCodeNotify('editor.action.moveLinesDownAction')<CR>")
-keymap("n", "<A-k>", ":call VSCodeNotify('editor.action.moveLinesUpAction')<CR>")
-keymap("x", "<A-j>", ":call VSCodeNotify('editor.action.moveLinesDownAction')<CR>")
-keymap("x", "<A-k>", ":call VSCodeNotify('editor.action.moveLinesUpAction')<CR>")
+keymap("n", "<A-h>", ":call VSCodeNotify('workbench.action.navigateLeft')<CR>")
+keymap("n", "<A-l>", ":call VSCodeNotify('workbench.action.navigateRight')<CR>")
+
+-- Line movement: pure Vim operations (vscode-neovim syncs the buffer back)
+keymap("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
+keymap("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move line up" })
+keymap("x", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move selection down" })
+  keymap("x", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move selection up" })
+keymap("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move line down" })
+keymap("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move line up" })
 
 -- Format document
 keymap("n", "<A-F>", ":call VSCodeNotify('editor.action.formatDocument')<CR>")
 
--- Rename symbol
-keymap("n", "<leader>rn", ":call VSCodeNotify('editor.action.rename')<CR>")
+-- File operations
+keymap("n", "<leader>W", ":call VSCodeNotify('workbench.action.files.saveAll')<CR>")
+keymap("n", "<leader>Q", ":call VSCodeNotify('workbench.action.closeAllEditors')<CR>")
 
 -- Navigate diagnostics (errors/warnings)
 keymap("n", "]d", ":call VSCodeNotify('editor.action.marker.next')<CR>")
 keymap("n", "[d", ":call VSCodeNotify('editor.action.marker.prev')<CR>")
 
--- Mac: VS Code receives ∆/˚ from Option+j/k regardless of WezTerm settings
-if vim.loop.os_uname().sysname == "Darwin" then
-  keymap({ "n", "x" }, "∆", ":call VSCodeNotify('editor.action.moveLinesDownAction')<CR>")
-  keymap({ "n", "x" }, "˚", ":call VSCodeNotify('editor.action.moveLinesUpAction')<CR>")
+-- Mac: VS Code receives composed Option characters instead of Alt chords (skip WezTerm)
+local term_program = vim.env.TERM_PROGRAM or ""
+local is_wezterm = term_program:lower():find("wezterm") ~= nil
+if vim.loop.os_uname().sysname == "Darwin" and not is_wezterm then
+  -- Option+h/l on Mac often become ˙/¬, so map both normal and insert modes.
+  keymap("n", "˙", ":call VSCodeNotify('workbench.action.navigateLeft')<CR>")
+  keymap("n", "¬", ":call VSCodeNotify('workbench.action.navigateRight')<CR>")
+  keymap("i", "˙", "<esc>:call VSCodeNotify('workbench.action.navigateLeft')<CR>")
+  keymap("i", "¬", "<esc>:call VSCodeNotify('workbench.action.navigateRight')<CR>")
+
+  -- Option+j/k on Mac often become ∆/˚; keep mode-specific move behavior.
+  keymap("n", "∆", "<cmd>m .+1<cr>==", { desc = "Move line down" })
+  keymap("n", "˚", "<cmd>m .-2<cr>==", { desc = "Move line up" })
+  keymap("x", "∆", ":m '>+1<cr>gv=gv", { desc = "Move selection down" })
+  keymap("x", "˚", ":m '<-2<cr>gv=gv", { desc = "Move selection up" })
+  keymap("i", "∆", "<esc><cmd>m .+1<cr>==gi", { desc = "Move line down (insert)" })
+  keymap("i", "˚", "<esc><cmd>m .-2<cr>==gi", { desc = "Move line up (insert)" })
 end
 
 return {}

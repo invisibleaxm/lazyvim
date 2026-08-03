@@ -19,11 +19,17 @@ end
 -- ============================================================================
 
 -- Enable mouse support in all modes (works in terminal and SSH)
-vim.opt.mouse = "a"
+-- vscode-neovim handles mouse via VS Code; skip to avoid conflicts
+if not vim.g.vscode then
+  vim.opt.mouse = "a"
+end
 
 -- Enable system clipboard integration (works locally)
 -- For SSH, OSC 52 is configured below
-vim.opt.clipboard = "unnamedplus"
+-- vscode-neovim manages clipboard via VS Code API; setting this causes double-copy
+if not vim.g.vscode then
+  vim.opt.clipboard = "unnamedplus"
+end
 
 -- OSC 52 clipboard for SSH sessions
 -- This allows clipboard to work even when SSH'd into a remote server
@@ -52,10 +58,13 @@ end
 -- FOLDING (UFO plugin provides better defaults, these are minimal overrides)
 -- ============================================================================
 
-vim.opt.foldcolumn = "0" -- Hide fold column for cleaner look
-vim.opt.foldlevel = 99 -- Open all folds by default
-vim.opt.foldlevelstart = 99 -- Start with all folds open
-vim.opt.foldenable = true
+-- vscode-neovim controls folding via VS Code's fold provider; skip in VS Code
+if not vim.g.vscode then
+  vim.opt.foldcolumn = "0"
+  vim.opt.foldlevel = 99
+  vim.opt.foldlevelstart = 99
+  vim.opt.foldenable = true
+end
 
 -- ============================================================================
 -- SEARCH & SCROLL

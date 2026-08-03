@@ -82,8 +82,8 @@ return {
         -- Ctrl+E to abort/close completion menu
         ["<C-e>"] = cmp.mapping.abort(),
 
-        -- Ctrl+Space to manually trigger completion
-        ["<C-Space>"] = cmp.mapping.complete(),
+        -- <C-Space> is reserved as WezTerm leader; use <C-n> to trigger completion
+        ["<C-n>"] = cmp.mapping.complete(),
 
         -- Tab: Smart completion handling
         -- Priority:

@@ -5,11 +5,14 @@ if vim.g.vscode then
   return {}
 end
 
-local enable_tmux_slime = true
-if vim.loop.os_uname().sysname == "Windows_NT" then
-  --- tmux does not work on windows so we use wezterm
-  enable_tmux_slime = false
-end
+-- Terminal detection for slime integration
+local sysname = vim.loop.os_uname().sysname
+local term_program = vim.env.TERM_PROGRAM or ""
+local is_wezterm = term_program:lower():find("wezterm") ~= nil
+
+-- Use tmux on Unix/Linux, skip on Windows (use WezTerm native)
+-- WezTerm on Mac can use both tmux or native panes (tmux_slime preferred)
+local enable_tmux_slime = sysname ~= "Windows_NT"
 
 -- I borrowed this from https://github.com/you-n-g/deploy/blob/623a56064926fb551cff7e4afb0984d2233bf788/configs/lazynvim/lua/plugins/slime.lua#L18
 function reset_slime()

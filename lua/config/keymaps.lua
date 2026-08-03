@@ -117,8 +117,19 @@ vim.keymap.set("t", "<A-l>", [[<C-\><C-n><C-w>l]], { desc = "Go to right split" 
 -- PLATFORM-SPECIFIC KEYMAPS
 -- ============================================================================
 
--- Mac: Alt+J/K for moving lines (∆ = Alt+j, ˚ = Alt+k on macOS)
-if vim.loop.os_uname().sysname == "Darwin" then
+-- Alt+j/k line movement: WezTerm with send_composed_key_when_left_alt_is_pressed=false
+-- sends ESC+j/k (received as <A-j>/<A-k>) instead of composed ∆/˚ characters
+vim.keymap.set("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move line down" })
+vim.keymap.set("n", "<A-k>", "<cmd>m .-2<cr>==", { desc = "Move line up" })
+vim.keymap.set("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move selection down" })
+vim.keymap.set("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move selection up" })
+vim.keymap.set("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move line down" })
+vim.keymap.set("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move line up" })
+
+-- Mac: ∆/˚ fallback for terminals that compose Option keys (skip WezTerm—it sends ESC sequences)
+local term_program = vim.env.TERM_PROGRAM or ""
+local is_wezterm = term_program:lower():find("wezterm") ~= nil
+if vim.loop.os_uname().sysname == "Darwin" and not is_wezterm then
   vim.keymap.set("n", "∆", "<cmd>m .+1<cr>==", { desc = "Move line down" })
   vim.keymap.set("n", "˚", "<cmd>m .-2<cr>==", { desc = "Move line up" })
   vim.keymap.set("v", "∆", ":m '>+1<cr>gv=gv", { desc = "Move selection down" })
