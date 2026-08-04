@@ -8,7 +8,7 @@ if vim.g.vscode then
 end
 
 local enable_lualsp = true
-enable_ansiblelint = true
+local enable_ansiblelint = true
 
 if vim.loop.os_uname().sysname == "Windows_NT" then
   enable_ansiblelint = false

@@ -14,199 +14,80 @@ return {
     end,
   },
 
-  -- Configure nvim-cmp for better completion behavior
+  -- Blink is the active completion engine in LazyVim defaults.
+  -- Use Tab/Shift-Tab to navigate popup suggestions.
   {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-      "hrsh7th/cmp-emoji",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-    },
-    ---@param opts cmp.ConfigSchema
+    "saghen/blink.cmp",
     opts = function(_, opts)
-      local has_words_before = function()
-        unpack = unpack or table.unpack
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-      end
+      opts.keymap = opts.keymap or {}
+      opts.keymap["<Tab>"] = { "select_next", "snippet_forward", "fallback" }
+      opts.keymap["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" }
+      opts.keymap["<Down>"] = { "select_next", "fallback" }
+      opts.keymap["<Up>"] = { "select_prev", "fallback" }
 
-      local luasnip = require("luasnip")
-      local cmp = require("cmp")
+      opts.sources = opts.sources or {}
+      opts.sources.per_filetype = opts.sources.per_filetype or {}
+      opts.sources.providers = opts.sources.providers or {}
 
-      -- ============================================================================
-      -- COMPLETION BEHAVIOR (Less Aggressive)
-      -- ============================================================================
+      opts.sources.per_filetype.ps1 = { inherit_defaults = false, "lsp", "copilot", "snippets", "buffer" }
+      opts.sources.per_filetype.psm1 = { inherit_defaults = false, "lsp", "copilot", "snippets", "buffer" }
+      opts.sources.per_filetype.psd1 = { inherit_defaults = false, "lsp", "copilot", "snippets", "buffer" }
+      opts.sources.per_filetype.powershell = { inherit_defaults = false, "lsp", "copilot", "snippets", "buffer" }
 
-      opts.completion = vim.tbl_deep_extend("force", opts.completion or {}, {
-        autocomplete = {
-          cmp.TriggerEvent.TextChanged, -- Only on text change, not on cursor movement
-        },
-        completeopt = "menu,menuone,noinsert", -- Don't auto-insert first completion
-        keyword_length = 1, -- Start showing completions after 1 character
+      opts.sources.providers.lsp = vim.tbl_deep_extend("force", opts.sources.providers.lsp or {}, {
+        score_offset = 20,
       })
-
-      -- Don't preselect first item (less aggressive)
-      opts.preselect = cmp.PreselectMode.None
-
-      -- ============================================================================
-      -- KEYMAPS
-      -- ============================================================================
-
-      opts.mapping = vim.tbl_extend("force", opts.mapping, {
-        -- Enter confirms only if item is explicitly selected
-        ["<CR>"] = cmp.mapping({
-          i = function(fallback)
-            if cmp.visible() and cmp.get_selected_entry() then
-              cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-            else
-              fallback()
-            end
-          end,
-          s = cmp.mapping.confirm({ select = true }),
-          c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-        }),
-
-        -- Ctrl+E to abort/close completion menu
-        ["<C-e>"] = cmp.mapping.abort(),
-
-        -- <C-Space> is reserved as WezTerm leader; use <C-n> to trigger completion
-        ["<C-n>"] = cmp.mapping.complete(),
-
-        -- Tab: Smart completion handling
-        -- Priority:
-        -- 1. If cmp menu visible → cycle through items
-        -- 2. If snippet expandable → expand snippet
-        -- 3. If words before cursor → trigger cmp
-        -- 4. Otherwise → normal tab
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          else
-            if luasnip.expand_or_jumpable() then
-              luasnip.expand_or_jump()
-            elseif has_words_before() then
-              cmp.complete()
-            else
-              fallback()
-            end
+      opts.sources.providers.copilot = vim.tbl_deep_extend("force", opts.sources.providers.copilot or {}, {
+        score_offset = 15,
+        max_items = function(ctx)
+          if ctx and (ctx.filetype == "ps1" or ctx.filetype == "psm1" or ctx.filetype == "psd1" or ctx.filetype == "powershell") then
+            return 5
           end
-        end, { "i", "s" }),
-
-        -- Shift+Tab cycles backwards
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
+          return 8
+        end,
+      })
+      opts.sources.providers.snippets = vim.tbl_deep_extend("force", opts.sources.providers.snippets or {}, {
+        score_offset = 10,
+      })
+      opts.sources.providers.buffer = vim.tbl_deep_extend("force", opts.sources.providers.buffer or {}, {
+        score_offset = -10,
+        min_keyword_length = function(ctx)
+          if ctx and (ctx.filetype == "ps1" or ctx.filetype == "psm1" or ctx.filetype == "psd1" or ctx.filetype == "powershell") then
+            return 5
           end
-        end, { "i", "s" }),
+          return 4
+        end,
+        max_items = function(ctx)
+          if ctx and (ctx.filetype == "ps1" or ctx.filetype == "psm1" or ctx.filetype == "psd1" or ctx.filetype == "powershell") then
+            return 3
+          end
+          return 5
+        end,
+        transform_items = function(_, items)
+          return vim.tbl_filter(function(item)
+            local label = item.label or ""
+            return not label:match("~$")
+          end, items)
+        end,
       })
-
-      -- ============================================================================
-      -- WINDOW APPEARANCE
-      -- ============================================================================
-
-      opts.window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
-      }
-
-      -- ============================================================================
-      -- SOURCE PRIORITIES (Ensure LSP comes before file paths)
-      -- ============================================================================
-
-      -- Configure completion sources with proper priorities.
-      -- Copilot source is injected by LazyVim Copilot extra when ai_cmp=true.
-      -- LSP > Snippets > Buffer > Path
-      opts.sources = cmp.config.sources({
-        { name = "nvim_lsp", group_index = 1, priority = 1000 }, -- Language server FIRST
-        { name = "luasnip", group_index = 1, priority = 900 }, -- Snippets with LSP group
-      }, {
-        {
-          name = "buffer",
-          group_index = 2,
-          priority = 500, -- Buffer words third
-          keyword_length = 4, -- Require 4 characters before showing buffer matches (was 3)
-          max_item_count = 5, -- Limit buffer suggestions to reduce noise
-          option = {
-            get_bufnrs = function()
-              -- Only complete from visible buffers (not all open buffers)
-              local bufs = {}
-              for _, win in ipairs(vim.api.nvim_list_wins()) do
-                bufs[vim.api.nvim_win_get_buf(win)] = true
-              end
-              return vim.tbl_keys(bufs)
-            end,
-          },
-          entry_filter = function(entry, ctx)
-            -- Get the actual word that will be shown
-            local word = entry:get_word()
-            local abbr = entry.completion_item.label
-
-            -- Filter out items with tilde suffix (disambiguators)
-            if word and word:match("~$") then
-              return false
-            end
-            if abbr and abbr:match("~$") then
-              return false
-            end
-
-            return true
-          end,
-        },
-        {
-          name = "path",
-          group_index = 2,
-          priority = 250, -- File paths LAST (prevents func.exe before function keyword)
-          keyword_length = 3, -- Require 3 characters for path completions
-          max_item_count = 5, -- Reduced from 10
-          option = {
-            trailing_slash = true, -- Add trailing slash for directories
-          },
-          entry_filter = function(entry)
-            local label = entry:get_insert_text()
-            -- Filter out temporary and backup files
-            if label:match("~$") then -- Vim/Neovim backup files (file.txt~)
-              return false
-            end
-            if label:match("%.tmp$") then -- .tmp files
-              return false
-            end
-            if label:match("%.temp$") then -- .temp files
-              return false
-            end
-            if label:match("%.swp$") then -- Vim swap files
-              return false
-            end
-            if label:match("%.swo$") then -- Vim swap files
-              return false
-            end
-            if label:match("%.swn$") then -- Vim swap files
-              return false
-            end
-            return true
-          end,
-        },
+      opts.sources.providers.path = vim.tbl_deep_extend("force", opts.sources.providers.path or {}, {
+        score_offset = -20,
+        min_keyword_length = 3,
+        max_items = 5,
+        transform_items = function(_, items)
+          return vim.tbl_filter(function(item)
+            local label = item.label or ""
+            return not (
+              label:match("~$")
+              or label:match("%.tmp$")
+              or label:match("%.temp$")
+              or label:match("%.swp$")
+              or label:match("%.swo$")
+              or label:match("%.swn$")
+            )
+          end, items)
+        end,
       })
-
-      -- Sorting configuration to respect priorities
-      opts.sorting = opts.sorting or {}
-      opts.sorting.priority_weight = 2
-      opts.sorting.comparators = {
-        cmp.config.compare.offset,
-        cmp.config.compare.exact,
-        cmp.config.compare.score,
-        cmp.config.compare.recently_used,
-        cmp.config.compare.locality,
-        cmp.config.compare.kind,
-        cmp.config.compare.sort_text,
-        cmp.config.compare.length,
-        cmp.config.compare.order,
-      }
-
-      return opts
     end,
   },
 }

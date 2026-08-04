@@ -1,0 +1,64 @@
+-- Template/reference snippets for future plugin experiments.
+--
+-- This file is intentionally NOT loaded by lazy.nvim because it does not end in .lua.
+-- Keep only commented snippets and notes here.
+--
+-- There are two valid copy/paste styles:
+--
+-- STYLE A: Full file (working as-is) requires `return { ... }`
+--   Example:
+--   return {
+--     {
+--       "folke/trouble.nvim",
+--       opts = { auto_open = false },
+--     },
+--   }
+--
+-- STYLE B: Single plugin block (merge into an existing return table)
+--   Example block:
+--   {
+--     "folke/trouble.nvim",
+--     opts = { auto_open = false },
+--   },
+--
+-- If you want to activate something from this file:
+-- 1) copy snippets into a real file under lua/plugins/*.lua
+-- 2) if creating a new file, wrap snippets in `return { ... }`
+-- 3) adapt to current LazyVim defaults first (Blink for completion, etc.)
+
+-- Example: Add a new colorscheme package
+-- {
+--   "rebelot/kanagawa.nvim",
+-- }
+
+-- Example: Add a custom Telescope keymap
+-- {
+--   "nvim-telescope/telescope.nvim",
+--   keys = {
+--     {
+--       "<leader>fp",
+--       function()
+--         require("telescope.builtin").find_files({
+--           cwd = require("lazy.core.config").options.root,
+--         })
+--       end,
+--       desc = "Find Plugin File",
+--     },
+--   },
+-- }
+
+-- Example: Add a language server
+-- {
+--   "neovim/nvim-lspconfig",
+--   opts = {
+--     servers = {
+--       -- pyright = {},
+--     },
+--   },
+-- }
+
+-- Example: Disable a plugin
+-- {
+--   "folke/trouble.nvim",
+--   enabled = false,
+-- }

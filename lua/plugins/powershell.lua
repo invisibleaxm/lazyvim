@@ -7,6 +7,13 @@ if vim.g.vscode then
   return {}
 end
 
+-- Set `vim.g.enable_powershell = false` in your config to disable all
+-- PowerShell-specific plugins and overrides from this file.
+local enable_powershell = vim.g.enable_powershell ~= false
+if not enable_powershell then
+  return {}
+end
+
 return {
   -- PowerShell LSP Configuration
   {
@@ -100,42 +107,6 @@ return {
       end
 
       return opts
-    end,
-  },
-
-  -- Auto-completion tuning for PowerShell
-  {
-    "hrsh7th/nvim-cmp",
-    -- Filetype-specific overrides for PowerShell
-    config = function()
-      -- Apply settings when entering PowerShell files
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "ps1", "psm1", "psd1" },
-        callback = function()
-          local cmp = require("cmp")
-
-          -- PowerShell-specific completion: LSP first, then Copilot, minimal buffer/path
-          cmp.setup.buffer({
-            sources = {
-              { name = "nvim_lsp", priority = 1000, max_item_count = 30 }, -- PowerShell LSP FIRST
-              { name = "copilot", priority = 950, max_item_count = 5 }, -- Copilot second
-              { name = "luasnip", priority = 900, max_item_count = 10 }, -- Snippets third
-              {
-                name = "buffer",
-                priority = 300,
-                keyword_length = 5, -- Need 5 chars before buffer shows
-                max_item_count = 3,
-                option = {
-                  get_bufnrs = function()
-                    return { vim.api.nvim_get_current_buf() }
-                  end,
-                },
-              },
-              -- path disabled for PowerShell
-            },
-          })
-        end,
-      })
     end,
   },
 
