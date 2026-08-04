@@ -6,6 +6,9 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
+-- Use completion-menu Copilot integration (cmp/blink) instead of inline ghost text.
+vim.g.ai_cmp = true
+
 require("lazy").setup({
   spec = {
     -- add LazyVim and import its plugins
@@ -17,7 +20,7 @@ require("lazy").setup({
 
     -- AI
     { import = "lazyvim.plugins.extras.ai.copilot" },
-    -- { import = "lazyvim.plugins.extras.ai.copilot-chat" },
+    { import = "lazyvim.plugins.extras.ai.copilot-chat" },
     -- { import = "lazyvim.plugins.extras.ai.codeium" },
     -- { import = "lazyvim.plugins.extras.ai.tabnine" },
 

@@ -14,19 +14,6 @@ return {
     end,
   },
 
-  -- Copilot-cmp: Load AFTER nvim-cmp to avoid "module cmp not found" error
-  {
-    "zbirenbaum/copilot-cmp",
-    dependencies = {
-      "hrsh7th/nvim-cmp",
-      "zbirenbaum/copilot.lua",
-    },
-    event = "InsertEnter",
-    config = function()
-      require("copilot_cmp").setup()
-    end,
-  },
-
   -- Configure nvim-cmp for better completion behavior
   {
     "hrsh7th/nvim-cmp",
@@ -88,19 +75,14 @@ return {
         -- Tab: Smart completion handling
         -- Priority:
         -- 1. If cmp menu visible → cycle through items
-        -- 2. If Copilot suggestion visible → accept it
-        -- 3. If snippet expandable → expand snippet
-        -- 4. If words before cursor → trigger cmp
-        -- 5. Otherwise → normal tab
+        -- 2. If snippet expandable → expand snippet
+        -- 3. If words before cursor → trigger cmp
+        -- 4. Otherwise → normal tab
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
           else
-            -- Check if Copilot suggestion is available
-            local copilot_ok, copilot_suggestion = pcall(require, "copilot.suggestion")
-            if copilot_ok and copilot_suggestion.is_visible() then
-              copilot_suggestion.accept()
-            elseif luasnip.expand_or_jumpable() then
+            if luasnip.expand_or_jumpable() then
               luasnip.expand_or_jump()
             elseif has_words_before() then
               cmp.complete()
@@ -135,11 +117,11 @@ return {
       -- SOURCE PRIORITIES (Ensure LSP comes before file paths)
       -- ============================================================================
 
-      -- Configure completion sources with proper priorities
-      -- LSP > Copilot > Snippets > Buffer > Path
+      -- Configure completion sources with proper priorities.
+      -- Copilot source is injected by LazyVim Copilot extra when ai_cmp=true.
+      -- LSP > Snippets > Buffer > Path
       opts.sources = cmp.config.sources({
         { name = "nvim_lsp", group_index = 1, priority = 1000 }, -- Language server FIRST
-        { name = "copilot", group_index = 1, priority = 950 }, -- Copilot second (AI suggestions)
         { name = "luasnip", group_index = 1, priority = 900 }, -- Snippets with LSP group
       }, {
         {
