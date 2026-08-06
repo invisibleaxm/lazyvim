@@ -15,6 +15,13 @@ vim.api.nvim_set_current_win = function(win)
   end
 end
 
+local _orig_win_set_cursor = vim.api.nvim_win_set_cursor
+vim.api.nvim_win_set_cursor = function(win, pos)
+  if vim.api.nvim_win_is_valid(win) then
+    _orig_win_set_cursor(win, pos)
+  end
+end
+
 local _orig_notify = vim.notify
 vim.notify = function(msg, level, opts)
   if type(msg) == "string" and msg:match("Invalid window id") then
