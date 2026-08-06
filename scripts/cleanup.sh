@@ -114,12 +114,17 @@ else
         RESET_COUNT=0
         for plugin_dir in "$LAZY_DIR"/*/; do
             if [[ -d "$plugin_dir/.git" ]]; then
-                cd "$plugin_dir"
+                cd "$plugin_dir" || continue
                 if [[ -n "$(git status --porcelain 2>/dev/null)" ]]; then
                     echo -e "  ${YELLOW}Resetting: $(basename "$plugin_dir")${NC}"
-                    git reset --hard HEAD >/dev/null 2>&1
-                    git clean -fd >/dev/null 2>&1
-                    ((RESET_COUNT++))
+                    if ! git reset --hard HEAD >/dev/null 2>&1; then
+                        echo -e "  ${YELLOW}⚠ Failed to reset: $(basename "$plugin_dir")${NC}"
+                        continue
+                    fi
+                    if ! git clean -fd >/dev/null 2>&1; then
+                        echo -e "  ${YELLOW}⚠ Failed to clean: $(basename "$plugin_dir")${NC}"
+                    fi
+                    ((++RESET_COUNT))
                 fi
             fi
         done
