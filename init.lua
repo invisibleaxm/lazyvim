@@ -1,5 +1,8 @@
 -- Bootstrap lazy.nvim
 -- Detect VSCode integration early
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_perl_provider = 0
+
 if vim.g.vscode then
   -- ========================================================================
   -- VSCODE MODE: Minimal config, pure Neovim motions only
