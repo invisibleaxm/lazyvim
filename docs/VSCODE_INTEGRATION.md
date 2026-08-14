@@ -7,6 +7,7 @@
 ## 🎨 What is Hybrid Mode?
 
 **Hybrid Mode** gives you the best of both worlds:
+
 - ✅ **Neovim's powerful editing** (motions, text objects, visual mode, macros)
 - ✅ **VSCode's IntelliSense & Copilot** (familiar completion, reliable LSP)
 - ✅ **All VSCode features** (debugging, extensions, UI)
@@ -19,6 +20,7 @@
 ### When Running in VSCode:
 
 **Enabled (Neovim):**
+
 - ✅ Vim motions (`hjkl`, `w`, `b`, `ciw`, etc.)
 - ✅ Visual mode (`v`, `V`, `Ctrl+v`)
 - ✅ Text objects (`ci"`, `da{`, `yap`, etc.)
@@ -27,6 +29,7 @@
 - ✅ Your LazyVim keybindings from `vscode.lua`
 
 **Disabled (Using VSCode Instead):**
+
 - ❌ nvim-cmp (VSCode IntelliSense instead)
 - ❌ Neovim Copilot (VSCode Copilot instead)
 - ❌ Neovim LSP servers (VSCode language servers instead)
@@ -47,10 +50,12 @@
 ### Enable/Disable Neovim Mode in VSCode
 
 **Toggle Neovim:**
+
 - Press `Ctrl+Alt+N` (default VSCode Neovim extension keybinding)
 - Or use Command Palette: `Toggle Neovim Mode`
 
 **Status:**
+
 - Bottom status bar shows "Normal", "Insert", "Visual" when Neovim is active
 - When inactive, VSCode works normally
 
@@ -69,43 +74,43 @@
 
 All your VSCode keybindings from `keybindings.json` continue to work:
 
-| Key | Action | Context |
-|-----|--------|---------|
-| `Ctrl+E` | Open Explorer | Always |
-| `Ctrl+J` | IntelliSense next | When suggesting |
-| `Ctrl+K` | IntelliSense previous | When suggesting |
-| `Tab` | Accept suggestion | When suggesting |
-| `Ctrl+\` | Toggle terminal | Always |
-| `j`/`k` | Navigate explorer | In file explorer |
-| `r` | Rename file | In file explorer |
+| Key      | Action                | Context          |
+| -------- | --------------------- | ---------------- |
+| `Ctrl+E` | Open Explorer         | Always           |
+| `Ctrl+J` | IntelliSense next     | When suggesting  |
+| `Ctrl+K` | IntelliSense previous | When suggesting  |
+| `Tab`    | Accept suggestion     | When suggesting  |
+| `Ctrl+\` | Toggle terminal       | Always           |
+| `j`/`k`  | Navigate explorer     | In file explorer |
+| `r`      | Rename file           | In file explorer |
 
 ### Vim Keybindings (When Neovim Active)
 
-| Key | Mode | Action |
-|-----|------|--------|
-| `hjkl` | Normal | Navigate |
-| `w`/`b`/`e` | Normal | Word navigation |
-| `i`/`a`/`o` | Normal | Enter insert mode |
-| `v`/`V`/`Ctrl+v` | Normal | Visual mode |
-| `d`/`y`/`c` | Normal/Visual | Delete/yank/change |
-| `ciw` | Normal | Change word |
-| `:w` | Command | Save file |
-| `:q` | Command | Close editor |
+| Key              | Mode          | Action             |
+| ---------------- | ------------- | ------------------ |
+| `hjkl`           | Normal        | Navigate           |
+| `w`/`b`/`e`      | Normal        | Word navigation    |
+| `i`/`a`/`o`      | Normal        | Enter insert mode  |
+| `v`/`V`/`Ctrl+v` | Normal        | Visual mode        |
+| `d`/`y`/`c`      | Normal/Visual | Delete/yank/change |
+| `ciw`            | Normal        | Change word        |
+| `:w`             | Command       | Save file          |
+| `:q`             | Command       | Close editor       |
 
 ### LazyVim Keybindings in VSCode
 
 Your `vscode.lua` is configured with these leader key commands:
 
-| Key | Action |
-|-----|--------|
+| Key          | Action                       |
+| ------------ | ---------------------------- |
 | `<leader>ff` | Quick Open (VSCode `Ctrl+P`) |
-| `<leader>fg` | Find in Files |
-| `<leader>fb` | Show All Editors |
-| `<leader>ca` | Code Actions |
-| `gd` | Go to Definition |
-| `gr` | Go to References |
-| `K` | Show Hover |
-| `gcc` | Toggle Comment |
+| `<leader>fg` | Find in Files                |
+| `<leader>fb` | Show All Editors             |
+| `<leader>ca` | Code Actions                 |
+| `gd`         | Go to Definition             |
+| `gr`         | Go to References             |
+| `K`          | Show Hover                   |
+| `gcc`        | Toggle Comment               |
 
 💡 **Leader key is `Space`** - same as standalone Neovim!
 
@@ -116,6 +121,7 @@ Your `vscode.lua` is configured with these leader key commands:
 ### Neovim Commands Don't Work in VSCode
 
 **Check:**
+
 1. Is Neovim mode enabled? (Look for status in bottom bar)
 2. Press `Ctrl+Alt+N` to toggle
 
@@ -124,17 +130,20 @@ Your `vscode.lua` is configured with these leader key commands:
 **This is normal in hybrid mode!** Neovim doesn't show VSCode IntelliSense unless you type.
 
 **Trigger manually:**
+
 - Press `Ctrl+Space` (VSCode default)
 
 ### Completions Appear Twice
 
 **This shouldn't happen in hybrid mode.** If it does:
+
 1. Reload VSCode: `Ctrl+Shift+P` → "Reload Window"
 2. Check that plugins disabled correctly
 
 ### Copilot Not Working
 
 **Use VSCode Copilot:**
+
 - It shows as gray text (same as normal VSCode)
 - Press `Tab` to accept
 - Or `Alt+]` / `Alt+[` to cycle suggestions
@@ -146,6 +155,7 @@ Your `vscode.lua` is configured with these leader key commands:
 **Your keybindings are already configured correctly!**
 
 If you notice conflicts:
+
 1. Check `keybindings.json` for the specific key
 2. Add `when: !neovim.mode` to disable in Neovim mode
 3. Or add `when: neovim.mode` to enable only in Neovim mode
@@ -157,6 +167,7 @@ If you notice conflicts:
 ### Modified Files
 
 **Neovim plugins disabled in VSCode:**
+
 - `lua/plugins/completion.lua` - nvim-cmp disabled
 - `lua/plugins/copilot.lua` - Neovim Copilot disabled
 - `lua/plugins/lsp.lua` - LSP servers disabled
@@ -168,15 +179,38 @@ If you notice conflicts:
 - `lua/plugins/notifications.lua` - Notifications disabled
 
 **VSCode settings updated:**
+
 - Added `vscode-neovim.useCtrlKeysForNormalMode: false`
 - Added `vscode-neovim.useCtrlKeysForInsertMode: false`
+- Added `vscode-neovim.ctrlKeysForInsertMode` (default list minus `c`, see below)
 - Enabled VSCode quick suggestions
 - Enabled commit character suggestions
 
 **What's kept:**
+
 - `lua/plugins/vscode.lua` - VSCode-specific keymaps
 - Your existing keybindings in `keybindings.json`
 - All VSCode settings and extensions
+
+### Insert-Mode Ctrl Keys Forwarded to Neovim
+
+`vscode-neovim.ctrlKeysForInsertMode` controls which `Ctrl+key` combos are handled
+by Neovim (vs. VS Code) while in insert mode. `c` was removed from the default list
+because `i_CTRL-C` in Vim exits insert mode instead of letting VS Code copy the
+selection. Current list: `["a", "d", "h", "j", "m", "o", "r", "t", "u", "w"]`.
+
+| Key      | Insert-mode behavior                                                       |
+| -------- | -------------------------------------------------------------------------- |
+| `Ctrl+A` | Insert the previously inserted text again (repeat last insert)             |
+| `Ctrl+D` | Decrease indent of current line by one `shiftwidth`                        |
+| `Ctrl+H` | Delete character before cursor (same as Backspace)                         |
+| `Ctrl+J` | Insert a line break (same as Enter)                                        |
+| `Ctrl+M` | Insert a line break (same as Enter, carriage-return variant)               |
+| `Ctrl+O` | Execute **one** Normal-mode command, then return to Insert mode            |
+| `Ctrl+R` | Insert contents of a register (prompts for register name, e.g. `Ctrl+R "`) |
+| `Ctrl+T` | Increase indent of current line by one `shiftwidth`                        |
+| `Ctrl+U` | Delete all entered text back to start of insert (or start of line)         |
+| `Ctrl+W` | Delete the word before the cursor                                          |
 
 ---
 
@@ -185,6 +219,7 @@ If you notice conflicts:
 ### When to Use Neovim Mode
 
 **Great for:**
+
 - ✅ Editing code with complex refactoring (motions, macros)
 - ✅ Working with PowerShell scripts (your optimized workflow)
 - ✅ Large text manipulations (visual mode, block edits)
@@ -193,6 +228,7 @@ If you notice conflicts:
 ### When to Disable Neovim Mode
 
 **Great for:**
+
 - ✅ Using VSCode-specific UI features (debugging panels, extensions)
 - ✅ When pairing with someone unfamiliar with Vim
 - ✅ Complex debugging sessions
@@ -201,6 +237,7 @@ If you notice conflicts:
 ### Toggle Freely!
 
 You can **toggle Neovim mode on/off** anytime without losing work:
+
 - `Ctrl+Alt+N` to switch
 - No restart needed
 - Files stay open
@@ -241,14 +278,17 @@ You can **toggle Neovim mode on/off** anytime without losing work:
 ## 🎓 Learning Resources
 
 **VSCode Neovim:**
+
 - Official docs: https://github.com/vscode-neovim/vscode-neovim
 - Settings reference: https://github.com/vscode-neovim/vscode-neovim#settings
 
 **Vim in VSCode:**
+
 - Vim basics: https://vim.fandom.com/wiki/Tutorial
 - VSCode tips: https://code.visualstudio.com/docs/editor/editingevolved
 
 **Your Config:**
+
 - Standalone Neovim: Launch `nvim` in terminal
 - All features: See [NEOVIM_USER_GUIDE.md](NEOVIM_USER_GUIDE.md)
 
