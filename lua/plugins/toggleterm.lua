@@ -38,16 +38,19 @@ return {
     cmd = "ToggleTerm",
     keys = {
       {
-        "<C-\\>",
+        "<A-`>",
         "<cmd>ToggleTerm<cr>",
         desc = "Open a floating terminal",
       },
     },
     opts = {
       -- open_mapping = [[<C-t>]],
-      open_mapping = [[<C-\>]],
+      open_mapping = [[<A-`>]],
       direction = "horizontal",
       size = 20,
+      on_open = function()
+        vim.schedule(function() vim.cmd("startinsert") end)
+      end,
       -- direction = "float",
       hide_numbers = true,
       terminal_mappings = true,
