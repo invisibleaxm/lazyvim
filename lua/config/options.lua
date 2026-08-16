@@ -74,6 +74,16 @@ vim.opt.hlsearch = false -- Don't highlight all search matches
 vim.opt.incsearch = true -- Show search matches as you type
 vim.opt.scrolloff = 8 -- Keep 8 lines visible above/below cursor
 
+-- Bar in insert, block in normal/visual. vscode-neovim uses the VS Code caret.
+if not vim.g.vscode then
+  vim.opt.guicursor = {
+    "n-v-c:block",
+    "i-ci-ve:ver25-blinkon520",
+    "r-cr:hor20",
+    "o:hor50",
+  }
+end
+
 -- ============================================================================
 -- UI
 -- ============================================================================

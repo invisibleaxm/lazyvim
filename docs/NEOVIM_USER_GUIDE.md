@@ -82,7 +82,7 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 
 | Key | Mode | Action |
 |-----|------|--------|
-| `<CR>` | Normal | Change word under cursor |
+| `g<CR>` | Normal | Change word under cursor |
 | `YY` | Normal | Copy entire code block (`{}`) |
 | `<A-F>` | Normal | Format file with LSP (like VSCode `Alt+Shift+F`) |
 | `gcc` | Normal | Toggle line comment |
@@ -168,8 +168,8 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 
 | Keymap | Mode | Action |
 |--------|------|--------|
-| `<Tab>` | Insert | Accept full Copilot suggestion |
-| `<C-j>` | Insert | Accept full suggestion (alternative) |
+| `<Tab>` | Insert | Next completion item (menu open) |
+| `<C-j>` | Insert | Next completion item (menu open only) |
 | `<C-Right>` | Insert | Accept next word only |
 | `<C-l>` | Insert | Accept line only |
 | `<Alt-]>` | Insert | Next Copilot suggestion |
@@ -183,7 +183,7 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 #### How it works:
 1. Type code naturally
 2. Copilot shows gray ghost text suggestions
-3. **Press `<Tab>` or `<C-j>` to accept** (most common)
+3. **Press `Enter` to accept** the selected menu item (`Tab` / `Ctrl+J` cycle)
 4. **Press `<C-Right>` to accept word-by-word** (partial accept)
 5. Press `<Alt-]>` to see alternative suggestions
 6. Keep typing to ignore
@@ -193,8 +193,8 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 **Problem:** Completion menu is open (takes priority over Copilot).
 
 **Solution:**
-- Use `<C-j>` instead of `<Tab>` (dedicated Copilot accept)
-- Or press `<C-e>` to close menu, then `<Tab>`
+- Press `Enter` to accept the selected menu item
+- Or press `<C-e>` to close the menu, then keep typing
 
 **First time setup:**
 ```
@@ -214,9 +214,9 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 
 | Keymap | Mode | Action |
 |--------|------|--------|
-| `<Tab>` | Insert | Accept completion / Next item |
-| `<S-Tab>` | Insert | Previous completion item |
-| `<CR>` | Insert | Confirm (only if explicitly selected) |
+| `<Tab>` / `<C-j>` / Down | Insert | Next completion item |
+| `<S-Tab>` / `<C-k>` / Up | Insert | Previous completion item |
+| `<CR>` | Insert | Accept selected item (newline if menu closed) |
 | `<C-Space>` | Insert | Trigger completion manually |
 | `<C-e>` | Insert | Close completion menu |
 

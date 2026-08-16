@@ -79,8 +79,10 @@ All your VSCode keybindings from `keybindings.json` continue to work:
 | `Ctrl+E` | Open Explorer         | Always           |
 | `Ctrl+J` | IntelliSense next     | When suggesting  |
 | `Ctrl+K` | IntelliSense previous | When suggesting  |
-| `Tab`    | Accept suggestion     | When suggesting  |
-| `Ctrl+\` | Toggle terminal       | Always           |
+| `Tab`    | IntelliSense next     | When suggesting  |
+| `Enter`  | Accept suggestion     | When suggesting  |
+| `Alt+\`` | Focus swap editor/terminal | Always      |
+| `Ctrl+\`` | Toggle terminal panel | Always           |
 | `j`/`k`  | Navigate explorer     | In file explorer |
 | `r`      | Rename file           | In file explorer |
 
@@ -145,7 +147,7 @@ Your `vscode.lua` is configured with these leader key commands:
 **Use VSCode Copilot:**
 
 - It shows as gray text (same as normal VSCode)
-- Press `Tab` to accept
+- Press `Enter` to accept (Tab cycles)
 - Or `Alt+]` / `Alt+[` to cycle suggestions
 
 **Neovim Copilot is disabled** in VSCode mode (uses VSCode's instead).
@@ -263,8 +265,8 @@ You can **toggle Neovim mode on/off** anytime without losing work:
 1. ✅ Press `hjkl` - should navigate
 2. ✅ Press `i` - should enter insert mode (see "Insert" in status bar)
 3. ✅ Type some code - should show VSCode IntelliSense
-4. ✅ Press `Ctrl+J` - should cycle through suggestions
-5. ✅ Press `Tab` - should accept suggestion
+4. ✅ Press `Ctrl+J` or `Tab` - should cycle through suggestions
+5. ✅ Press `Enter` - should accept the selected suggestion
 6. ✅ Press `Esc` - should return to normal mode
 7. ✅ Type `ciw` - should change word
 8. ✅ Press `<Space>ff` - should open Quick Open

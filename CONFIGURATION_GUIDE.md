@@ -261,13 +261,15 @@ Note: `nvim-silicon` requires the external `silicon` binary installed separately
 
 ---
 
-## Tmux / Pane Navigation
+## Tmux / WezTerm / Herdr Pane Navigation
 
-**[lua/plugins/ui.lua](lua/plugins/ui.lua)** · [tmux.nvim](https://github.com/aserowy/tmux.nvim)
+**[lua/plugins/ui.lua](lua/plugins/ui.lua)** · [smart-splits.nvim](https://github.com/mrjones2014/smart-splits.nvim)
 
-Lets `<C-h/j/k/l>` seamlessly move between Neovim splits _and_ tmux panes as if they were the same grid (Unix/macOS only — needs a small tmux-side config to feel smooth).
+`<C-h/j/k/l>` moves between Neovim splits. At a Neovim edge the same keys call `wezterm cli` / tmux / herdr to enter the neighboring host pane. From a bare shell those Ctrl chords stay readline (delete-word, kill-to-EOL, clear); use `Ctrl+Alt+h/j/k/l` or WezTerm `Leader+h/j/k/l` to move host panes.
 
-🔗 [tmux.nvim](https://github.com/aserowy/tmux.nvim)
+Herdr is a first-class smart-splits backend. When you install herdr, link the plugin from the smart-splits repo and bind `ctrl+h/j/k/l` as `plugin_action` (see the smart-splits Herdr section). Until then, Neovim-side edge crossing still works if `herdr` is on `PATH`.
+
+🔗 [smart-splits.nvim](https://github.com/mrjones2014/smart-splits.nvim)
 
 ---
 

@@ -16,8 +16,10 @@
 | `<C-w> w`    | Cycle to next split             |
 | `<C-w> p`    | Jump to previous (last) split   |
 
-> You also have `<C-h/j/k/l>` mapped in `vscode.lua` which does the same via VSCodeNotify —
-> use whichever feels natural.
+> Standalone Neovim: `<C-h/j/k/l>` is smart-splits (nvim splits, then WezTerm/tmux/herdr at the edge).
+> VS Code: the same chords are in `keybindings.json` (normal mode only) because
+> `useCtrlKeysForNormalMode` is false. From a VS Code / ToggleTerm terminal use
+> `Alt+h/j/k/l` or `Ctrl+Alt+h/j/k/l`.
 
 ---
 
@@ -73,7 +75,7 @@ These are already in `vscode.lua`:
 |------------------|-------------------------------------|
 | `<leader>fb`     | Show all open editors (picker)      |
 | `<leader>ff`     | Quick Open file (Ctrl+P equivalent) |
-| `<C-h/j/k/l>`   | Navigate between editor groups      |
+| `<C-h/j/k/l>`   | Navigate between editor groups (normal mode; keybindings.json) |
 
 ---
 

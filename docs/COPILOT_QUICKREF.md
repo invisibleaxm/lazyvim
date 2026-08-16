@@ -10,19 +10,19 @@ Copilot is integrated into Blink's completion menu in standalone Neovim. Use the
 
 ### Accept Suggestions
 
-| Keymap      | Action                     | When to Use                                 |
-| ----------- | -------------------------- | ------------------------------------------- |
-| `<Tab>`     | Accept selected completion | **Most common** - accepts the selected item |
-| `<C-j>`     | Select next completion     | Navigate forward                            |
-| `<C-k>`     | Select previous completion | Navigate backward                           |
-| `<C-Right>` | Accept next word only      | **Partial accept** - word by word           |
-| `<C-l>`     | Accept line only           | Accept just current line                    |
+Same chords in standalone Neovim and VS Code IntelliSense.
 
-💡 **Tip:** Use `<C-Right>` when you want only part of the suggestion!
+| Keymap      | Action                     | When to Use                                      |
+| ----------- | -------------------------- | ------------------------------------------------ |
+| `<Tab>`     | Next completion item       | Cycle the menu (does not accept)                 |
+| `<S-Tab>`   | Previous completion item   | Cycle backward                                   |
+| `<C-j>`     | Next completion item       | Alias; **only while the menu is open**           |
+| `<C-k>`     | Previous completion item   | Alias; **only while the menu is open**           |
+| `<CR>`      | Accept selected item       | Menu open. Newline if the menu is closed         |
+| `<C-Right>` | Accept next word only      | Partial accept when the source supports it       |
+| `<Esc>`     | Dismiss menu               | Leaves insert mode in Neovim after dismiss       |
 
-### Navigate Suggestions
-
-Use `<C-j>` / `<C-k>` to move through the completion menu. `<S-Tab>` also moves backward, and `<CR>` inserts a newline without accepting the selected item.
+`Ctrl+J` / `Ctrl+K` are **not** bound in the terminal. A shell still uses `Ctrl+K` to kill to end-of-line.
 
 ### Example Workflow
 
@@ -30,14 +30,12 @@ Use `<C-j>` / `<C-k>` to move through the completion menu. `<S-Tab>` also moves 
 # You type:
 $tomorrow
 
-# Copilot suggests (in gray):
-$tomorrowDate = (Get-Date).AddDays(1).ToString("yyyy-MM-dd")
+# Menu opens with the first item preselected (like VS Code)
 
-# Options:
-# 1. Press <C-j>/<C-k> → Navigate completion items
-# 2. Press <Tab> → Accept the selected item ✓
-# 3. Press <C-Right> → Accept just "$tomorrowDate" when supported
-# 4. Press <CR> → Insert a newline without accepting
+# 1. Tab / Ctrl+J / Down  → next item
+# 2. Shift+Tab / Ctrl+K / Up → previous item
+# 3. Enter → accept the selected item
+# 4. Esc → close the menu
 ```
 
 ---
@@ -50,13 +48,11 @@ Copilot suggestions also appear in the completion dropdown menu with `` icon.
 
 | Keymap      | Action                           |
 | ----------- | -------------------------------- |
-| `<C-j>`     | Next item in menu                |
-| `<C-k>`     | Previous item in menu            |
-| `<Tab>`     | Accept selected item             |
-| `<S-Tab>`   | Previous item in menu            |
-| `<CR>`      | Insert newline without accepting |
-| `<C-Space>` | Trigger menu manually            |
-| `<C-e>`     | Close menu                       |
+| `<Tab>` / `<C-j>` / Down | Next item in menu                |
+| `<S-Tab>` / `<C-k>` / Up | Previous item in menu            |
+| `<CR>`                   | Accept selected item             |
+| `<C-Space>`              | Trigger menu manually            |
+| `<C-e>` / `<Esc>`        | Close menu                       |
 
 ### Source Priority (What Shows First)
 
@@ -161,14 +157,14 @@ Try:
 
 ### Conflicts with Tab Key
 
-**Issue:** Tab cycles through completion menu instead of accepting Copilot.
+**Issue:** Tab cycles the menu instead of accepting.
 
-**Reason:** Completion menu takes priority.
+**Reason:** Tab is next-item, same as VS Code. Accept is Enter.
 
 **Fix:**
 
-- Use `<C-j>` to explicitly accept Copilot (bypasses menu)
-- Or press `<C-e>` to close menu first, then `<Tab>`
+- Press `<CR>` to accept the selected item
+- Or press `<C-e>` to close the menu first
 
 ### Copilot Disabled
 
@@ -186,15 +182,16 @@ Or toggle with `<leader>co`.
 
 - Appears as **gray text** after cursor
 - Shows **one suggestion** at a time
-- Accept with `<Tab>`, `<C-j>`, or `<C-Right>`
+- Accept with `<CR>` when the item is selected in the menu
+- Word-wise accept with `<C-Right>` when ghost text is enabled
 - Navigate with `<Alt-]>` / `<Alt-[>`
 
-**Completion Menu (nvim-cmp):**
+**Completion Menu (blink.cmp):**
 
 - Appears as **popup menu** with multiple items
 - Shows suggestions from **all sources** (LSP, Copilot, snippets, buffer)
-- Navigate with `<Tab>` / `<S-Tab>`
-- Copilot items have `` icon
+- Navigate with `<Tab>` / `<S-Tab>` / `<C-j>` / `<C-k>`
+- Accept with `<CR>`
 
 💡 **Both can show at the same time!** Menu shows multiple sources, ghost text shows one AI suggestion.
 
@@ -202,7 +199,7 @@ Or toggle with `<leader>co`.
 
 ## 🎓 Learning Path
 
-**Day 1:** Just use `<Tab>` to accept suggestions
+**Day 1:** `Tab` to cycle, `Enter` to accept
 **Day 2:** Try `<C-Right>` for word-by-word acceptance
 **Day 3:** Use `<Alt-]>` to explore alternatives
 **Week 2:** Open panel with `<Alt-Enter>` for complex completions

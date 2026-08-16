@@ -10,9 +10,9 @@ local sysname = vim.loop.os_uname().sysname
 local term_program = vim.env.TERM_PROGRAM or ""
 local is_wezterm = term_program:lower():find("wezterm") ~= nil
 
--- Use tmux on Unix/Linux, skip on Windows (use WezTerm native)
--- WezTerm on Mac can use both tmux or native panes (tmux_slime preferred)
-local enable_tmux_slime = sysname ~= "Windows_NT"
+-- Only talk to tmux when we are actually inside a tmux session.
+-- Otherwise send to the Neovim/toggleterm job (Windows, WezTerm, VS Code).
+local enable_tmux_slime = sysname ~= "Windows_NT" and vim.env.TMUX ~= nil
 
 -- I borrowed this from https://github.com/you-n-g/deploy/blob/623a56064926fb551cff7e4afb0984d2233bf788/configs/lazynvim/lua/plugins/slime.lua#L18
 function reset_slime()

@@ -63,7 +63,8 @@ keymap("n", "N", "Nzzzv")
 
 -- Change entire word under cursor (regardless of cursor position within word)
 -- Note: native `cw` only changes cursor→end-of-word; `ciw` changes the whole word
-keymap("n", "<CR>", "ciw")
+-- g<CR> so Enter is free for VS Code accept / list select
+keymap("n", "g<CR>", "ciw")
 
 -- ============================================================================
 -- EDITING (pure Vim — no VSCode conflicts)

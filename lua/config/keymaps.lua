@@ -28,8 +28,8 @@ vim.keymap.set({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without yankin
 -- Join lines without moving cursor
 vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines (keep cursor)" })
 
--- Change word under cursor
-vim.keymap.set("n", "<CR>", "ciw", { desc = "Change word under cursor" })
+-- Change word under cursor (g<CR> so quickfix / loclist Enter still works)
+vim.keymap.set("n", "g<CR>", "ciw", { desc = "Change word under cursor" })
 
 -- Copy code block (visual select inside {})
 vim.keymap.set("n", "YY", "va{Vy", { desc = "Copy code block" })

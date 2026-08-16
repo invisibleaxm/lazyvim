@@ -5,7 +5,9 @@ if vim.g.vscode then
 end
 
 return {
-  -- Use Ctrl+J/K to navigate, Tab to accept, and Shift+Tab to move backward.
+  -- Match VS Code IntelliSense: Tab/S-Tab/C-j/C-k cycle, Enter accepts.
+  -- C-j/C-k have no fallback so a closed menu does not insert a newline
+  -- or start a digraph (i_CTRL-K). Shells keep Ctrl+K = kill-to-EOL.
   -- first: disable default <tab> and <s-tab> behavior in LuaSnip
   {
     "L3MON4D3/LuaSnip",
@@ -19,13 +21,19 @@ return {
     "saghen/blink.cmp",
     opts = function(_, opts)
       opts.keymap = opts.keymap or {}
-      opts.keymap["<C-j>"] = { "select_next", "fallback" }
-      opts.keymap["<C-k>"] = { "select_prev", "fallback" }
-      opts.keymap["<Tab>"] = { "accept", "snippet_forward", "fallback" }
+      opts.keymap["<Tab>"] = { "select_next", "snippet_forward", "fallback" }
       opts.keymap["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" }
-      opts.keymap["<CR>"] = { "fallback" }
+      opts.keymap["<C-j>"] = { "select_next" }
+      opts.keymap["<C-k>"] = { "select_prev" }
+      opts.keymap["<CR>"] = { "accept", "fallback" }
       opts.keymap["<Down>"] = { "select_next", "fallback" }
       opts.keymap["<Up>"] = { "select_prev", "fallback" }
+
+      -- First item preselected, like VS Code. Enter then accepts it.
+      -- Cycling does not insert (auto_insert = false) until Enter.
+      opts.completion = opts.completion or {}
+      opts.completion.list = opts.completion.list or {}
+      opts.completion.list.selection = { preselect = true, auto_insert = false }
 
       opts.sources = opts.sources or {}
       opts.sources.per_filetype = opts.sources.per_filetype or {}
