@@ -5,7 +5,7 @@ if vim.g.vscode then
 end
 
 return {
-  -- Use <tab> for completion and snippets (supertab)
+  -- Use Ctrl+J/K to navigate, Tab to accept, and Shift+Tab to move backward.
   -- first: disable default <tab> and <s-tab> behavior in LuaSnip
   {
     "L3MON4D3/LuaSnip",
@@ -15,13 +15,15 @@ return {
   },
 
   -- Blink is the active completion engine in LazyVim defaults.
-  -- Use Tab/Shift-Tab to navigate popup suggestions.
   {
     "saghen/blink.cmp",
     opts = function(_, opts)
       opts.keymap = opts.keymap or {}
-      opts.keymap["<Tab>"] = { "select_next", "snippet_forward", "fallback" }
+      opts.keymap["<C-j>"] = { "select_next", "fallback" }
+      opts.keymap["<C-k>"] = { "select_prev", "fallback" }
+      opts.keymap["<Tab>"] = { "accept", "snippet_forward", "fallback" }
       opts.keymap["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" }
+      opts.keymap["<CR>"] = { "fallback" }
       opts.keymap["<Down>"] = { "select_next", "fallback" }
       opts.keymap["<Up>"] = { "select_prev", "fallback" }
 

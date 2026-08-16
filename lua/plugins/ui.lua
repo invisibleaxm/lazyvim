@@ -18,6 +18,7 @@ return {
   --integrated tmux navigation, requires config on tmux to make it smooth
   {
     "aserowy/tmux.nvim",
+    cond = vim.loop.os_uname().sysname ~= "Windows_NT",
     opts = {
       resize = {
         enable_default_keybindings = false,

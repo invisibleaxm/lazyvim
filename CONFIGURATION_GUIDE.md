@@ -58,11 +58,12 @@ The autocompletion popup while typing. Sources are prioritized: LSP first, then 
 
 **Cheat sheet:**
 
-| Key                 | Action                                                                 |
-| ------------------- | ---------------------------------------------------------------------- |
-| `<Tab>` / `<S-Tab>` | Next/previous item (or accept Copilot / expand snippet if menu closed) |
-| `<CR>`              | Confirm the selected item                                              |
-| `<Up>` / `<Down>`   | Move up/down the popup list                                            |
+| Key                 | Action                                                              |
+| ------------------- | ------------------------------------------------------------------- |
+| `<C-j>` / `<C-k>`   | Next/previous item                                                  |
+| `<Tab>` / `<S-Tab>` | Accept selected item / move backward (or advance an active snippet) |
+| `<CR>`              | Insert a newline without accepting the suggestion                   |
+| `<Up>` / `<Down>`   | Move up/down the popup list                                         |
 
 🔗 [blink.cmp](https://github.com/Saghen/blink.cmp) · [LuaSnip](https://github.com/L3MON4D3/LuaSnip)
 
@@ -76,13 +77,12 @@ Copilot suggestions are integrated into the completion menu path (`vim.g.ai_cmp 
 
 **Cheat sheet:**
 
-| Key               | Action                   |
-| ----------------- | ------------------------ |
-| `<C-j>`           | Accept full suggestion   |
-| `<C-Right>`       | Accept next word only    |
-| `<C-l>`           | Accept current line only |
-| `<M-]>` / `<M-[>` | Next/previous suggestion |
-| `<C-]>`           | Dismiss suggestion       |
+| Key               | Action                        |
+| ----------------- | ----------------------------- |
+| `<C-j>` / `<C-k>` | Next/previous completion item |
+| `<Tab>`           | Accept selected completion    |
+| `<C-Right>`       | Accept next word only         |
+| `<C-l>`           | Accept current line only      |
 
 🔗 [copilot.lua](https://github.com/zbirenbaum/copilot.lua) · [GitHub Copilot](https://github.com/features/copilot)
 
