@@ -31,6 +31,9 @@ return {
       opts.sources.per_filetype = opts.sources.per_filetype or {}
       opts.sources.providers = opts.sources.providers or {}
 
+      -- Disable auto-triggered completion in Git commit messages; keep normal code completion unchanged.
+      opts.sources.per_filetype.gitcommit = { inherit_defaults = false }
+
       opts.sources.per_filetype.ps1 = { inherit_defaults = false, "lsp", "copilot", "snippets", "buffer" }
       opts.sources.per_filetype.psm1 = { inherit_defaults = false, "lsp", "copilot", "snippets", "buffer" }
       opts.sources.per_filetype.psd1 = { inherit_defaults = false, "lsp", "copilot", "snippets", "buffer" }
