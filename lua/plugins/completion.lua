@@ -66,9 +66,9 @@ return {
         score_offset = -10,
         min_keyword_length = function(ctx)
           if ctx and (ctx.filetype == "ps1" or ctx.filetype == "psm1" or ctx.filetype == "psd1" or ctx.filetype == "powershell") then
-            return 5
+            return 6
           end
-          return 4
+          return 5
         end,
         max_items = function(ctx)
           if ctx and (ctx.filetype == "ps1" or ctx.filetype == "psm1" or ctx.filetype == "psd1" or ctx.filetype == "powershell") then
@@ -85,7 +85,7 @@ return {
       })
       opts.sources.providers.path = vim.tbl_deep_extend("force", opts.sources.providers.path or {}, {
         score_offset = -20,
-        min_keyword_length = 3,
+        min_keyword_length = 4,
         max_items = 5,
         transform_items = function(_, items)
           return vim.tbl_filter(function(item)
