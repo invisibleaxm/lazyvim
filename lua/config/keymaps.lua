@@ -18,6 +18,11 @@ vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line to system clipboard"
 -- Paste from system clipboard without overwriting register
 vim.keymap.set("x", "<leader>p", '"_dP', { desc = "Paste without yanking" })
 
+-- Let clipboard managers that simulate Ctrl+V paste while typing.
+vim.keymap.set("i", "<C-v>", '<C-r>+', { desc = "Paste from system clipboard" })
+-- Preserve the built-in literal-character command on a separate chord.
+vim.keymap.set("i", "<C-q>", "<C-v>", { desc = "Insert next key literally" })
+
 -- Delete without yanking (use black hole register)
 vim.keymap.set({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without yanking" })
 
