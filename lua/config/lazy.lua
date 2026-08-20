@@ -26,8 +26,8 @@ require("lazy").setup({
 
     -- Coding
     { import = "lazyvim.plugins.extras.coding.luasnip" },
+    { import = "lazyvim.plugins.extras.coding.mini-surround" },
     -- { import = "lazyvim.plugins.extras.coding.mini-comment" },
-    -- { import = "lazyvim.plugins.extras.coding.mini-surround" },
     -- { import = "lazyvim.plugins.extras.coding.neogen" },
     -- { import = "lazyvim.plugins.extras.coding.nvim-cmp" },
     -- { import = "lazyvim.plugins.extras.coding.yanky" },
@@ -37,7 +37,8 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.dap.nlua" },
 
     -- Editor
-    { import = "lazyvim.plugins.extras.editor.mini-files" },
+    -- Neo-tree is the single file explorer for this configuration.
+    -- { import = "lazyvim.plugins.extras.editor.mini-files" },
     -- { import = "lazyvim.plugins.extras.editor.aerial" },
     -- { import = "lazyvim.plugins.extras.editor.dial" },
     -- { import = "lazyvim.plugins.extras.editor.harpoon2" },
@@ -141,7 +142,6 @@ require("lazy").setup({
         "netrwPlugin",
         "tarPlugin",
         "tohtml",
-        "tutor",
         "zipPlugin",
       },
     },

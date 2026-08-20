@@ -19,7 +19,10 @@ vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line to system clipboard"
 vim.keymap.set("x", "<leader>p", '"_dP', { desc = "Paste without yanking" })
 
 -- Let clipboard managers that simulate Ctrl+V paste while typing.
-vim.keymap.set("i", "<C-v>", '<C-r>+', { desc = "Paste from system clipboard" })
+-- nvim_paste's crlf=true strips CR so Windows-sourced clipboard text (e.g. via Ditto) pastes as LF-only.
+vim.keymap.set("i", "<C-v>", function()
+  vim.api.nvim_paste(vim.fn.getreg("+"), true, -1)
+end, { desc = "Paste from system clipboard (normalize CRLF to LF)" })
 -- Preserve the built-in literal-character command on a separate chord.
 vim.keymap.set("i", "<C-q>", "<C-v>", { desc = "Insert next key literally" })
 

@@ -8,6 +8,8 @@ return {
   {
     "nvim-neo-tree/neo-tree.nvim",
     opts = {
+      -- Exit Neovim once Neo-tree is the only window left in the tab.
+      close_if_last_window = true,
       open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
       filesystem = {
         filtered_items = {
