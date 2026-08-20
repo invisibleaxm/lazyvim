@@ -29,11 +29,10 @@ return {
       opts.keymap["<Down>"] = { "select_next", "fallback" }
       opts.keymap["<Up>"] = { "select_prev", "fallback" }
 
-      -- First item preselected, like VS Code. Enter then accepts it.
       -- Cycling does not insert (auto_insert = false) until Enter.
       opts.completion = opts.completion or {}
       opts.completion.list = opts.completion.list or {}
-      opts.completion.list.selection = { preselect = true, auto_insert = false }
+      opts.completion.list.selection = { preselect = false, auto_insert = false }
 
       opts.sources = opts.sources or {}
       opts.sources.per_filetype = opts.sources.per_filetype or {}
@@ -49,9 +48,11 @@ return {
 
       opts.sources.providers.lsp = vim.tbl_deep_extend("force", opts.sources.providers.lsp or {}, {
         score_offset = 20,
+        min_keyword_length = 5,
       })
       opts.sources.providers.copilot = vim.tbl_deep_extend("force", opts.sources.providers.copilot or {}, {
         score_offset = 15,
+        min_keyword_length = 5,
         max_items = function(ctx)
           if ctx and (ctx.filetype == "ps1" or ctx.filetype == "psm1" or ctx.filetype == "psd1" or ctx.filetype == "powershell") then
             return 5
@@ -61,12 +62,13 @@ return {
       })
       opts.sources.providers.snippets = vim.tbl_deep_extend("force", opts.sources.providers.snippets or {}, {
         score_offset = 10,
+        min_keyword_length = 5,
       })
       opts.sources.providers.buffer = vim.tbl_deep_extend("force", opts.sources.providers.buffer or {}, {
         score_offset = -10,
         min_keyword_length = function(ctx)
           if ctx and (ctx.filetype == "ps1" or ctx.filetype == "psm1" or ctx.filetype == "psd1" or ctx.filetype == "powershell") then
-            return 6
+            return 5
           end
           return 5
         end,
@@ -85,7 +87,7 @@ return {
       })
       opts.sources.providers.path = vim.tbl_deep_extend("force", opts.sources.providers.path or {}, {
         score_offset = -20,
-        min_keyword_length = 4,
+        min_keyword_length = 5,
         max_items = 5,
         transform_items = function(_, items)
           return vim.tbl_filter(function(item)

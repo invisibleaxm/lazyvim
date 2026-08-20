@@ -89,6 +89,7 @@ end
 -- ============================================================================
 
 vim.opt.numberwidth = 3 -- Narrower number column
+vim.opt.listchars:append({ trail = "·" })
 
 -- ============================================================================
 -- PLATFORM-SPECIFIC CONFIGURATION
