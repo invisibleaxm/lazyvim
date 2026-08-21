@@ -35,6 +35,12 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
   command = "set filetype=bicep",
 })
 
+-- VS Code workspace files: treat as JSON (jsonc, since VS Code allows comments there)
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  pattern = "*.code-workspace",
+  command = "set filetype=jsonc",
+})
+
 -- Azure DevOps pipeline files: special YAML filetype
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
   pattern = { "*/azure-pipeline*.y*l", "*/pipeline*/*.y*l" },
