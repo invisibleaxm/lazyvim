@@ -41,9 +41,9 @@ return {
         font = "FiraCode Nerd Font=34;Symbols Nerd Font Mono=34",
         output = function()
           if vim.loop.os_uname().sysname == "Windows_NT" then
-            return os.getenv("USERPROFILE") .. "\\dev\\tools\\snaps\\" .. os.date("!%Y-%m-%dT%H-%M-%S") .. "_code.png"
+            return os.getenv("USERPROFILE") .. "\\.local\\share\\nvim\\snaps\\" .. os.date("!%Y-%m-%dT%H-%M-%S") .. "_code.png"
           else
-            return "~/dev/tools/snaps/" .. os.date("!%Y-%m-%dT%H-%M-%S") .. "_code.png"
+            return "~/.local/share/nvim/snaps/" .. os.date("!%Y-%m-%dT%H-%M-%S") .. "_code.png"
           end
         end,
       })
