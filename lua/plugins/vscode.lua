@@ -96,10 +96,13 @@ keymap("x", "<leader>rs", function()
   paste_from_vscode_clipboard()
 end, { desc = "Replace selection with system clipboard" })
 
-keymap("n", "<leader>rp", function()
+local function replace_file_with_vscode_clipboard()
   vim.fn.VSCodeCall("editor.action.selectAll")
   paste_from_vscode_clipboard()
-end, { desc = "Replace file with system clipboard" })
+end
+
+keymap("n", "<leader>rf", replace_file_with_vscode_clipboard, { desc = "Replace file with system clipboard" })
+keymap("n", "<leader>R", replace_file_with_vscode_clipboard, { desc = "Replace file with system clipboard" })
 
 -- Yank to system clipboard
 keymap({ "n", "v" }, "<leader>y", '"+y')

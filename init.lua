@@ -5,7 +5,7 @@ vim.g.loaded_perl_provider = 0
 
 if vim.g.vscode then
   -- ========================================================================
-  -- VSCODE MODE: Minimal config, pure Neovim motions only
+  -- VSCODE MODE: Minimal config, but still load the VS Code keymap layer.
   -- ========================================================================
   vim.notify = function() end -- Disable notifications in VSCode
 
@@ -18,7 +18,8 @@ if vim.g.vscode then
   vim.opt.ignorecase = true          -- Case-insensitive search
   vim.opt.smartcase = true           -- Case-sensitive if uppercase present
 
-  -- STOP HERE: No plugins, no LazyVim, no keymaps - pure Vim motions
+  -- Load custom VS Code mappings before returning.
+  require("plugins.vscode")
   return
 end
 
