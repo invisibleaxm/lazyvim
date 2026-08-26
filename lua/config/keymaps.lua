@@ -2,6 +2,16 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+local function normalize_windows_clipboard_text(text)
+  if type(text) ~= "string" then
+    return text
+  end
+
+  text = text:gsub("\r\n", "\n")
+  text = text:gsub("\r", "\n")
+  return text
+end
+
 -- Skip VSCode-specific keymaps if running in VSCode (handled in plugins/vscode.lua)
 if vim.g.vscode then
   return
@@ -20,7 +30,8 @@ vim.keymap.set("x", "<leader>p", '"_dP', { desc = "Paste without yanking" })
 vim.keymap.set("x", "<leader>rs", '"_d"+P', { desc = "Replace selection with system clipboard" })
 
 local function replace_file_with_system_clipboard()
-  local lines = vim.fn.getreg("+", 1, true)
+  local text = normalize_windows_clipboard_text(vim.fn.getreg("+"))
+  local lines = vim.split(text, "\n", { plain = true })
   if #lines == 0 then
     lines = { "" }
   end
@@ -35,7 +46,8 @@ vim.keymap.set("n", "<leader>R", replace_file_with_system_clipboard, { desc = "R
 -- Let clipboard managers that simulate Ctrl+V paste while typing.
 -- nvim_paste's crlf=true strips CR so Windows-sourced clipboard text (e.g. via Ditto) pastes as LF-only.
 vim.keymap.set("i", "<C-v>", function()
-  vim.api.nvim_paste(vim.fn.getreg("+"), true, -1)
+  local text = normalize_windows_clipboard_text(vim.fn.getreg("+"))
+  vim.api.nvim_paste(text, true, -1)
 end, { desc = "Paste from system clipboard (normalize CRLF to LF)" })
 -- Preserve the built-in literal-character command on a separate chord.
 vim.keymap.set("i", "<C-q>", "<C-v>", { desc = "Insert next key literally" })

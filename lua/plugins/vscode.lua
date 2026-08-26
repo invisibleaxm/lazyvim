@@ -33,7 +33,22 @@ end
 -- Keymaps that work well in VSCode
 local keymap = vim.keymap.set
 
+local function normalize_windows_clipboard_text(text)
+  if type(text) ~= "string" then
+    return text
+  end
+
+  text = text:gsub("\r\n", "\n")
+  text = text:gsub("\r", "\n")
+  return text
+end
+
 local function paste_from_vscode_clipboard(delay_ms)
+  local clipboard_text = normalize_windows_clipboard_text(vim.fn.getreg("+"))
+  if clipboard_text ~= nil then
+    vim.fn.setreg("+", clipboard_text)
+  end
+
   vim.defer_fn(function()
     vim.fn.VSCodeCall("editor.action.clipboardPasteAction")
   end, delay_ms or 30)
@@ -97,6 +112,11 @@ keymap("x", "<leader>rs", function()
 end, { desc = "Replace selection with system clipboard" })
 
 local function replace_file_with_vscode_clipboard()
+  local clipboard_text = normalize_windows_clipboard_text(vim.fn.getreg("+"))
+  if clipboard_text ~= nil then
+    vim.fn.setreg("+", clipboard_text)
+  end
+
   vim.fn.VSCodeCall("editor.action.selectAll")
   paste_from_vscode_clipboard()
 end
