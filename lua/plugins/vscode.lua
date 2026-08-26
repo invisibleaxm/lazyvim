@@ -33,6 +33,12 @@ end
 -- Keymaps that work well in VSCode
 local keymap = vim.keymap.set
 
+local function paste_from_vscode_clipboard(delay_ms)
+  vim.defer_fn(function()
+    vim.fn.VSCodeCall("editor.action.clipboardPasteAction")
+  end, delay_ms or 30)
+end
+
 -- Better navigation
 keymap("n", "<C-j>", ":call VSCodeNotify('workbench.action.navigateDown')<CR>")
 keymap("n", "<C-k>", ":call VSCodeNotify('workbench.action.navigateUp')<CR>")
@@ -87,12 +93,12 @@ keymap("n", "YY", "va{Vy")
 keymap("x", "<leader>p", '"_dP')
 
 keymap("x", "<leader>rs", function()
-  vim.fn.VSCodeCall("editor.action.clipboardPasteAction")
+  paste_from_vscode_clipboard()
 end, { desc = "Replace selection with system clipboard" })
 
 keymap("n", "<leader>rp", function()
   vim.fn.VSCodeCall("editor.action.selectAll")
-  vim.fn.VSCodeCall("editor.action.clipboardPasteAction")
+  paste_from_vscode_clipboard()
 end, { desc = "Replace file with system clipboard" })
 
 -- Yank to system clipboard
