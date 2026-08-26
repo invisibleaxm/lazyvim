@@ -17,6 +17,17 @@ vim.keymap.set("n", "<leader>Y", '"+Y', { desc = "Yank line to system clipboard"
 
 -- Paste from system clipboard without overwriting register
 vim.keymap.set("x", "<leader>p", '"_dP', { desc = "Paste without yanking" })
+vim.keymap.set("x", "<leader>rs", '"_d"+P', { desc = "Replace selection with system clipboard" })
+
+vim.keymap.set("n", "<leader>rp", function()
+  local lines = vim.fn.getreg("+", 1, true)
+  if #lines == 0 then
+    lines = { "" }
+  end
+
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
+  vim.api.nvim_win_set_cursor(0, { 1, 0 })
+end, { desc = "Replace file with system clipboard" })
 
 -- Let clipboard managers that simulate Ctrl+V paste while typing.
 -- nvim_paste's crlf=true strips CR so Windows-sourced clipboard text (e.g. via Ditto) pastes as LF-only.

@@ -86,6 +86,15 @@ keymap("n", "YY", "va{Vy")
 -- Better paste (visual: replace selection without overwriting register)
 keymap("x", "<leader>p", '"_dP')
 
+keymap("x", "<leader>rs", function()
+  vim.fn.VSCodeCall("editor.action.clipboardPasteAction")
+end, { desc = "Replace selection with system clipboard" })
+
+keymap("n", "<leader>rp", function()
+  vim.fn.VSCodeCall("editor.action.selectAll")
+  vim.fn.VSCodeCall("editor.action.clipboardPasteAction")
+end, { desc = "Replace file with system clipboard" })
+
 -- Yank to system clipboard
 keymap({ "n", "v" }, "<leader>y", '"+y')
 keymap("n", "<leader>Y", '"+Y')

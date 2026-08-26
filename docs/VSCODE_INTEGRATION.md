@@ -74,17 +74,17 @@
 
 All your VSCode keybindings from `keybindings.json` continue to work:
 
-| Key      | Action                | Context          |
-| -------- | --------------------- | ---------------- |
-| `Ctrl+E` | Open Explorer         | Always           |
-| `Ctrl+J` | IntelliSense next     | When suggesting  |
-| `Ctrl+K` | IntelliSense previous | When suggesting  |
-| `Tab`    | IntelliSense next     | When suggesting  |
-| `Enter`  | Accept suggestion     | When suggesting  |
-| `Alt+\`` | Focus swap editor/terminal | Always      |
-| `Ctrl+\`` | Toggle terminal panel | Always           |
-| `j`/`k`  | Navigate explorer     | In file explorer |
-| `r`      | Rename file           | In file explorer |
+| Key       | Action                     | Context          |
+| --------- | -------------------------- | ---------------- |
+| `Ctrl+E`  | Open Explorer              | Always           |
+| `Ctrl+J`  | IntelliSense next          | When suggesting  |
+| `Ctrl+K`  | IntelliSense previous      | When suggesting  |
+| `Tab`     | IntelliSense next          | When suggesting  |
+| `Enter`   | Accept suggestion          | When suggesting  |
+| `Alt+\``  | Focus swap editor/terminal | Always           |
+| `Ctrl+\`` | Toggle terminal panel      | Always           |
+| `j`/`k`   | Navigate explorer          | In file explorer |
+| `r`       | Rename file                | In file explorer |
 
 ### Vim Keybindings (When Neovim Active)
 
@@ -103,16 +103,18 @@ All your VSCode keybindings from `keybindings.json` continue to work:
 
 Your `vscode.lua` is configured with these leader key commands:
 
-| Key          | Action                       |
-| ------------ | ---------------------------- |
-| `<leader>ff` | Quick Open (VSCode `Ctrl+P`) |
-| `<leader>fg` | Find in Files                |
-| `<leader>fb` | Show All Editors             |
-| `<leader>ca` | Code Actions                 |
-| `gd`         | Go to Definition             |
-| `gr`         | Go to References             |
-| `K`          | Show Hover                   |
-| `gcc`        | Toggle Comment               |
+| Key          | Action                           |
+| ------------ | -------------------------------- |
+| `<leader>ff` | Quick Open (VSCode `Ctrl+P`)     |
+| `<leader>fg` | Find in Files                    |
+| `<leader>fb` | Show All Editors                 |
+| `<leader>ca` | Code Actions                     |
+| `<leader>rp` | Replace file with clipboard      |
+| `<leader>rs` | Replace selection with clipboard |
+| `gd`         | Go to Definition                 |
+| `gr`         | Go to References                 |
+| `K`          | Show Hover                       |
+| `gcc`        | Toggle Comment                   |
 
 💡 **Leader key is `Space`** - same as standalone Neovim!
 

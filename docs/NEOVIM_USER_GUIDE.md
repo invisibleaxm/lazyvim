@@ -21,6 +21,7 @@
 ### First Launch
 
 After installation, Neovim will automatically:
+
 - Install all plugins via Lazy.nvim
 - Set up LSP servers via Mason
 - Compile Treesitter parsers
@@ -46,71 +47,73 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 
 ### Navigation & Movement
 
-| Key | Mode | Action |
-|-----|------|--------|
+| Key     | Mode   | Action                              |
+| ------- | ------ | ----------------------------------- |
 | `<C-d>` | Normal | Scroll down (cursor stays centered) |
-| `<C-u>` | Normal | Scroll up (cursor stays centered) |
-| `n` | Normal | Next search result (centered) |
-| `N` | Normal | Previous search result (centered) |
-| `J` | Normal | Join lines (cursor stays in place) |
+| `<C-u>` | Normal | Scroll up (cursor stays centered)   |
+| `n`     | Normal | Next search result (centered)       |
+| `N`     | Normal | Previous search result (centered)   |
+| `J`     | Normal | Join lines (cursor stays in place)  |
 
 ### File Operations
 
-| Key | Mode | Action |
-|-----|------|--------|
-| `<leader>ff` | Normal | Find files (Telescope) |
+| Key          | Mode   | Action                      |
+| ------------ | ------ | --------------------------- |
+| `<leader>ff` | Normal | Find files (Telescope)      |
 | `<leader>fg` | Normal | Live grep (search in files) |
-| `<leader>fb` | Normal | Find buffers |
-| `<leader>fr` | Normal | Recent files |
-| `<leader>w` | Normal | Save file |
-| `<leader>W` | Normal | Save all files |
-| `<leader>q` | Normal | Quit window |
-| `<leader>Q` | Normal | Quit all |
+| `<leader>fb` | Normal | Find buffers                |
+| `<leader>fr` | Normal | Recent files                |
+| `<leader>w`  | Normal | Save file                   |
+| `<leader>W`  | Normal | Save all files              |
+| `<leader>q`  | Normal | Quit window                 |
+| `<leader>Q`  | Normal | Quit all                    |
 
 ### Clipboard Operations
 
-| Key | Mode | Action |
-|-----|------|--------|
-| `<leader>y` | Normal/Visual | Yank to system clipboard |
-| `<leader>Y` | Normal | Yank line to system clipboard |
-| `<leader>p` | Visual | Paste without yanking (keeps register) |
-| `<leader>d` | Normal/Visual | Delete without yanking (black hole register) |
+| Key          | Mode          | Action                                       |
+| ------------ | ------------- | -------------------------------------------- |
+| `<leader>y`  | Normal/Visual | Yank to system clipboard                     |
+| `<leader>Y`  | Normal        | Yank line to system clipboard                |
+| `<leader>p`  | Visual        | Paste without yanking (keeps register)       |
+| `<leader>rp` | Normal        | Replace file with system clipboard           |
+| `<leader>rs` | Visual        | Replace selection with system clipboard      |
+| `<leader>d`  | Normal/Visual | Delete without yanking (black hole register) |
 
 💡 **Tip:** Mouse selections automatically copy to clipboard!
 
 ### Editing
 
-| Key | Mode | Action |
-|-----|------|--------|
-| `g<CR>` | Normal | Change word under cursor |
-| `YY` | Normal | Copy entire code block (`{}`) |
+| Key     | Mode   | Action                                           |
+| ------- | ------ | ------------------------------------------------ |
+| `g<CR>` | Normal | Change word under cursor                         |
+| `YY`    | Normal | Copy entire code block (`{}`)                    |
 | `<A-F>` | Normal | Format file with LSP (like VSCode `Alt+Shift+F`) |
-| `gcc` | Normal | Toggle line comment |
-| `gc` | Visual | Toggle comment on selection |
+| `gcc`   | Normal | Toggle line comment                              |
+| `gc`    | Visual | Toggle comment on selection                      |
 
 ### Code Navigation
 
-| Key | Mode | Action |
-|-----|------|--------|
-| `gd` | Normal | Go to definition |
-| `gr` | Normal | Go to references |
-| `gi` | Normal | Go to implementation |
-| `gy` | Normal | Go to type definition |
-| `K` | Normal | Show hover documentation |
-| `<leader>ca` | Normal | Code actions |
-| `<leader>cr` | Normal | Rename symbol |
-| `[d` | Normal | Previous diagnostic |
-| `]d` | Normal | Next diagnostic |
+| Key          | Mode   | Action                   |
+| ------------ | ------ | ------------------------ |
+| `gd`         | Normal | Go to definition         |
+| `gr`         | Normal | Go to references         |
+| `gi`         | Normal | Go to implementation     |
+| `gy`         | Normal | Go to type definition    |
+| `K`          | Normal | Show hover documentation |
+| `<leader>ca` | Normal | Code actions             |
+| `<leader>cr` | Normal | Rename symbol            |
+| `[d`         | Normal | Previous diagnostic      |
+| `]d`         | Normal | Next diagnostic          |
 
 ### LSP & Diagnostics
 
-| Key | Mode | Action |
-|-----|------|--------|
-| `<leader>cd` | Normal | Line diagnostics |
-| `<leader>cl` | Normal | LSP info |
-| `<leader>xx` | Normal | Trouble: Document diagnostics |
+| Key          | Mode   | Action                         |
+| ------------ | ------ | ------------------------------ |
+| `<leader>cd` | Normal | Line diagnostics               |
+| `<leader>cl` | Normal | LSP info                       |
+| `<leader>xx` | Normal | Trouble: Document diagnostics  |
 | `<leader>xX` | Normal | Trouble: Workspace diagnostics |
-| `<leader>xq` | Normal | Trouble: Quickfix list |
+| `<leader>xq` | Normal | Trouble: Quickfix list         |
 
 ---
 
@@ -120,18 +123,19 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 
 **Find anything in your project:**
 
-| Keymap | Description |
-|--------|-------------|
-| `<leader>ff` | Find files by name |
+| Keymap       | Description                      |
+| ------------ | -------------------------------- |
+| `<leader>ff` | Find files by name               |
 | `<leader>fg` | Live grep (search text in files) |
-| `<leader>fb` | Find open buffers |
-| `<leader>fh` | Find help tags |
-| `<leader>fr` | Recent files |
-| `<leader>fo` | Find old files |
-| `<leader>fc` | Find commands |
-| `<leader>fk` | Find keymaps |
+| `<leader>fb` | Find open buffers                |
+| `<leader>fh` | Find help tags                   |
+| `<leader>fr` | Recent files                     |
+| `<leader>fo` | Find old files                   |
+| `<leader>fc` | Find commands                    |
+| `<leader>fk` | Find keymaps                     |
 
 **Inside Telescope:**
+
 - `<C-j>` / `<C-k>` - Navigate up/down
 - `<C-n>` / `<C-p>` - Next/previous
 - `<CR>` - Open file
@@ -141,12 +145,13 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 
 ### Neo-tree (File Explorer)
 
-| Keymap | Description |
-|--------|-------------|
-| `<leader>e` | Toggle file explorer (focus) |
+| Keymap      | Description                     |
+| ----------- | ------------------------------- |
+| `<leader>e` | Toggle file explorer (focus)    |
 | `<leader>E` | Toggle file explorer (no focus) |
 
 **Inside Neo-tree:**
+
 - `<Space>` - Toggle node
 - `a` - Add file/folder
 - `d` - Delete
@@ -166,21 +171,22 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 
 #### Quick Reference
 
-| Keymap | Mode | Action |
-|--------|------|--------|
-| `<Tab>` | Insert | Next completion item (menu open) |
-| `<C-j>` | Insert | Next completion item (menu open only) |
-| `<C-Right>` | Insert | Accept next word only |
-| `<C-l>` | Insert | Accept line only |
-| `<Alt-]>` | Insert | Next Copilot suggestion |
-| `<Alt-[>` | Insert | Previous Copilot suggestion |
-| `<C-]>` | Insert | Dismiss Copilot suggestion |
-| `<Alt-Enter>` | Insert | Open Copilot panel (all suggestions) |
-| `<leader>co` | Normal | Toggle Copilot on/off |
+| Keymap        | Mode   | Action                                |
+| ------------- | ------ | ------------------------------------- |
+| `<Tab>`       | Insert | Next completion item (menu open)      |
+| `<C-j>`       | Insert | Next completion item (menu open only) |
+| `<C-Right>`   | Insert | Accept next word only                 |
+| `<C-l>`       | Insert | Accept line only                      |
+| `<Alt-]>`     | Insert | Next Copilot suggestion               |
+| `<Alt-[>`     | Insert | Previous Copilot suggestion           |
+| `<C-]>`       | Insert | Dismiss Copilot suggestion            |
+| `<Alt-Enter>` | Insert | Open Copilot panel (all suggestions)  |
+| `<leader>co`  | Normal | Toggle Copilot on/off                 |
 
 **📖 Complete Copilot Guide:** [COPILOT_QUICKREF.md](COPILOT_QUICKREF.md)
 
 #### How it works:
+
 1. Type code naturally
 2. Copilot shows gray ghost text suggestions
 3. **Press `Enter` to accept** the selected menu item (`Tab` / `Ctrl+J` cycle)
@@ -193,10 +199,12 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 **Problem:** Completion menu is open (takes priority over Copilot).
 
 **Solution:**
+
 - Press `Enter` to accept the selected menu item
 - Or press `<C-e>` to close the menu, then keep typing
 
 **First time setup:**
+
 ```
 :Copilot auth
 ```
@@ -206,19 +214,20 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 **Smart autocompletion while typing:**
 
 **Source priority:**
+
 1. **LSP** - Language server keywords (highest priority)
 2. **Copilot** - AI suggestions
 3. **Snippets** - Code templates
 4. **Buffer** - Words from open files (4+ characters)
 5. **Path** - File paths (3+ characters)
 
-| Keymap | Mode | Action |
-|--------|------|--------|
-| `<Tab>` / `<C-j>` / Down | Insert | Next completion item |
-| `<S-Tab>` / `<C-k>` / Up | Insert | Previous completion item |
-| `<CR>` | Insert | Accept selected item (newline if menu closed) |
-| `<C-Space>` | Insert | Trigger completion manually |
-| `<C-e>` | Insert | Close completion menu |
+| Keymap                   | Mode   | Action                                        |
+| ------------------------ | ------ | --------------------------------------------- |
+| `<Tab>` / `<C-j>` / Down | Insert | Next completion item                          |
+| `<S-Tab>` / `<C-k>` / Up | Insert | Previous completion item                      |
+| `<CR>`                   | Insert | Accept selected item (newline if menu closed) |
+| `<C-Space>`              | Insert | Trigger completion manually                   |
+| `<C-e>`                  | Insert | Close completion menu                         |
 
 💡 **Non-aggressive:** Completions won't auto-insert, you must select them!
 
@@ -226,22 +235,22 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 
 **Better error/warning list:**
 
-| Keymap | Description |
-|--------|-------------|
-| `<leader>xx` | Document diagnostics |
+| Keymap       | Description           |
+| ------------ | --------------------- |
+| `<leader>xx` | Document diagnostics  |
 | `<leader>xX` | Workspace diagnostics |
-| `<leader>xL` | Location list |
-| `<leader>xQ` | Quickfix list |
+| `<leader>xL` | Location list         |
+| `<leader>xQ` | Quickfix list         |
 
 ### Notifications (Noice + Notify)
 
 **Notification center:**
 
-| Keymap | Description |
-|--------|-------------|
+| Keymap       | Description               |
+| ------------ | ------------------------- |
 | `<leader>un` | Dismiss all notifications |
-| `<leader>nh` | Notification history |
-| `<leader>sn` | Search notifications |
+| `<leader>nh` | Notification history      |
+| `<leader>sn` | Search notifications      |
 
 ---
 
@@ -251,16 +260,16 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 
 ### Quick Reference
 
-| Keymap | Description |
-|--------|-------------|
-| `<leader>pp` | Toggle PowerShell terminal (floating) |
-| `<leader>pr` | Run current PowerShell script |
-| `<leader>pt` | Run Pester tests |
-| `<leader>pa` | Analyze script (PSScriptAnalyzer) |
-| `<leader>ph` | Get PowerShell help |
-| `<leader>pf` | Format PowerShell file |
-| `<F9>` | Send current line to terminal |
-| `<F9>` | Send visual selection to terminal (Visual mode) |
+| Keymap       | Description                                     |
+| ------------ | ----------------------------------------------- |
+| `<leader>pp` | Toggle PowerShell terminal (floating)           |
+| `<leader>pr` | Run current PowerShell script                   |
+| `<leader>pt` | Run Pester tests                                |
+| `<leader>pa` | Analyze script (PSScriptAnalyzer)               |
+| `<leader>ph` | Get PowerShell help                             |
+| `<leader>pf` | Format PowerShell file                          |
+| `<F9>`       | Send current line to terminal                   |
+| `<F9>`       | Send visual selection to terminal (Visual mode) |
 
 ### Features
 
@@ -274,11 +283,13 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 ### Workflow: Edit & Test
 
 **Method 1: Quick Run**
+
 1. Edit your `.ps1` file
 2. Press `<leader>pr` to run entire script
 3. View output in terminal
 
 **Method 2: Interactive Testing**
+
 1. Edit your `.ps1` file
 2. Press `<leader>pp` to open PowerShell terminal (floating)
 3. Select code you want to test (Visual mode)
@@ -287,6 +298,7 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 6. Close terminal with `<leader>pp` again
 
 **Method 3: Pester Tests**
+
 1. Write Pester tests in `.Tests.ps1` file
 2. Press `<leader>pt` to run tests
 3. View test results
@@ -294,6 +306,7 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 ### Code Formatting
 
 Your PowerShell files use **OTBS formatting**:
+
 - Opening brace on same line
 - Proper indentation
 - Correct cmdlet casing
@@ -307,17 +320,18 @@ Your PowerShell files use **OTBS formatting**:
 
 Type these abbreviations and press `<Tab>`:
 
-| Trigger | Expands To |
-|---------|------------|
-| `func` | Function template |
-| `param` | Parameter block |
-| `try` | Try-catch-finally |
+| Trigger   | Expands To          |
+| --------- | ------------------- |
+| `func`    | Function template   |
+| `param`   | Parameter block     |
+| `try`     | Try-catch-finally   |
 | `foreach` | ForEach-Object loop |
-| `help` | Comment-based help |
+| `help`    | Comment-based help  |
 
 ### PowerShell Completion Behavior
 
 **Smart completion tuning for PowerShell files:**
+
 - LSP keywords (like `function`, `param`) appear **first**
 - Copilot suggestions **second**
 - Snippets **third**
@@ -328,30 +342,35 @@ Type these abbreviations and press `<Tab>`:
 
 ### Terminal Integration
 
-| Keymap | Description |
-|--------|-------------|
+| Keymap       | Description                           |
+| ------------ | ------------------------------------- |
 | `<leader>pp` | PowerShell terminal (floating window) |
-| `<C-\>` | General terminal (horizontal split) |
-| `<F9>` | Send code to terminal |
+| `<C-\>`      | General terminal (horizontal split)   |
+| `<F9>`       | Send code to terminal                 |
 
 **PowerShell terminal** is pre-configured with `pwsh -NoLogo` for clean output.
 
 ### Troubleshooting PowerShell LSP
 
 **LSP not working?**
+
 ```
 :Mason
 ```
+
 Install `powershell-editor-services`
 
 **Formatting not working?**
+
 ```
 :LspInfo
 ```
+
 Check if `powershell_es` is attached
 
 **Code analysis not running?**
 Install PSScriptAnalyzer:
+
 ```powershell
 Install-Module PSScriptAnalyzer -Scope CurrentUser
 ```
@@ -359,6 +378,7 @@ Install-Module PSScriptAnalyzer -Scope CurrentUser
 ### PowerShell Best Practices
 
 Your LSP is configured to enforce:
+
 - ✅ Use full cmdlet names (no aliases)
 - ✅ Proper PascalCase for cmdlets
 - ✅ Consistent brace style (OTBS)
@@ -375,16 +395,16 @@ See full guide: [POWERSHELL_DEVELOPMENT.md](POWERSHELL_DEVELOPMENT.md)
 
 ### Debug Keybindings
 
-| Key | Action |
-|-----|--------|
-| `<F5>` | Start/Continue debugging |
-| `<Shift-F5>` | Stop debugging |
-| `<F8>` | Toggle breakpoint |
-| `<F10>` | Step over |
-| `<F11>` | Step into |
-| `<F12>` | Step out |
-| `<leader>dh` | Hover variables |
-| `<leader>dP` | Preview variables |
+| Key          | Action                   |
+| ------------ | ------------------------ |
+| `<F5>`       | Start/Continue debugging |
+| `<Shift-F5>` | Stop debugging           |
+| `<F8>`       | Toggle breakpoint        |
+| `<F10>`      | Step over                |
+| `<F11>`      | Step into                |
+| `<F12>`      | Step out                 |
+| `<leader>dh` | Hover variables          |
+| `<leader>dP` | Preview variables        |
 
 ### Workflow
 
@@ -402,13 +422,14 @@ See full guide: [POWERSHELL_DEVELOPMENT.md](POWERSHELL_DEVELOPMENT.md)
 
 ### LazyGit (Best Way)
 
-| Keymap | Description |
-|--------|-------------|
+| Keymap       | Description                            |
+| ------------ | -------------------------------------- |
 | `<leader>gg` | Open LazyGit (full-screen terminal UI) |
-| `<leader>gf` | LazyGit current file history |
-| `<leader>gl` | LazyGit log |
+| `<leader>gf` | LazyGit current file history           |
+| `<leader>gl` | LazyGit log                            |
 
 **Inside LazyGit:**
+
 - `1-5` - Switch panels (Status, Files, Branches, Commits, Stash)
 - `<Space>` - Stage/unstage file
 - `c` - Commit
@@ -419,14 +440,14 @@ See full guide: [POWERSHELL_DEVELOPMENT.md](POWERSHELL_DEVELOPMENT.md)
 
 ### Gitsigns (In-buffer Git)
 
-| Keymap | Description |
-|--------|-------------|
-| `<leader>ghs` | Stage hunk |
-| `<leader>ghr` | Reset hunk |
-| `<leader>ghp` | Preview hunk |
-| `<leader>ghb` | Blame line |
-| `[h` | Previous hunk |
-| `]h` | Next hunk |
+| Keymap        | Description   |
+| ------------- | ------------- |
+| `<leader>ghs` | Stage hunk    |
+| `<leader>ghr` | Reset hunk    |
+| `<leader>ghp` | Preview hunk  |
+| `<leader>ghb` | Blame line    |
+| `[h`          | Previous hunk |
+| `]h`          | Next hunk     |
 
 ---
 
@@ -463,6 +484,7 @@ See full guide: [POWERSHELL_DEVELOPMENT.md](POWERSHELL_DEVELOPMENT.md)
 3. **Send code to active terminal:** `<F9>`
 
 **Terminal mode shortcuts:**
+
 - `<C-\><C-n>` - Exit terminal mode (back to Normal mode)
 - `i` or `a` - Enter terminal mode
 
@@ -470,14 +492,15 @@ See full guide: [POWERSHELL_DEVELOPMENT.md](POWERSHELL_DEVELOPMENT.md)
 
 **Send code directly to a terminal** for interactive development:
 
-| Keymap | Mode | Action |
-|--------|------|--------|
+| Keymap | Mode   | Action                                                |
+| ------ | ------ | ----------------------------------------------------- |
 | `<F9>` | Normal | Send current line to the toggleterm floating terminal |
-| `<F9>` | Visual | Send selection to the toggleterm floating terminal |
+| `<F9>` | Visual | Send selection to the toggleterm floating terminal    |
 
 `<F9>` uses toggleterm.nvim's own built-in send commands (`ToggleTermSendCurrentLine`/`ToggleTermSendVisualLines`) — it works the same on every OS and doesn't depend on tmux or WezTerm at all.
 
 **Example workflow (Python REPL):**
+
 1. Open terminal: `<C-\>`
 2. Start Python REPL: `python`
 3. Switch back to your code buffer
@@ -485,33 +508,37 @@ See full guide: [POWERSHELL_DEVELOPMENT.md](POWERSHELL_DEVELOPMENT.md)
 5. Code executes in REPL immediately!
 
 **Example workflow (PowerShell):**
+
 1. Open PowerShell terminal: `<leader>pp`
 2. Select code to test
 3. Press `<F9>` - runs in terminal
 4. Iterate quickly without saving file
 
 **Tips:**
+
 - Works with any REPL: Python, PowerShell, Node.js, R, Julia
 - Send entire functions or single lines
 - Much faster than copy-paste for interactive development
 
 #### Optional: vim-slime (send to an external pane)
 
-If you'd rather send code to a pane *outside* Neovim (e.g. a real tmux/WezTerm pane instead of the in-editor toggleterm terminal), `vim-slime` is also configured, via its own commands (`:SlimeSend`, `:SlimeSendCurrentLine`, etc. — not bound to `<F9>`):
+If you'd rather send code to a pane _outside_ Neovim (e.g. a real tmux/WezTerm pane instead of the in-editor toggleterm terminal), `vim-slime` is also configured, via its own commands (`:SlimeSend`, `:SlimeSendCurrentLine`, etc. — not bound to `<F9>`):
 
 - **Linux/macOS:** targets tmux panes (default target: `{right-of}`)
 - **Windows:** defaults to targeting the toggleterm floating terminal directly (no external terminal app needed). If you prefer sending to real WezTerm panes instead, see the alternate config commented in [lua/plugins/toggleterm.lua](../lua/plugins/toggleterm.lua).
 
 **First time setup:**
+
 ```vim
 :SlimeConfig
 ```
-You'll be prompted for target-specific configuration (e.g. socket name/target pane for tmux, or pane ID for WezTerm — find WezTerm pane IDs with `wezterm cli list`).
 
+You'll be prompted for target-specific configuration (e.g. socket name/target pane for tmux, or pane ID for WezTerm — find WezTerm pane IDs with `wezterm cli list`).
 
 ### Maximizing Productivity
 
 **Learn these first:**
+
 1. `<leader>ff` - Find files (most used!)
 2. `<leader>fg` - Search in files
 3. `<leader>e` - File explorer
@@ -520,6 +547,7 @@ You'll be prompted for target-specific configuration (e.g. socket name/target pa
 6. `<leader>pf` - Format file
 
 **VSCode Users:**
+
 - `<C-p>` still works (opens Telescope file finder)
 - `<A-F>` formats (like `Alt+Shift+F`)
 - Mouse works! (click, select, scroll)
