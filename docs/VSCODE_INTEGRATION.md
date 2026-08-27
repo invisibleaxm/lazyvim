@@ -109,7 +109,7 @@ Your `vscode.lua` is configured with these leader key commands:
 | `<leader>fg` | Find in Files                    |
 | `<leader>fb` | Show All Editors                 |
 | `<leader>ca` | Code Actions                     |
-| `<leader>rp` | Replace file with clipboard      |
+| `<leader>rf` | Replace file with clipboard      |
 | `<leader>rs` | Replace selection with clipboard |
 | `gd`         | Go to Definition                 |
 | `gr`         | Go to References                 |

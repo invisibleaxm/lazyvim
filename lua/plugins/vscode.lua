@@ -8,27 +8,28 @@ end
 -- from nvim_set_current_win being called with a stale window id (e.g. after
 -- Copilot Chat / any webview steals focus). Patching the API avoids the error
 -- being generated at all, which prevents the VS Code notification.
-local _orig_set_current_win = vim.api.nvim_set_current_win
-vim.api.nvim_set_current_win = function(win)
-  if vim.api.nvim_win_is_valid(win) then
-    _orig_set_current_win(win)
-  end
-end
 
-local _orig_win_set_cursor = vim.api.nvim_win_set_cursor
-vim.api.nvim_win_set_cursor = function(win, pos)
-  if vim.api.nvim_win_is_valid(win) then
-    _orig_win_set_cursor(win, pos)
-  end
-end
+-- local _orig_set_current_win = vim.api.nvim_set_current_win
+-- vim.api.nvim_set_current_win = function(win)
+--   if vim.api.nvim_win_is_valid(win) then
+--     _orig_set_current_win(win)
+--   end
+-- end
 
-local _orig_notify = vim.notify
-vim.notify = function(msg, level, opts)
-  if type(msg) == "string" and msg:match("Invalid window id") then
-    return
-  end
-  _orig_notify(msg, level, opts)
-end
+-- local _orig_win_set_cursor = vim.api.nvim_win_set_cursor
+-- vim.api.nvim_win_set_cursor = function(win, pos)
+--   if vim.api.nvim_win_is_valid(win) then
+--     _orig_win_set_cursor(win, pos)
+--   end
+-- end
+
+-- local _orig_notify = vim.notify
+-- vim.notify = function(msg, level, opts)
+--   if type(msg) == "string" and msg:match("Invalid window id") then
+--     return
+--   end
+--   _orig_notify(msg, level, opts)
+-- end
 
 -- Keymaps that work well in VSCode
 local keymap = vim.keymap.set
@@ -72,9 +73,8 @@ keymap("n", "gd", ":call VSCodeNotify('editor.action.revealDefinition')<CR>")
 keymap("n", "gi", ":call VSCodeNotify('editor.action.goToImplementation')<CR>")
 keymap("n", "K", ":call VSCodeNotify('editor.action.showHover')<CR>")
 
--- Comment toggling
-keymap("n", "gcc", ":call VSCodeNotify('editor.action.commentLine')<CR>")
-keymap("x", "gc", ":call VSCodeNotify('editor.action.commentLine')<CR>")
+-- Use VS Code's verified comment keybinding for visual selections.
+keymap("x", "gc", ":call VSCodeNotify('editor.action.commentLine')<CR>", { desc = "Toggle selection comment" })
 
 -- Center cursor on scroll
 keymap("n", "<C-d>", "<C-d>zz")

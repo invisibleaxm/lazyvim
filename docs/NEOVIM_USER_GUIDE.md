@@ -75,7 +75,7 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 | `<leader>y`  | Normal/Visual | Yank to system clipboard                     |
 | `<leader>Y`  | Normal        | Yank line to system clipboard                |
 | `<leader>p`  | Visual        | Paste without yanking (keeps register)       |
-| `<leader>rp` | Normal        | Replace file with system clipboard           |
+| `<leader>rf` | Normal        | Replace file with system clipboard           |
 | `<leader>rs` | Visual        | Replace selection with system clipboard      |
 | `<leader>d`  | Normal/Visual | Delete without yanking (black hole register) |
 
