@@ -30,17 +30,13 @@ return {
   },
 
   -- nvim-lint (linting) - already included by LazyVim
-  -- Disabled by default to avoid errors when linters aren't installed
-  -- Uncomment and configure after installing linters via Mason
-  -- {
-  --   "mfussenegger/nvim-lint",
-  --   optional = true,
-  --   opts = {
-  --     linters_by_ft = {
-  --       python = { "flake8" },
-  --       markdown = { "markdownlint" },
-  --       lua = { "luacheck" },
-  --     },
-  --   },
-  -- },
+  {
+    "mfussenegger/nvim-lint",
+    optional = true,
+    opts = {
+      linters_by_ft = {
+        markdown = { "markdownlint" },
+      },
+    },
+  },
 }

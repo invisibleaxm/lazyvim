@@ -52,7 +52,8 @@ return {
       ---@type lspconfig.options
       diagnostics = {
         underline = false,
-        virtual_text = { prefix = "icons" },
+        virtual_text = false,
+        signs = true,
       },
       servers = {
         ["*"] = {
