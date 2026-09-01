@@ -33,7 +33,7 @@
 - ❌ nvim-cmp (VSCode IntelliSense instead)
 - ❌ Neovim Copilot (VSCode Copilot instead)
 - ❌ Neovim LSP servers (VSCode language servers instead)
-- ❌ Telescope (VSCode `Ctrl+P` instead)
+- ❌ Snacks picker / Neo-tree (VSCode `Ctrl+P` / Explorer instead)
 - ❌ Neo-tree (VSCode Explorer instead)
 - ❌ ToggleTerm (VSCode integrated terminal instead)
 - ❌ Trouble (VSCode Problems panel instead)
@@ -172,15 +172,15 @@ If you notice conflicts:
 
 **Neovim plugins disabled in VSCode:**
 
-- `lua/plugins/completion.lua` - nvim-cmp disabled
+- `lua/plugins/completion.lua` - blink.cmp disabled
 - `lua/plugins/copilot.lua` - Neovim Copilot disabled
 - `lua/plugins/lsp.lua` - LSP servers disabled
-- `lua/plugins/telescope.lua` - Telescope disabled
 - `lua/plugins/powershell.lua` - PowerShell LSP disabled
 - `lua/plugins/trouble.lua` - Trouble disabled
-- `lua/plugins/neotree.lua` - Neo-tree disabled
+- `lua/plugins/neotree.lua` - Neo-tree disabled (VS Code Explorer instead)
 - `lua/plugins/toggleterm.lua` - ToggleTerm disabled
-- `lua/plugins/notifications.lua` - Notifications disabled
+- `lua/plugins/notifications.lua` - Snacks notifier timeout skipped
+- Snacks picker / Noice UI are disabled by `extras.vscode`
 
 **VSCode settings updated:**
 

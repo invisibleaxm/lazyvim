@@ -267,17 +267,16 @@ nvim/
 
 ## 🔍 Finding Functions
 
-### Telescope Integration
+### Snacks picker
 
 ```vim
 <leader>ff  " Find files
-<leader>fg  " Live grep (search in files)
-<leader>fs  " Find string under cursor
+<leader>sg  " Live grep (search in files)
 ```
 
 **Search for PowerShell functions:**
 ```vim
-<leader>fg function .*{
+<leader>sg function .*{
 ```
 
 ### Symbol Search
@@ -447,7 +446,7 @@ Ctrl+o      " Jump back
 
 ```vim
 <leader>ff  " Find files
-<leader>fg Write-Host  " Find all Write-Host calls
+<leader>sg Write-Host  " Find all Write-Host calls
 ```
 
 ## 🎯 Workflow Example

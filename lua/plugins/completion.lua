@@ -1,5 +1,5 @@
 -- VSCODE HYBRID MODE: Disable Neovim completion in VSCode
--- Use VSCode IntelliSense instead of nvim-cmp
+-- Use VSCode IntelliSense instead of blink.cmp
 if vim.g.vscode then
   return {}
 end

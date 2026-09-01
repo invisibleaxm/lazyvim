@@ -59,8 +59,8 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 
 | Key          | Mode   | Action                      |
 | ------------ | ------ | --------------------------- |
-| `<leader>ff` | Normal | Find files (Telescope)      |
-| `<leader>fg` | Normal | Live grep (search in files) |
+| `<leader>ff` | Normal | Find files (Snacks picker)  |
+| `<leader>sg` | Normal | Live grep (search in files) |
 | `<leader>fb` | Normal | Find buffers                |
 | `<leader>fr` | Normal | Recent files                |
 | `<leader>w`  | Normal | Save file                   |
@@ -119,29 +119,26 @@ Example: `<leader>ff` means press `Space`, then `f`, then `f` to find files.
 
 ## 🔌 Essential Plugins
 
-### Telescope (Fuzzy Finder)
+### Snacks picker (Fuzzy Finder)
 
-**Find anything in your project:**
+**Find anything in your project** (LazyVim default; not Telescope):
 
-| Keymap       | Description                      |
-| ------------ | -------------------------------- |
-| `<leader>ff` | Find files by name               |
-| `<leader>fg` | Live grep (search text in files) |
-| `<leader>fb` | Find open buffers                |
-| `<leader>fh` | Find help tags                   |
-| `<leader>fr` | Recent files                     |
-| `<leader>fo` | Find old files                   |
-| `<leader>fc` | Find commands                    |
-| `<leader>fk` | Find keymaps                     |
+| Keymap        | Description                      |
+| ------------- | -------------------------------- |
+| `<leader>ff`  | Find files by name               |
+| `<leader>sg`  | Live grep (search text in files) |
+| `<leader>fb`  | Find open buffers                |
+| `<leader>fr`  | Recent files                     |
+| `<leader>sk`  | Search keymaps                   |
+| `<leader>sh`  | Help tags                        |
+| `<leader>snh` | Notification / Noice history     |
 
-**Inside Telescope:**
+**Inside the picker:**
 
 - `<C-j>` / `<C-k>` - Navigate up/down
-- `<C-n>` / `<C-p>` - Next/previous
 - `<CR>` - Open file
-- `<C-x>` - Open in horizontal split
-- `<C-v>` - Open in vertical split
-- `<Esc>` - Close Telescope
+- `<C-s>` / `<C-v>` - Split / vertical split (Snacks defaults)
+- `<Esc>` - Close picker
 
 ### Neo-tree (File Explorer)
 
@@ -456,14 +453,14 @@ See full guide: [POWERSHELL_DEVELOPMENT.md](POWERSHELL_DEVELOPMENT.md)
 ### Multi-File Editing
 
 1. **Find files:** `<leader>ff`
-2. **Select multiple:** `<Tab>` in Telescope to mark files
+2. **Select multiple:** `<Tab>` in the Snacks picker to mark files
 3. **Open all:** `<CR>` to open in tabs
 4. **Switch buffers:** `<leader>fb` or `<leader>,`
 
 ### Search & Replace Across Project
 
-1. **Search:** `<leader>fg` (live grep)
-2. **Send to quickfix:** `<C-q>` in Telescope
+1. **Search:** `<leader>sg` (live grep)
+2. **Send to quickfix:** `<C-q>` in the Snacks picker (if bound; otherwise use Trouble)
 3. **Open quickfix:** `<leader>xq`
 4. **Replace:** `:cdo s/old/new/g | update`
 
@@ -540,7 +537,7 @@ You'll be prompted for target-specific configuration (e.g. socket name/target pa
 **Learn these first:**
 
 1. `<leader>ff` - Find files (most used!)
-2. `<leader>fg` - Search in files
+2. `<leader>sg` - Search in files
 3. `<leader>e` - File explorer
 4. `<leader>pp` - PowerShell terminal
 5. `<F9>` - Send code to terminal
@@ -548,7 +545,7 @@ You'll be prompted for target-specific configuration (e.g. socket name/target pa
 
 **VSCode Users:**
 
-- `<C-p>` still works (opens Telescope file finder)
+- `<leader>ff` is find files (Snacks picker)
 - `<A-F>` formats (like `Alt+Shift+F`)
 - Mouse works! (click, select, scroll)
 - Clipboard integration automatic

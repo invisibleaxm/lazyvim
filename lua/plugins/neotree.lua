@@ -1,5 +1,6 @@
--- VSCODE HYBRID MODE: Disable Neo-tree in VSCode
--- Use VSCode's Explorer sidebar instead
+-- VSCODE HYBRID MODE: extra is already blocked by extras.vscode cond.
+-- Keep this file as Neo-tree *opts* only; keymaps/lazy-load come from
+-- lazyvim.plugins.extras.editor.neo-tree.
 if vim.g.vscode then
   return {}
 end
@@ -8,9 +9,7 @@ return {
   {
     "nvim-neo-tree/neo-tree.nvim",
     opts = {
-      -- Exit Neovim once Neo-tree is the only window left in the tab.
       close_if_last_window = true,
-      open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
       filesystem = {
         filtered_items = {
           hide_dotfiles = true,

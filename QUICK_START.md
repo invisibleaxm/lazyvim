@@ -8,8 +8,8 @@
    nvim
    ```
 3. LazyVim installs all plugins automatically on first run.
-4. Once it's done, run `:TSUpdate` to compile Treesitter parsers.
-5. Optional: open `:Mason` to install any formatters/linters you want (e.g. `stylua`, `black`, `isort`, `shfmt`, `markdownlint`).
+4. Once it's done, run `:TSUpdate` if parsers did not compile automatically.
+5. Optional: open `:Mason` to install extra formatters/linters (e.g. `stylua`, `ruff`, `shfmt`, `markdownlint`).
 
 ## Your First 5 Minutes
 
@@ -17,8 +17,8 @@
 | ----------------------------- | ---------------------------------------------------- |
 | `<Space>` (leader), then wait | which-key pops up showing every available keybinding |
 | `<leader>e`                   | Toggle the file explorer (Neo-tree)                  |
-| `<leader>ff`                  | Find files                                           |
-| `<leader>fg`                  | Search text across the project                       |
+| `<leader>ff`                  | Find files (Snacks picker)                           |
+| `<leader>sg`                  | Search text across the project                       |
 | `<leader><leader>`            | Command palette / fuzzy command finder               |
 | `gd`                          | Go to definition (once an LSP server is attached)    |
 | `K`                           | Hover documentation                                  |

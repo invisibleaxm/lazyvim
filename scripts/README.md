@@ -135,7 +135,7 @@ chmod +x scripts/cleanup.sh
 
 ### When to use
 
-- After telescope/plugin installation failures
+- After plugin installation failures
 - When seeing "local changes" blocking updates
 - After corrupted parser errors (`.so2` files)
 - Before major Neovim/plugin updates

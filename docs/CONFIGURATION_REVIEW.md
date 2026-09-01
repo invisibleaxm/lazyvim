@@ -140,7 +140,8 @@ These options are **already set by LazyVim** and don't need to be duplicated:
 - `nvim-treesitter` - Syntax highlighting
 - `nvim-lspconfig` - LSP configuration
 - `which-key.nvim` - Keymap help
-- `telescope.nvim` - Fuzzy finder
+- `snacks.nvim` picker - Fuzzy finder (LazyVim 8 default)
+- `neo-tree.nvim` - File explorer (`extras.editor.neo-tree`)
 - `conform.nvim` - Formatting
 - `nvim-lint` - Linting
 - `mini.pairs` - Auto-pairs
@@ -253,11 +254,11 @@ New comprehensive guides:
 
 ### Future Considerations
 
-1. **Telescope fuzzy finding:** Already configured, explore ` + f` keymaps
+1. **Snacks picker:** `<leader>ff` find files, `<leader>sg` grep
 2. **LSP configuration:** Consider adding more language servers via `:Mason`
 3. **Formatter/linters:** Install tools in [formatting.lua](../lua/plugins/formatting.lua) via `:Mason`
 4. **Custom snippets:** LuaSnip configured, add snippets in `snippets/`
-5. **Color scheme:** Try different themes (catppuccin, gruvbox, kanagawa) in [ui.lua](../lua/plugins/ui.lua)
+5. **Color scheme:** On Omarchy, `omarchy theme set` drives Neovim. Elsewhere LazyVim's default theme applies.
 
 ### Things to Avoid
 

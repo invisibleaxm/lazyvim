@@ -1,35 +1,21 @@
--- Formatting and Linting Configuration
--- LazyVim already includes conform.nvim and nvim-lint by default
--- This file provides additional configuration and tool specifications
---
--- To use these formatters/linters, install them via Mason:
--- :Mason
--- Then install: stylua, black, isort, shfmt, flake8, markdownlint, luacheck
+-- Extra formatters/linters on top of LazyVim defaults (conform.nvim + nvim-lint).
+-- Python formatting/linting comes from extras.lang.python (ruff). Install
+-- remaining tools via :Mason as needed.
 
 return {
-  -- Conform.nvim (formatting) - already included by LazyVim
   {
     "stevearc/conform.nvim",
     optional = true,
     opts = {
       formatters_by_ft = {
         lua = { "stylua" },
-        python = { "isort", "black" },
         sh = { "shfmt" },
         bash = { "shfmt" },
-        -- Add more formatters as needed after installing via Mason
       },
-      -- Disable format on save initially (enable when you have formatters installed)
       format_on_save = nil,
-      -- Or enable format on save after installing formatters:
-      -- format_on_save = {
-      --   timeout_ms = 500,
-      --   lsp_fallback = true,
-      -- },
     },
   },
 
-  -- nvim-lint (linting) - already included by LazyVim
   {
     "mfussenegger/nvim-lint",
     optional = true,

@@ -2,7 +2,7 @@
 
 This is a tour of the plugins actually selected/customized in this config, organized by what they're for. Each entry covers **what it does**, a **quick cheat sheet**, and a **link to the official project** for the full docs.
 
-> This config is built on [LazyVim](https://www.lazyvim.org/) — a curated Neovim "distro". LazyVim itself already brings in a large default plugin set (Telescope, Neo-tree, which-key, gitsigns, lualine, bufferline, flash.nvim, mini.nvim, noice.nvim, Trouble, and more). See the [LazyVim plugin list](https://www.lazyvim.org/plugins) for everything included out of the box. Below is what's specifically configured or added on top of that foundation, in [lua/plugins/](lua/plugins).
+> This config is built on [LazyVim](https://www.lazyvim.org/) — a curated Neovim "distro". LazyVim itself already brings in a large default plugin set (Snacks picker, which-key, gitsigns, lualine, bufferline, flash.nvim, mini.nvim, noice.nvim, Trouble, and more). This config keeps **Neo-tree** as the file explorer (via `extras.editor.neo-tree`; new LazyVim installs default to Snacks explorer). See the [LazyVim plugin list](https://www.lazyvim.org/plugins) for everything included out of the box. Below is what's specifically configured or added on top of that foundation, in [lua/plugins/](lua/plugins).
 
 ---
 
@@ -16,7 +16,8 @@ Use this as the "single source of truth" map when deciding where to edit behavio
 | Completion engine and ranking | [lua/plugins/completion.lua](lua/plugins/completion.lua)       | [lua/plugins/copilot.lua](lua/plugins/copilot.lua)       | `vim.g.ai_cmp = true` keeps Copilot in completion-menu mode                   |
 | PowerShell IDE features       | [lua/plugins/powershell.lua](lua/plugins/powershell.lua)       | none                                                     | `vim.g.enable_powershell = false` disables this entire file                   |
 | Terminal and REPL flow        | [lua/plugins/toggleterm.lua](lua/plugins/toggleterm.lua)       | [lua/plugins/powershell.lua](lua/plugins/powershell.lua) | inherits `vim.g.enable_powershell` for PowerShell helpers                     |
-| Notifications and message UI  | [lua/plugins/notifications.lua](lua/plugins/notifications.lua) | [lua/plugins/disabled.lua](lua/plugins/disabled.lua)     | VSCode mode short-circuits these automatically                                |
+| Notifications and message UI  | [lua/plugins/notifications.lua](lua/plugins/notifications.lua) | none                                                     | 5s Snacks.notifier timeout; VSCode extra disables notifier                    |
+| Omarchy desktop theme follow  | [lua/plugins/omarchy-theme.lua](lua/plugins/omarchy-theme.lua) | [lua/plugins/omarchy-all-themes.lua](lua/plugins/omarchy-all-themes.lua), [lua/plugins/omarchy-theme-hotreload.lua](lua/plugins/omarchy-theme-hotreload.lua) | No-op unless `~/.local/state/omarchy/current/theme/neovim.lua` exists; skipped in VS Code |
 
 Notes:
 
@@ -144,31 +145,33 @@ Runs formatters per filetype: `stylua` (Lua), `black`/`isort` (Python), `shfmt` 
 
 ## File Explorer & Fuzzy Finding
 
-**[lua/plugins/neotree.lua](lua/plugins/neotree.lua)** · [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim)
-**[lua/plugins/telescope.lua](lua/plugins/telescope.lua)** · [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) + [telescope-fzf-native](https://github.com/nvim-telescope/telescope-fzf-native.nvim)
+**[lua/plugins/neotree.lua](lua/plugins/neotree.lua)** · [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim) (via `extras.editor.neo-tree`)
+**Snacks picker** · [snacks.nvim](https://github.com/folke/snacks.nvim) (LazyVim 8 default finder; no Telescope)
 
-Neo-tree is the sidebar file browser (dotfiles hidden by default here). Telescope is the fuzzy finder for files, text search, buffers, and more, accelerated by the native `fzf` sorter.
+Neo-tree is the sidebar file browser (dotfiles hidden; close Neovim if it is the last window). Snacks picker is the fuzzy finder for files, grep, buffers, and keymaps.
 
 **Cheat sheet:**
 
-| Key          | Action                                       |
-| ------------ | -------------------------------------------- |
-| `<leader>e`  | Toggle file explorer (Neo-tree)              |
-| `<leader>ff` | Find files                                   |
-| `<leader>fg` | Live grep (search text across files)         |
-| `<leader>fb` | Browse open buffers                          |
-| `<leader>fp` | Find a file inside your Neovim plugin config |
-| `<leader>sn` | Search notification history                  |
+| Key           | Action                                 |
+| ------------- | -------------------------------------- |
+| `<leader>e`   | Toggle file explorer (Neo-tree)        |
+| `<leader>ff`  | Find files                             |
+| `<leader>sg`  | Live grep (search text across files)   |
+| `<leader>fb`  | Browse open buffers                    |
+| `<leader>fr`  | Recent files                           |
+| `<leader>sk`  | Search keymaps                         |
+| `<leader>sp`  | Search LazyVim plugin specs            |
+| `<leader>snh` | Notification / Noice history           |
 
-🔗 [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim) · [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
+🔗 [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim) · [snacks.nvim](https://github.com/folke/snacks.nvim)
 
 ---
 
 ## Notifications & Messages UI
 
-**[lua/plugins/notifications.lua](lua/plugins/notifications.lua)** · [noice.nvim](https://github.com/folke/noice.nvim) + [nvim-notify](https://github.com/rcarriga/nvim-notify)
+**[lua/plugins/notifications.lua](lua/plugins/notifications.lua)** · [snacks.nvim notifier](https://github.com/folke/snacks.nvim) + [noice.nvim](https://github.com/folke/noice.nvim)
 
-Replaces the plain command line and message area with a nicer UI, and shows `vim.notify()` calls as pop-up toasts (5s timeout here) instead of only `:messages`.
+LazyVim shows `vim.notify()` toasts via Snacks (5s timeout here). Noice still owns the command line and LSP progress UI.
 
 **Cheat sheet:**
 
@@ -177,9 +180,9 @@ Replaces the plain command line and message area with a nicer UI, and shows `vim
 | `:Noice` or `:Noice history` | Reopen the full message/notification history (use this since popups disappear!) |
 | `:Noice last`                | Redisplay the most recent notification                                          |
 | `<leader>un`                 | Dismiss all visible notifications                                               |
-| `<leader>nh`                 | Notification history (via Telescope)                                            |
+| `<leader>snh`                | Notification / Noice history                                                    |
 
-🔗 [noice.nvim](https://github.com/folke/noice.nvim) · [nvim-notify](https://github.com/rcarriga/nvim-notify)
+🔗 [noice.nvim](https://github.com/folke/noice.nvim) · [snacks.nvim](https://github.com/folke/snacks.nvim)
 
 ---
 
@@ -261,6 +264,14 @@ Note: `nvim-silicon` requires the external `silicon` binary installed separately
 
 ---
 
+## Omarchy theme follow
+
+**[lua/plugins/omarchy-theme.lua](lua/plugins/omarchy-theme.lua)** · **[lua/plugins/omarchy-all-themes.lua](lua/plugins/omarchy-all-themes.lua)** · **[lua/plugins/omarchy-theme-hotreload.lua](lua/plugins/omarchy-theme-hotreload.lua)**
+
+On Omarchy, `omarchy theme set` writes `~/.local/state/omarchy/current/theme/neovim.lua`. This config loads that spec at startup and watches it so a running Neovim picks up the new colorscheme (plus [plugin/after/transparency.lua](plugin/after/transparency.lua)). Off Omarchy, and inside VS Code, these files do nothing and LazyVim's default theme remains.
+
+---
+
 ## Tmux / WezTerm / Herdr Pane Navigation
 
 **[lua/plugins/ui.lua](lua/plugins/ui.lua)** · [smart-splits.nvim](https://github.com/mrjones2014/smart-splits.nvim)
@@ -277,7 +288,7 @@ Herdr is a first-class smart-splits backend. When you install herdr, link the pl
 
 **[lua/plugins/web-devicons.lua](lua/plugins/web-devicons.lua)** · [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons)
 
-Custom file-type icons used by Neo-tree/Telescope/bufferline — notably distinct icons for `.ps1`/`.psm1`/`.psd1` and Dockerfiles.
+Custom file-type icons used by Neo-tree/Snacks picker/bufferline — notably distinct icons for `.ps1`/`.psm1`/`.psd1` and Dockerfiles.
 
 🔗 [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons)
 
@@ -287,7 +298,7 @@ Custom file-type icons used by Neo-tree/Telescope/bufferline — notably distinc
 
 **[lua/plugins/vscode.lua](lua/plugins/vscode.lua)** · [vscode-neovim](https://marketplace.visualstudio.com/items?itemName=asvetliakov.vscode-neovim) extension compatibility layer
 
-Not a plugin itself — this file only activates when Neovim is running _inside_ VSCode via the vscode-neovim extension. It remaps a handful of keys to call native VSCode commands (quick open, find in files, go to definition, rename, etc.) instead of Neovim's own UI plugins, and disables the Neovim-only UI plugins above (Telescope, Neo-tree, Trouble, noice, etc. all short-circuit with `if vim.g.vscode then return {} end`) so there's no conflict.
+Not a plugin itself — this file only activates when Neovim is running _inside_ VSCode via the vscode-neovim extension. It remaps a handful of keys to call native VSCode commands (quick open, find in files, go to definition, rename, etc.) instead of Neovim's own UI plugins, and disables the Neovim-only UI plugins above (Snacks picker, Neo-tree, Trouble, noice, etc. all short-circuit with `if vim.g.vscode then return {} end`) so there's no conflict.
 
 🔗 [vscode-neovim extension](https://marketplace.visualstudio.com/items?itemName=asvetliakov.vscode-neovim)
 

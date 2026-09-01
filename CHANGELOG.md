@@ -2,7 +2,22 @@
 
 All notable changes to this Neovim configuration.
 
-## [2026-07-18] - Latest
+## [2026-08-31] - Latest
+
+### 🔧 Changed
+- **LazyVim 8 defaults for finder, keep Neo-tree** - `install_version` is 8 so the picker is Snacks (not fzf-lua/Telescope). File explorer stays Neo-tree via `extras.editor.neo-tree`.
+- **Drop Telescope and nvim-notify** - `<leader>ff` / grep go through Snacks; notification history is `<leader>snh`.
+- **Python extra** - `extras.lang.python` (pyright + ruff). Removed flake8/black/isort from Mason ensure_installed.
+- **Treesitter `main`** - `lua/plugins/treesitter.lua` only extends `ensure_installed`; no old master-branch `build`/compiler opts.
+
+### ✨ Added
+- **Omarchy theme follow** - Neovim uses the active Omarchy theme and hot-reloads on `omarchy theme set`
+  - [lua/plugins/omarchy-theme.lua](lua/plugins/omarchy-theme.lua) loads `~/.local/state/omarchy/current/theme/neovim.lua`
+  - [lua/plugins/omarchy-all-themes.lua](lua/plugins/omarchy-all-themes.lua) preinstalls Omarchy colorscheme plugins
+  - [lua/plugins/omarchy-theme-hotreload.lua](lua/plugins/omarchy-theme-hotreload.lua) watches that file in a running session
+  - No-op on macOS/Windows and inside VS Code
+
+## [2026-07-18]
 
 ### ✨ Added
 - **vim-slime integration** - Send code to tmux/WezTerm panes with `<F9>`

@@ -10,27 +10,12 @@ return {
     end,
   },
 
-  --extends tree sitter default list/options available at: https://www.lazyvim.org/plugins/treesitter
-  -- NOTE: Compiler is configured via vim.env.CC in lua/config/options.lua
-  -- Treesitter will automatically use the CC environment variable
+  -- LazyVim 15+ uses the nvim-treesitter `main` branch. Only extend the
+  -- ensure_installed list; do not set highlight/indent/compilers/build here.
   {
     "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    opts = function(_, opts)
-      -- Prefer GCC first for parser builds, fallback to clang.
-      opts.compilers = { "gcc", "clang" }
-
-      if type(opts.ensure_installed) == "table" then
-        vim.list_extend(opts.ensure_installed, { "toml", "rust" })
-      end
-
-      -- Additional treesitter configuration
-      opts.highlight = opts.highlight or {}
-      opts.highlight.enable = true
-      opts.indent = opts.indent or {}
-      opts.indent.enable = true
-
-      return opts
-    end,
+    opts = {
+      ensure_installed = { "toml", "rust" },
+    },
   },
 }

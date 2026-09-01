@@ -31,7 +31,7 @@ This runs cleanup + bootstrap to ensure a smooth installation.
 
 ## 📋 Prerequisites
 
-- **Neovim** 0.9+
+- **Neovim** 0.11+ (0.12 recommended; this config tracks current LazyVim)
 - **A C compiler** (for Treesitter parsers) — `gcc` is preferred and auto-detected (e.g. via MSYS2/MinGW on Windows), with `clang` used automatically as a fallback if `gcc` isn't found. Just make sure one of the two is on your `PATH`.
 
 ## 🎯 Quick Setup

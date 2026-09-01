@@ -37,7 +37,8 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.dap.nlua" },
 
     -- Editor
-    -- Neo-tree is the single file explorer for this configuration.
+    -- Neo-tree is the file explorer (LazyVim 8+ defaults to Snacks explorer).
+    { import = "lazyvim.plugins.extras.editor.neo-tree" },
     -- { import = "lazyvim.plugins.extras.editor.mini-files" },
     -- { import = "lazyvim.plugins.extras.editor.aerial" },
     -- { import = "lazyvim.plugins.extras.editor.dial" },
@@ -50,7 +51,7 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.editor.outline" },
     -- { import = "lazyvim.plugins.extras.editor.overseer" },
     -- { import = "lazyvim.plugins.extras.editor.refactoring" },
-    -- { import = "lazyvim.plugins.extras.editor.telescope" },
+    -- Finder is Snacks picker (LazyVim 8 default). Do not enable telescope/fzf extras.
 
     -- Formatting
     { import = "lazyvim.plugins.extras.formatting.prettier" },
@@ -58,6 +59,7 @@ require("lazy").setup({
 
     -- Languages
     { import = "lazyvim.plugins.extras.lang.json" },
+    { import = "lazyvim.plugins.extras.lang.python" },
     -- { import = "lazyvim.plugins.extras.lang.go" }, -- Disabled: Go not available on Linux
     -- { import = "lazyvim.plugins.extras.lang.ansible" },
     -- { import = "lazyvim.plugins.extras.lang.clangd" },
@@ -68,10 +70,9 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.lang.helm" },
     -- { import = "lazyvim.plugins.extras.lang.java" },
     -- { import = "lazyvim.plugins.extras.lang.markdown" },
-    -- { import = "lazyvim.plugins.extras.lang.omnisharp" },
+    -- { import = "lazyvim.plugins.extras.lang.dotnet" }, -- was lang.omnisharp
     -- { import = "lazyvim.plugins.extras.lang.php" },
     -- { import = "lazyvim.plugins.extras.lang.prisma" },
-    -- { import = "lazyvim.plugins.extras.lang.python" },
     -- { import = "lazyvim.plugins.extras.lang.ruby" },
     -- { import = "lazyvim.plugins.extras.lang.rust" },
     -- { import = "lazyvim.plugins.extras.lang.scala" },
@@ -88,7 +89,7 @@ require("lazy").setup({
     -- { import = "lazyvim.plugins.extras.linting.eslint" },
 
     -- LSP
-    -- { import = "lazyvim.plugins.extras.lsp.none-ls" },
+    -- none-ls is optional; LazyVim formats/lints with conform.nvim + nvim-lint.
 
     -- Test
     -- { import = "lazyvim.plugins.extras.test.core" },
@@ -136,12 +137,9 @@ require("lazy").setup({
       -- disable some rtp plugins
       disabled_plugins = {
         "gzip",
-        "matchit",
-        "matchparen",
-        "ftpPlugin",
-        "netrwPlugin",
         "tarPlugin",
         "tohtml",
+        "tutor",
         "zipPlugin",
       },
     },

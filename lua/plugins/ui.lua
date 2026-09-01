@@ -1,19 +1,7 @@
 -- Some customizations
 return {
-
-  -- color schemes
-  -- { "ellisonleao/gruvbox.nvim" },
-  --   { "rebelot/kanagawa.nvim" },
-  -- { "tanvirtin/monokai.nvim" },
-  -- { "catppuccin/nvim", name = "catppuccin" },
-  -- Configure LazyVim to load gruvbox
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      --    colorscheme = "kanagawa",
-      -- colorscheme = "monokai_pro",
-    },
-  },
+  -- Colorscheme: on Omarchy, lua/plugins/omarchy-theme.lua reads the current
+  -- `omarchy theme` spec. Do not pin a colorscheme here or it will fight that.
 
   -- Neovim splits + WezTerm/tmux/herdr panes. Do not lazy-load: mux
   -- backends (IS_NVIM / @pane-is-vim) must be set at startup.
