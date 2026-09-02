@@ -55,6 +55,22 @@ vim.keymap.set("i", "<C-q>", "<C-v>", { desc = "Insert next key literally" })
 -- Delete without yanking (use black hole register)
 vim.keymap.set({ "n", "v" }, "<leader>d", '"_d', { desc = "Delete without yanking" })
 
+-- Toggle nvim's mouse capture. Multiplexers like herdr/tmux only drive their
+-- own terminal-native select-to-copy when the pane app isn't requesting the
+-- mouse itself; nvim requesting it (mouse=a) makes drag-select go to nvim's
+-- visual mode instead, whose yank clipboard sync (OSC 52) isn't guaranteed to
+-- reach the client over every multiplexer/remote hop. Toggle off, drag-select,
+-- let the terminal copy it, toggle back on.
+vim.keymap.set("n", "<leader>tm", function()
+  if vim.o.mouse == "" then
+    vim.o.mouse = "a"
+    vim.notify("Mouse: nvim (a)", vim.log.levels.INFO)
+  else
+    vim.o.mouse = ""
+    vim.notify("Mouse: released to terminal", vim.log.levels.INFO)
+  end
+end, { desc = "Toggle nvim mouse capture (terminal-native select+copy)" })
+
 -- ============================================================================
 -- EDITING SHORTCUTS
 -- ============================================================================

@@ -20,8 +20,14 @@ end
 
 -- Enable mouse support in all modes (works in terminal and SSH)
 -- vscode-neovim handles mouse via VS Code; skip to avoid conflicts
+--
+-- Inside herdr (HERDR_ENV=1, set on every pane it spawns), default mouse off
+-- instead: herdr only drives its own terminal-native select-to-copy when the
+-- pane app isn't requesting the mouse, and nvim's OSC 52 yank isn't relayed
+-- through herdr's remote hop back to the client clipboard. <leader>tm
+-- (keymaps.lua) toggles it back on for click-to-position / in-nvim drag-select.
 if not vim.g.vscode then
-  vim.opt.mouse = "a"
+  vim.opt.mouse = vim.env.HERDR_ENV and "" or "a"
 end
 
 -- Enable system clipboard integration (works locally)
